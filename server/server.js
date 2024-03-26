@@ -1,5 +1,6 @@
 const path = require('path')
 const express = require('express');
+const initializeJobs = require('./runJobs')
 
 // set up server configuration 
 const app = express(); 
@@ -14,6 +15,7 @@ app.use(express.static(path.resolve(__dirname, '../client')));
 app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../src/index.html'));
 });
+
 
 // Catch all route handler 
 app.use((req, res) => res.status(404).send('This page cannot be found'));
@@ -31,6 +33,8 @@ app.use((err, req, res, next) => {
   
     return res.status(errorObj.status).json(errorObj.message);
   });
+
+  initializeJobs();
 
 
 // set up listener
