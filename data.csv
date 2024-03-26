@@ -1,7 +1,3 @@
-a,b,c
-1,2,
-4,5,1
-7,8,
-1,2,
-4,5,1
-7,8,
+name,url,invokeTime,formattedResponse,functionIntialLoad,functionInnertime,msSinceFunctionLoad,firstRun,serverStart,serverEnd,serverDifference
+Test-ping,https://4eldkli961.execute-api.sa-east-1.amazonaws.com/default/RAFunc,1711496090006,This function initially loaded at Tue Mar 26 2024 23:34:50 GMT+0000 (Coordinated Universal Time)!,1711496090515,1711496090519,4,1,1711496090007,1711496090552,545
+Test-ping,https://4eldkli961.execute-api.sa-east-1.amazonaws.com/default/RAFunc,1711496100004,This function initially loaded at Tue Mar 26 2024 23:34:50 GMT+0000 (Coordinated Universal Time)!,1711496090515,1711496100235,9720,,1711496100004,1711496100246,242
