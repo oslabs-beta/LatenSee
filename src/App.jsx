@@ -8,11 +8,8 @@ const App = () => {
     <div>
       {/* <p>We're inside the App component</p> */}
       <Routes>
-        {/* <div> */}
-        <Route path="/" element={<Configure />} />
-        {/* <Route path="/configure" component={Configure} /> */}
-        {/* <Route path="/dashboard" component={Dashboard} />*/}
-        {/* </div> */}
+        <Route path="config" element={<Configure />} />
+        <Route path="dashboard" element={<DashboardContainer />} />
       </Routes>
     </div>
   );
