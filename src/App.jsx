@@ -1,6 +1,6 @@
 import React from 'react';
 import Configure from './containers/Configure';
-// import Dashboard from './containers/Dashboard';
+import DashboardContainer from './containers/DashboardContainer';
 import { Routes, Route } from 'react-router-dom';
 
 const App = () => {
