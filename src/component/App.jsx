@@ -6,11 +6,11 @@ const App = () => {
   return (
     <div>
       <div className="graph-container">
-        <h1>This is a graph container</h1>
+        <h1>This is graph container</h1>
         {/* <GraphContrainer /> */}
       </div>
       <div className="dashboard-container">
-        <h1>THis is a dashboard container</h1>
+        <h1>THis is dashboard container</h1>
         <DashboardContainer />
       </div>
     </div>
