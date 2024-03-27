@@ -20,6 +20,9 @@ function Dashboard() {
 
   return (
     <div>
+      <h1>This is graph</h1>
+      {/* <Graph data={data}/> */}
+      <h1>This is table</h1>
       <Table data={data} />
     </div>
   );
