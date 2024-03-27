@@ -1,0 +1,11 @@
+Function,Number of Pings,Number of Cold Starts,Cold Start %,Ave Latency (ms),Cold Start Latency (ms),Warm Start Latency (ms),Cold Start Latency vs Warm
+Function_1,404,96,23.76%,167,256,110,2.33
+Function_2,745,23,3.09%,191,255,148,1.72
+Function_3,721,4,0.55%,55,93,33,2.82
+Function_4,105,12,11.43%,191,379,116,3.27
+Function_5,617,51,8.27%,26,206,25,8.24
+Function_6,690,76,11.01%,263,327,49,6.67
+Function_7,229,95,41.48%,22,146,17,8.59
+Function_8,647,15,2.32%,80,149,34,4.38
+Function_9,105,41,39.05%,240,309,214,1.44
+Function_10,292,57,19.52%,179,275,19,14.47
