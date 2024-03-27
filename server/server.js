@@ -1,6 +1,7 @@
 const path = require('path')
 const express = require('express');
 const initializeJobs = require('./runJobs')
+const dataRouter = require(path.join(__dirname, './routes/dataRouter.js')); 
 
 // set up server configuration 
 const app = express(); 
@@ -9,6 +10,9 @@ const PORT = 3000;
 // set up parsing request body 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/data', dataRouter); 
+
+
 
 app.use(express.static(path.resolve(__dirname, '../client')));
 
@@ -34,7 +38,7 @@ app.use((err, req, res, next) => {
     return res.status(errorObj.status).json(errorObj.message);
   });
 
-  initializeJobs();
+  // initializeJobs();
 
 
 // set up listener

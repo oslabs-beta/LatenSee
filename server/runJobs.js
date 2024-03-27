@@ -36,7 +36,6 @@ const callAndLog = async (endpoint, invokeTime) => {
 
     const params = [
     [endpoint.name,
-      endpoint.url,
       invokeTime,
       result.formattedResponse,
       result.functionIntialLoad,
@@ -60,7 +59,6 @@ const callAndLog = async (endpoint, invokeTime) => {
     const csvData = stringify(params, {header: useHeader, 
     columns: [
       'name',
-      'url',
       'invokeTime', 
       'formattedResponse',
       'functionIntialLoad',
