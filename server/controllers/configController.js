@@ -4,6 +4,7 @@ const csvFuncs = require(path.resolve(__dirname, './csvFuncs.js'));
 // const initializeJobs = require('./runJobs') 
 const parse = require ('csv-parser');
 
+
 const {stringify} = require('csv-stringify/sync'); 
 
 const configController = {}; 
