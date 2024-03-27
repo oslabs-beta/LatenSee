@@ -7,7 +7,7 @@ const dataController = require('../controllers/dataController.js')
 const router = express.Router(); 
 
 router.get('/', dataController.getData, (req, res) => {
-    console.log("from response", res.locals.funcData); 
+    // console.log("from response", res.locals.funcData); 
     res.status(200).json(res.locals.funcData); 
 
 })

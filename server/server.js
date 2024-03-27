@@ -2,6 +2,7 @@ const path = require('path')
 const express = require('express');
 const initializeJobs = require('./runJobs')
 const dataRouter = require(path.join(__dirname, './routes/dataRouter.js')); 
+const configRouter = require(path.join(__dirname, './routes/configRouter.js')); 
 
 // set up server configuration 
 const app = express(); 
@@ -11,6 +12,7 @@ const PORT = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/data', dataRouter); 
+app.use('/config', configRouter); 
 
 
 
