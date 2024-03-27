@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Table from '../components/Table';
+import FunctionPerformanceTable from '../components/FunctionPerformanceTable';
 
 function Dashboard() {
   const [data, setData] = useState([]);
@@ -23,7 +23,7 @@ function Dashboard() {
       <h1>This is graph</h1>
       {/* <Graph data={data}/> */}
       <h1>This is table</h1>
-      <Table data={data} />
+      <FunctionPerformanceTable data={data} />
     </div>
   );
 }

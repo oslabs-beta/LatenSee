@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Table({ data }) {
+function FunctionPerformanceTable({ data }) {
   return (
     <table>
       <thead>
@@ -33,4 +33,4 @@ function Table({ data }) {
   );
 }
 
-export default Table;
+export default FunctionPerformanceTable;
