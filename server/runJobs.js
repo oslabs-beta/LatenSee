@@ -2,6 +2,7 @@
 const schedule = require('node-schedule');
 require('dotenv').config();
 const fs = require('fs')
+const path = require('path'); 
 const {stringify} = require('csv-stringify/sync'); 
 
 /**
@@ -13,6 +14,8 @@ const {stringify} = require('csv-stringify/sync');
  */
 const callAndLog = async (endpoint, invokeTime) => {
   try {
+    // file where data is saved 
+    const fileName = path.resolve(__dirname, `./storage/data.csv`);
     // create a variable for starting time in ms, serverStart
     let serverStart = Date.now();
     // make a fetch for endpoint.url
@@ -36,22 +39,18 @@ const callAndLog = async (endpoint, invokeTime) => {
 
     const params = [
     [endpoint.name,
+      result.firstRun, 
       invokeTime,
-      result.formattedResponse,
-      result.functionIntialLoad,
-      result.functionInnertime,
-      result.msSinceFunctionLoad,
-      result.firstRun,
       serverStart,
       serverEnd,
       serverDifference]
     ];
 
-    // console.log(params); 
+    
 
     // deal with header values 
     let useHeader = true; 
-    if (fs.existsSync('data.csv')){
+    if (fs.existsSync(fileName)){
       useHeader = false
     }
 
@@ -59,12 +58,8 @@ const callAndLog = async (endpoint, invokeTime) => {
     const csvData = stringify(params, {header: useHeader, 
     columns: [
       'name',
-      'invokeTime', 
-      'formattedResponse',
-      'functionIntialLoad',
-      'functionInnertime',
-      'msSinceFunctionLoad',
       'firstRun',
+      'invokeTime',
       'serverStart',
       'serverEnd',
       'serverDifference' 
@@ -74,7 +69,7 @@ const callAndLog = async (endpoint, invokeTime) => {
   })
 
   // write data to file (TO COMBINE WITH ABOVE)
-  fs.appendFile('data.csv', csvData, 'utf-8', (err)=>{
+  fs.appendFile(fileName, csvData, 'utf-8', (err)=>{
     if(err) console.log('error writing file', err); 
     else console.log('write to file completed'); 
   })
