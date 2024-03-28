@@ -6,6 +6,8 @@ const {stringify} = require('csv-stringify/sync');
 
 const configController = {}; 
 let funcID; 
+// setting up headers 
+const heading = [{key: 'funcID'}, {key: 'appName'}, {key: 'funcName'}, {key: 'funcFreq'}, {key: 'userID'}]; 
 
 // middleware that takes information from the configure page POST request body and saves information where is is required. 
 configController.addNew = async (req, res, next) => {
@@ -17,16 +19,13 @@ configController.addNew = async (req, res, next) => {
         const {appName, funcName, funcUrl, funcFreq} = req.body; 
 
         // if user file does not exist create file and set up file headers 
-        
-        // setting up headers 
-        const heading = stringify([], {header: true, columns: [{key: 'funcID'}, {key: 'appName'}, {key: 'funcName'}, {key: 'funcFreq'}, {key: 'userID'}] }, function (err, str) {
-            return str}); 
 
         // check if file already exists 
         const fileName = path.resolve(__dirname, `../storage/${userID}.csv`); 
 
         if (!fs.existsSync(fileName)){
-            fs.appendFileSync(fileName, heading, 'utf-8', (err)=>{
+            funcID = 1
+            fs.appendFileSync(fileName, stringify([{funcID,appName,funcName,funcFreq,userID}], {header: true, columns: heading}),'utf-8', (err)=>{
                 if (err) console.log(err); 
                 else {
                     console.log('function data saved')
@@ -37,11 +36,7 @@ configController.addNew = async (req, res, next) => {
             // if user file exists,
             // first check last id and create id for func
             const records = await csvFuncs.getAllRows(fileName)
-            if (!records) {
-                funcID = 1; 
-            } else {
-                funcID = parseInt(records[records.length-1].funcID) + 1;  
-            }
+            funcID = parseInt(records[records.length-1].funcID) + 1;  
             // then append funcID, userID, appName, funcName and funcFreq to user's file)
             fs.appendFileSync(fileName, stringify([{funcID,appName,funcName,funcFreq,userID}], {header: false}, function (err, str) {
                 if (err) {
@@ -87,14 +82,13 @@ configController.editFunc = async (req, res, next) => {
 
     // if new frequency is specified, update the frequency of the function and re-write file
     if (funcFreq){
-        console.log('here')
         records[selectedIndex].funcFreq = funcFreq; 
-        fs.writeFileSync(fileName, stringify(records), {header: true, columns: Object.keys(records) } , function (err, str) {
+        fs.writeFileSync(fileName, stringify(records, {header: true, columns: heading} , function (err, str) {
             if (err) {
                 console.log(err); 
             } else {
                 console.log('added new record')
-            } })
+            } }))
     }
 
     // if new URL is specified, update the env file 
