@@ -57,40 +57,50 @@ configController.addNew = async (req, res, next) => {
                 message: `Error in middleware`,
             }); 
         }
-
 }
-
 
 // If the user wants to edit the frequency the function is pinged, 
 configController.editFunc = async (req, res, next) => {
     try {
         const userID = 'abc123';  
-    const {funcID, funcURL, funcFreq} = req.body 
-    const fileName = path.resolve(__dirname, `../storage/${userID}.csv`); 
+        const {funcID, funcURL, funcFreq, warmerOn} = req.body 
+        const fileName = path.resolve(__dirname, `../storage/${userID}.csv`); 
     
-    // get array of all functions in the users file 
-    const records = await csvFuncs.getAllRows(fileName); 
-    
-    // iterate through records to get object with funcID
-    let selectedIndex; 
-    records.forEach((element, index) => { 
-        if (element.funcID === funcID.toString()) {
-            selectedIndex = index;
-            return selectedIndex;  
-        }
-    });
+        // get array of all functions in the users file 
+        const records = await csvFuncs.getAllRows(fileName); 
+        
+        // iterate through records to get object with funcID
+        let selectedIndex; 
+        records.forEach((element, index) => { 
+            if (element.funcID === funcID.toString()) {
+                selectedIndex = index;
+                return selectedIndex;  
+            }
+        });
 
-    // if new frequency is specified, update the frequency of the function and re-write file
-    if (funcFreq){
-        records[selectedIndex].funcFreq = funcFreq; 
-        fs.writeFileSync(fileName, stringify(records, {header: true, columns: heading} , function (err, str) {
-            if (err) {
-                console.log(err); 
-            } else {
-                console.log('added new record')
-            } }))
-    }
-    return next(); 
+        // if new frequency is specified, update the frequency of the function and re-write file
+        if (funcFreq){
+            records[selectedIndex].funcFreq = funcFreq; 
+            fs.writeFileSync(fileName, stringify(records, {header: true, columns: heading} , function (err, str) {
+                if (err) {
+                    console.log(err); 
+                } else {
+                    console.log('updated record')
+                } }))
+        }
+
+        if (warmerOn){
+            records[selectedIndex].warmerOn = warmerOn; 
+            fs.writeFileSync(fileName, stringify(records, {header: true, columns: heading} , function (err, str) {
+                if (err) {
+                    console.log(err); 
+                } else {
+                    console.log('updated record')
+                } }))
+
+        }
+
+        return next(); 
 
     } catch (err) {
         return next({
@@ -101,6 +111,26 @@ configController.editFunc = async (req, res, next) => {
 
     }
 }
+
+// This controller turns warming on and off when the button to turn on or off is clicked 
+// configController.funcOnOFF = async () => {
+//     try {
+//         const userID = 'abc123';  
+//         const {funcID, warmerOn} = req.body 
+//         const fileName = path.resolve(__dirname, `../storage/${userID}.csv`); 
+
+
+
+//     } catch (err) {
+//         return next({
+//             log: `Error in middleware ${err}`,
+//             status: 500,
+//             message: `Error in funcONOFF function middleware`,
+//         }); 
+
+//     }
+
+// }
 
 
 
