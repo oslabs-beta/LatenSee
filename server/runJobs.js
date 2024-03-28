@@ -4,6 +4,7 @@ require('dotenv').config();
 const fs = require('fs')
 const path = require('path'); 
 const {stringify} = require('csv-stringify/sync'); 
+const { electron } = require('webpack');
 
 /**
  *
@@ -29,13 +30,14 @@ const callAndLog = async (endpoint, invokeTime) => {
     // parse the fetch results
     let result = await response.json();
 
+    /*
     // make an async request to write these results to the DB:
-
     // const SQL = `
     //   INSERT INTO logs ("name", "url", "invokeTime", "formattedResponse", "functionInitialLoad", "functionInnertime", "msSinceFunctionLoad", "firstRun", "serverStart", "serverEnd", "serverDifference")
     //   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
     //   RETURNING *
     // `;
+    */
 
     const params = [
     [endpoint.name,
@@ -91,14 +93,28 @@ const callAndLog = async (endpoint, invokeTime) => {
  * Every...10s, 1m, 5m, 15m, 30m, 1hr, 2hr, 3hr, 4hr, 5hr
  */
 
+const getOnFuncs = async () => {
+  // get all functions that from user is tracking that are turned on 
+  
+  // get array of all functions in the users file 
+  const records = await csvFuncs.getAllRows(fileName);
+  const onFuncs = []
+  records.forEach((element)=>{
+    if(element.On === 'Yes'){
+      onFuncs.push(element); 
+    }
+    return onFuncs; 
+  })
+}
+
+
 const endpointTest = {
   url: process.env.URL_TEST,
   name: 'Test-ping',
 };
 
-
-
 const initializeJobs = () => {
+
   /* Run the jobs */
   const job10S = schedule.scheduleJob('*/10 * * * * *', () =>
     callAndLog(endpointTest, Date.now())

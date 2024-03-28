@@ -93,10 +93,10 @@ configController.editFunc = async (req, res, next) => {
 
     // if new URL is specified, update the env file 
     // need to test this have not checked if this works
-    // if (funcURL) {
-    //     const name =`${funcID}URL` 
-    //     process.env.name = `${funcUrl}`; 
-    // }
+    if (funcUrl) {
+        const name =`${funcID}URL` 
+        process.env.name = `${funcUrl}`; 
+    }
     return next(); 
 
     } catch (err) {
