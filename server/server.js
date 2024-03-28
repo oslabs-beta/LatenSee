@@ -15,13 +15,18 @@ app.use('/data', dataRouter);
 app.use('/config', configRouter); 
 
 
+if (process.env.NODE_ENV === 'production') {
+  app.use('/dist', express.static(path.join(__dirname, '../dist')));
+  app.get('/', (req, res) => {
+    return res.status(200).sendFile(path.join(__dirname, '../dist/index.html'));
+  });
+} else {
+  app.use(express.static(path.resolve(__dirname, '../src')));
 
-app.use(express.static(path.resolve(__dirname, '../client')));
-
-app.get('/', (req, res) => {
-  return res.status(200).sendFile(path.join(__dirname, '../src/index.html'));
-});
-
+  app.get('/', (req, res) => {
+    return res.status(200).sendFile(path.join(__dirname, '../src/index.html'));
+  });
+}
 
 // Catch all route handler 
 app.use((req, res) => res.status(404).send('This page cannot be found'));

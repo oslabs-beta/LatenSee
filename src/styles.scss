@@ -1,0 +1,86 @@
+body {
+  font-family: 'Nunito', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+  //raleway, quicksand, montserrat, poppins, figtree
+  margin: 0;
+}
+
+.logo {
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  img {
+    width: 100px;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+}
+
+.sidenav {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #ffffff;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  text-align: center;
+
+  a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+
+    &.active {
+      background-color: #50b9ffb7;
+      color: white;
+    }
+
+    &:hover:not(.active) {
+      background-color: #5555554e;
+      color: white;
+    }
+  }
+}
+
+.main-content {
+  margin-left: 200px;
+}
+
+.configure {
+  background-color: #dadada36;
+
+  h1 {
+    margin-left: 50px;
+  }
+
+  .config-form {
+    margin-left: 80px;
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    input {
+      padding: 5px;
+      margin-top: 5px;
+      width: 300px;
+      margin-bottom: 30px;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 5px;
+      background-color: #50b9ffb7;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  }
+}
