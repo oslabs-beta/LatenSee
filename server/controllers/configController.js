@@ -1,10 +1,7 @@
 const fs = require ('fs')
 const path = require('path'); 
 const csvFuncs = require(path.resolve(__dirname, './csvFuncs.js'));
-// const initializeJobs = require('./runJobs') 
 const parse = require ('csv-parser');
-
-
 const {stringify} = require('csv-stringify/sync'); 
 
 const configController = {}; 
@@ -67,5 +64,57 @@ configController.addNew = async (req, res, next) => {
         }
 
 }
+
+/*
+// If the user wants to edit the frequency the function is pinged, 
+configController.editFunc = async (req, res, next) => {
+    try {
+        const userID = 'abc123';  
+    const {funcID, funcURL, funcFreq} = req.body 
+    const fileName = path.resolve(__dirname, `../storage/${userID}.csv`); 
+    
+    // get array of all functions in the users file 
+    const records = await csvFuncs.getAllRows(fileName); 
+    
+    // iterate through records to get object with funcID
+    let selectedIndex; 
+    records.forEach((element, index) => { 
+        if (element.funcID === funcID.toString()) {
+            console.log(element.funcID, index);  
+            selectedIndex = index;
+            return selectedIndex;  
+        }
+    });
+    console.log(selectedIndex); 
+
+    // if new frequency is specified, update the frequency of the function and re-write file
+    if (funcFreq){
+        console.log('records', selectedIndex)
+        records[selectedIndex].funcFreq = funcFreq;
+        records.forEach((element,index) => {
+           // need to complete file rewrite of csv file 
+        })
+       
+    }
+
+    // if new URL is specified, update the env file 
+    // need to test this have not checked if this works
+    if (funcURL) {
+        const name =`${funcID}URL` 
+        process.env.name = `${funcUrl}`; 
+    }
+    return next(); 
+
+    } catch (err) {
+        return next({
+            log: `Error in middleware ${err}`,
+            status: 500,
+            message: `Error in edit function middleware`,
+        }); 
+
+    }
+}
+*/
+
 
 module.exports = configController; 
