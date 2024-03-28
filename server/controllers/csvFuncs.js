@@ -17,5 +17,20 @@ csvFuncs.getAllRows = async (fileName) => {
     
 }
 
+// takes in returns daily total number of runs for a function 
+/**
+ *
+ * Given a function id, startdate string and enddate string, returns number of runs in that period 
+ *
+ * @param {number} funcID : number 
+ * @param {number} startDate : the time in miliseconds that represents start of period of calculation
+ * @param {number} endDate : the time in miliseconds that represents end of period of calculation
+ */
+csvFuncs.getTotalRuns = async(funcID, startDate, endDate) => {
+    const allRoes
+
+}
+
+
 module.exports = csvFuncs;
 
