@@ -6,7 +6,7 @@ const {stringify} = require('csv-stringify/sync');
 
 const configController = {}; 
 let funcID; 
-// setting up headers 
+// setting up headers for the user file that lists all the functions for a single user
 const heading = [{key: 'funcID'}, {key: 'appName'}, {key: 'funcName'}, {key: 'funcFreq'}, {key: 'userID'}]; 
 
 // middleware that takes information from the configure page POST request body and saves information where is is required. 
