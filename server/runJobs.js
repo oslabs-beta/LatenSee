@@ -63,8 +63,6 @@ const callAndLog = async (endpoint, invokeTime) => {
       serverDifference]
     ];
 
-    
-
     // deal with header values 
     let useHeader = true; 
     if (fs.existsSync(fileName)){
@@ -127,14 +125,12 @@ const getOnFuncs = async () => {
 
 const initializeJobs = async () => {
   const funcsList = await getOnFuncs()
-  console.log('function list', funcsList); 
   funcsList.forEach(element =>{
     let endpoint = {
       url: process.env[`${element.funcID}_URL`],
       name: element.funcName, 
       id:element.funcID, 
     }
-    console.log('freq', element.funcFreq); 
     /* Run the jobs */
     schedule.scheduleJob(`${scheduling[element.funcFreq]}`, () =>
     callAndLog(endpoint, Date.now())
