@@ -1,10 +1,14 @@
 // Imports
+const csvFuncs = require ('./controllers/csvFuncs')
 const schedule = require('node-schedule');
 require('dotenv').config();
 const fs = require('fs')
 const path = require('path'); 
 const {stringify} = require('csv-stringify/sync'); 
 const { electron } = require('webpack');
+
+// NEED TO MOVE THIS INTO A CONTROLLER
+const userID = 'abc123'
 
 /**
  *
@@ -94,31 +98,35 @@ const callAndLog = async (endpoint, invokeTime) => {
  */
 
 const getOnFuncs = async () => {
+  // NEED TO MOVE THIS INTO A CONTROLLER
+  const srcfileName = path.resolve(__dirname, `./storage/${userID}.csv`);
   // get all functions that from user is tracking that are turned on 
   
   // get array of all functions in the users file 
-  const records = await csvFuncs.getAllRows(fileName);
+  const records = await csvFuncs.getAllRows(srcfileName);
   const onFuncs = []
   records.forEach((element)=>{
-    if(element.On === 'Yes'){
+    if(element.warmerOn === 'Yes'){
       onFuncs.push(element); 
-    }
-    return onFuncs; 
+    } 
   })
+  return onFuncs; 
 }
 
-
-const endpointTest = {
-  url: process.env.URL_TEST,
-  name: 'Test-ping',
-};
-
-const initializeJobs = () => {
-
-  /* Run the jobs */
-  const job10S = schedule.scheduleJob('*/10 * * * * *', () =>
-    callAndLog(endpointTest, Date.now())
-  );
+const initializeJobs = async () => {
+  const funcsList = await getOnFuncs()
+  console.log('function list', funcsList); 
+  funcsList.forEach(element =>{
+    let endpoint = {
+      url: process.env[`${element.funcID}_URL`],
+      name: element.funcName
+    }
+    console.log('freq', element.funcFreq); 
+    /* Run the jobs */
+    schedule.scheduleJob(`*/${element.funcFreq} * * * * *`, () =>
+    callAndLog(endpoint, Date.now())
+);
+  })
 };
 
 module.exports = initializeJobs;

@@ -7,7 +7,7 @@ const {stringify} = require('csv-stringify/sync');
 const configController = {}; 
 let funcID; 
 // setting up headers for the user file that lists all the functions for a single user
-const heading = [{key: 'funcID'}, {key: 'appName'}, {key: 'funcName'}, {key: 'funcFreq'}, {key: 'userID'}]; 
+const heading = [{key: 'funcID'}, {key: 'appName'}, {key: 'funcName'}, {key: 'funcFreq'}, {key: 'userID'}, {key: 'warmerOn'}]; 
 
 // middleware that takes information from the configure page POST request body and saves information where is is required. 
 configController.addNew = async (req, res, next) => {
@@ -16,7 +16,7 @@ configController.addNew = async (req, res, next) => {
         // keeping userID hardcoded for now until we work out authentication 
         const userID = 'abc123'
         // deconstructing information from body 
-        const {appName, funcName, funcUrl, funcFreq} = req.body; 
+        const {appName, funcName, funcUrl, funcFreq, warmerOn} = req.body; 
 
         // if user file does not exist create file and set up file headers 
 
@@ -25,7 +25,7 @@ configController.addNew = async (req, res, next) => {
 
         if (!fs.existsSync(fileName)){
             funcID = 1
-            fs.appendFileSync(fileName, stringify([{funcID,appName,funcName,funcFreq,userID}], {header: true, columns: heading}),'utf-8', (err)=>{
+            fs.appendFileSync(fileName, stringify([{funcID,appName,funcName,funcFreq,userID, warmerOn}], {header: true, columns: heading}),'utf-8', (err)=>{
                 if (err) console.log(err); 
                 else {
                     console.log('function data saved')
@@ -38,7 +38,7 @@ configController.addNew = async (req, res, next) => {
             const records = await csvFuncs.getAllRows(fileName)
             funcID = parseInt(records[records.length-1].funcID) + 1;  
             // then append funcID, userID, appName, funcName and funcFreq to user's file)
-            fs.appendFileSync(fileName, stringify([{funcID,appName,funcName,funcFreq,userID}], {header: false}, function (err, str) {
+            fs.appendFileSync(fileName, stringify([{funcID,appName,funcName,funcFreq,userID, warmerOn}], {header: false}, function (err, str) {
                 if (err) {
                     console.log(err); 
                 } else {
