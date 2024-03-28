@@ -18,14 +18,14 @@ function FunctionPerformanceTable({ data }) {
       <tbody>
         {data.map((item, index) => (
           <tr key={index}>
-            <td>{item.functionName}</td>
-            <td>{item.numberOfPings}</td>
-            <td>{item.numberOfColdStarts}</td>
-            <td>{item.coldStartPercentage}</td>
-            <td>{item.averageLatency}</td>
+            <td>{item.funcName}</td>
+            <td>{item.firstRun}</td>
+            <td>{item.timestamp}</td>
+            <td>{item.serverDiff}</td>
+            {/* <td>{item.averageLatency}</td>
             <td>{item.coldStartLatency}</td>
             <td>{item.warmStartLatency}</td>
-            <td>{item.coldStartLatencyVsWarm}</td>
+            <td>{item.coldStartLatencyVsWarm}</td> */}
           </tr>
         ))}
       </tbody>
