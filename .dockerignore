@@ -1,0 +1,11 @@
+# Node modules will be installed by docker
+node_modules/
+
+# Not sharing github readme material
+public/
+LICENSE
+README.md
+
+# Not sharing git material
+.git/
+.gitignore
