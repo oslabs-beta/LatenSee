@@ -65,7 +65,7 @@ configController.addNew = async (req, res, next) => {
 
 }
 
-/*
+
 // If the user wants to edit the frequency the function is pinged, 
 configController.editFunc = async (req, res, next) => {
     try {
@@ -80,29 +80,29 @@ configController.editFunc = async (req, res, next) => {
     let selectedIndex; 
     records.forEach((element, index) => { 
         if (element.funcID === funcID.toString()) {
-            console.log(element.funcID, index);  
             selectedIndex = index;
             return selectedIndex;  
         }
     });
-    console.log(selectedIndex); 
 
     // if new frequency is specified, update the frequency of the function and re-write file
     if (funcFreq){
-        console.log('records', selectedIndex)
-        records[selectedIndex].funcFreq = funcFreq;
-        records.forEach((element,index) => {
-           // need to complete file rewrite of csv file 
-        })
-       
+        console.log('here')
+        records[selectedIndex].funcFreq = funcFreq; 
+        fs.writeFileSync(fileName, stringify(records), {header: true, columns: Object.keys(records) } , function (err, str) {
+            if (err) {
+                console.log(err); 
+            } else {
+                console.log('added new record')
+            } })
     }
 
     // if new URL is specified, update the env file 
     // need to test this have not checked if this works
-    if (funcURL) {
-        const name =`${funcID}URL` 
-        process.env.name = `${funcUrl}`; 
-    }
+    // if (funcURL) {
+    //     const name =`${funcID}URL` 
+    //     process.env.name = `${funcUrl}`; 
+    // }
     return next(); 
 
     } catch (err) {
@@ -114,7 +114,7 @@ configController.editFunc = async (req, res, next) => {
 
     }
 }
-*/
+
 
 
 module.exports = configController; 

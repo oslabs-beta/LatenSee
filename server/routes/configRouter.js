@@ -11,8 +11,8 @@ router.post('/new', configController.addNew, (req, res) => {
 
 })
 
-// router.put('/', configController.editFunc, (req, res)=>{
-//     res.status(200).json('func updated'); 
-// })
+router.put('/', configController.editFunc, (req, res)=>{
+    res.status(200).json('func updated'); 
+})
 
 module.exports = router; 
