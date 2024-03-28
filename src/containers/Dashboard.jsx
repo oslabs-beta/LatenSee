@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import FunctionPerformanceTable from '../components/FunctionPerformanceTable';
 import Papa from 'papaparse';
+import Chart from '../components/chart';
 
 function Dashboard() {
   const myArray = [
@@ -58,6 +59,7 @@ function Dashboard() {
     <div>
       <h1>This is graph</h1>
       {/* <Graph data={data}/> */}
+      <Chart />
       <h1>This is table</h1>
       <FunctionPerformanceTable data={data} />
     </div>
