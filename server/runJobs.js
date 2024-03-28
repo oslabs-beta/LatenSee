@@ -9,6 +9,16 @@ const { electron } = require('webpack');
 
 // NEED TO MOVE THIS INTO A CONTROLLER
 const userID = 'abc123'
+const scheduling = {
+  '10S': '*/10 * * * * *', 
+  '1M': '0 */1 * * * *', 
+  '5M': '0 */5 * * * *', 
+  '15M': '0 */15 * * * *', 
+  '30M': '0 */30 * * * *', 
+  '1H' : '0 0 */1 * * *', 
+  '2H': '0 0 */2 * * *', 
+  '3H': '0 0 */3 * * *', 
+}
 
 /**
  *
@@ -44,7 +54,8 @@ const callAndLog = async (endpoint, invokeTime) => {
     */
 
     const params = [
-    [endpoint.name,
+    [endpoint.id,
+      endpoint.name,
       result.firstRun, 
       invokeTime,
       serverStart,
@@ -63,6 +74,7 @@ const callAndLog = async (endpoint, invokeTime) => {
     // convert data to csv 
     const csvData = stringify(params, {header: useHeader, 
     columns: [
+      'funcID',
       'name',
       'firstRun',
       'invokeTime',
@@ -119,11 +131,12 @@ const initializeJobs = async () => {
   funcsList.forEach(element =>{
     let endpoint = {
       url: process.env[`${element.funcID}_URL`],
-      name: element.funcName
+      name: element.funcName, 
+      id:element.funcID, 
     }
     console.log('freq', element.funcFreq); 
     /* Run the jobs */
-    schedule.scheduleJob(`*/${element.funcFreq} * * * * *`, () =>
+    schedule.scheduleJob(`${scheduling[element.funcFreq]}`, () =>
     callAndLog(endpoint, Date.now())
 );
   })

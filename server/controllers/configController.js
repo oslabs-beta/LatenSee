@@ -46,7 +46,7 @@ configController.addNew = async (req, res, next) => {
                 } }))
 
             // append funcURL to .env file with unique name 'funcID-URL'
-            fs.appendFileSync('.env', `${funcID}URL = '${funcUrl}'\n`)
+            fs.appendFileSync('.env', `${funcID}_URL = '${funcUrl}'\n`)
         }
         return next(); 
         
@@ -89,13 +89,6 @@ configController.editFunc = async (req, res, next) => {
             } else {
                 console.log('added new record')
             } }))
-    }
-
-    // if new URL is specified, update the env file 
-    // need to test this have not checked if this works
-    if (funcUrl) {
-        const name =`${funcID}URL` 
-        process.env.name = `${funcUrl}`; 
     }
     return next(); 
 
