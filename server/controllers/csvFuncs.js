@@ -28,10 +28,9 @@ csvFuncs.getAllRows = async (fileName) => {
  * @param {number} startDate : the time in miliseconds that represents start of period of calculation
  * @param {number} endDate : the time in miliseconds that represents end of period of calculation
  */
-csvFuncs.getTotalRuns = async(funcID, startDate, endDate, fileName) => {
-    const allRows = await csvFuncs.getAllRows(fileName)
+csvFuncs.getTotalRuns = (arr, funcID, startDate, endDate) => {
     const selectedRows = []
-    allRows.forEach(row=>{
+    arr.forEach(row=>{
         if (row.invokeTime>= startDate && row.invokeTime <= endDate && row.funcID === funcID){
             selectedRows.push(row); 
         }
