@@ -1,24 +1,25 @@
 // require needed modules
 const fs = require('fs'); 
 const parse = require ('csv-parser');
+const path = require('path');
+const { getTotalRuns } = require('./csvFuncs');
+const csvFuncs = require(path.resolve(__dirname, './csvFuncs.js'));
+
+const userID = 'abc123'
+const datafileName = path.resolve(__dirname, `../storage/data.csv`);
+const userfileName = path.resolve(__dirname, `../storage/${userID}.csv`); 
 
 
 const dataController = {}; 
 
 // middleware that gets the data on our lamda function from the ENV file 
 dataController.getData = async (req, res, next)=>{ 
-    // INTERNAL NOTES - TO DELETE 
-    // In the future will implement way to get data for each individual function by ID. currently only have one function. 
     try { 
-        const results = []; 
-    fs.createReadStream('data.csv')
-      .pipe(parse())
-      .on('data', (data)=> results.push(data))
-      .on('end', ()=>{
-        res.locals.funcData = results; 
-        // console.log("from controller", res.locals.funcData);  
-        return next(); 
-      })
+      const x = await csvFuncs.getAllDaily (0, Date.now(), userfileName, datafileName)
+      
+      console.log(x); 
+      
+  
     }
     catch (err){
         return next({
