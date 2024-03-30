@@ -20,15 +20,16 @@ const ConfigForm = () => {
   const body = {
     appName: appName,
     funcName: funcName,
-    url: url,
-    invRate: invRate,
+    funcUrl: url,
+    funcFreq: invRate,
+    warmerOn:'' 
     //stretch: add userId field for auth
   };
 
   //on submit, send form data to server
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch('/config', {
+    fetch('/api/config/new', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

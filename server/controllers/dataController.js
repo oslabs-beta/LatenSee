@@ -21,6 +21,7 @@ dataController.getData = async (req, res, next)=>{
       .on('data', (data)=> results.push(data))
       .on('end', ()=>{
         res.locals.records = results; 
+        console.log(results); 
         return next(); 
       })
     }

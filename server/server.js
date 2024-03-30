@@ -12,7 +12,7 @@ const PORT = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api', dataRouter); 
-app.use('/config', configRouter); 
+app.use('/api/config', configRouter); 
 
 
 if (process.env.NODE_ENV === 'production') {
