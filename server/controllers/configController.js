@@ -112,26 +112,5 @@ configController.editFunc = async (req, res, next) => {
     }
 }
 
-// This controller turns warming on and off when the button to turn on or off is clicked 
-// configController.funcOnOFF = async () => {
-//     try {
-//         const userID = 'abc123';  
-//         const {funcID, warmerOn} = req.body 
-//         const fileName = path.resolve(__dirname, `../storage/${userID}.csv`); 
-
-
-
-//     } catch (err) {
-//         return next({
-//             log: `Error in middleware ${err}`,
-//             status: 500,
-//             message: `Error in funcONOFF function middleware`,
-//         }); 
-
-//     }
-
-// }
-
-
 
 module.exports = configController; 

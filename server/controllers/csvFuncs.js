@@ -1,3 +1,7 @@
+/*
+This file contains all the function for data manipulation to extract and do calculation on data from the CSV file 
+*/
+
 const fs = require ('fs');
 const parse = require ('csv-parser');
 const path = require('path');

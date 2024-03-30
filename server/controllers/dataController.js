@@ -14,8 +14,6 @@ const dataController = {};
 
 // middleware that gets the data on our lamda function from the ENV file 
 dataController.getData = async (req, res, next)=>{ 
-    // INTERNAL NOTES - TO DELETE 
-    // In the future will implement way to get data for each individual function by ID. currently only have one function. 
     try { 
         const results = []; 
     fs.createReadStream(userfileName)
@@ -23,7 +21,6 @@ dataController.getData = async (req, res, next)=>{
       .on('data', (data)=> results.push(data))
       .on('end', ()=>{
         res.locals.records = results; 
-        // console.log("from controller", res.locals.funcData);  
         return next(); 
       })
     }
@@ -37,8 +34,18 @@ dataController.getData = async (req, res, next)=>{
     } 
 }
 
-dataController.getRuns = async (req, res, next) => {
 
+/* INTERNAL NOTE TO DELETE
+plan is to update this to get more data:
+number of runs per day and per week and overall 
+number of cold starts per day and per week and overall
+number of warm starts per day and per week and overall
+average latency per day and per week and overall
+latency for cold starts per day and per week and overall
+latency for warm starts per day and per week and overall
+*/
+// middleware that gets number of runs for each function using all data available  
+dataController.getRuns = async (req, res, next) => {
   try {
     const {records} = res.locals; 
     const data = await csvFuncs.getAllRows (datafileName)
