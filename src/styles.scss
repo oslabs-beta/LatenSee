@@ -1,18 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Bruno+Ace&family=Gruppo&family=Manrope:wght@200..800&family=Orbitron:wght@400..900&family=Quicksand:wght@300..700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap'rel='stylesheet');
+
 body {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Raleway', sans-serif;
   font-optical-sizing: auto;
-  font-weight: 200;
+  font-weight: 250;
   font-style: normal;
-  //raleway, quicksand, montserrat, poppins, figtree
+  //raleway, quicksand, montserrat, poppins, figtree?
   margin: 0;
+}
+
+.logo-container {
+  display: flex;
+
+  h2 {
+    font-family: 'Bruno Ace', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.4rem;
+  }
 }
 
 .logo {
   margin-top: 20px;
+  margin-left: -11px;
   margin-bottom: 20px;
 
   img {
-    width: 100px;
+    width: 80px;
+    margin-right: -20px;
   }
 
   a {
@@ -26,15 +41,19 @@ body {
   padding: 0;
   width: 200px;
   background-color: #ffffff;
-  position: fixed;
+  position: fixed; /* Keeps the sidebar fixed on scroll */
   height: 100%;
-  overflow: auto;
+  overflow-x: hidden; /* Prevents horizontal scroll */
+  overflow-y: auto; /* Enables vertical scroll if content overflows */
+  top: 0; /* Aligns the sidebar to the top of the viewport */
+  left: 0; /* Aligns the sidebar to the left of the viewport */
   text-align: center;
+  border-right: 1px solid rgba(128, 128, 128, 0.116);
 
   a {
     display: block;
     color: black;
-    padding: 16px;
+    padding: 5px;
     text-decoration: none;
 
     &.active {
@@ -42,9 +61,46 @@ body {
       color: white;
     }
 
-    &:hover:not(.active) {
-      background-color: #5555554e;
-      color: white;
+    .dashboard-link {
+      display: flex;
+      align-items: center; /* Vertically center the contents */
+
+      svg {
+        margin-left: 24px;
+        margin-bottom: 8px;
+      }
+
+      span {
+        margin-left: 8px; /* Adds space between the icon and text */
+      }
+    }
+
+    .config-link {
+      display: flex;
+      align-items: center; /* Vertically center the contents */
+
+      svg {
+        margin-left: 29px;
+        margin-bottom: 8px;
+      }
+
+      span {
+        margin-left: 8px; /* Adds space between the icon and text */
+      }
+    }
+
+    .user-link {
+      display: flex;
+      align-items: center; /* Vertically center the contents */
+
+      svg {
+        margin-left: 25px;
+        margin-bottom: 8px;
+      }
+
+      span {
+        margin-left: 13px; /* Adds space between the icon and text */
+      }
     }
   }
 }
@@ -53,10 +109,16 @@ body {
   margin-left: 200px;
 }
 
-.configure {
-  background-color: #dadada36;
+.dashboard-page {
+  background-color: #dadada25;
+  min-height: 100vh; /* Ensures background color covers the entire page */
+}
 
-  h1 {
+.configure-page {
+  background-color: #dadada25;
+  min-height: 100vh;
+
+  h2 {
     margin-left: 50px;
   }
 
@@ -81,6 +143,34 @@ body {
       color: white;
       border: none;
       cursor: pointer;
+    }
+  }
+}
+
+.user-page {
+  background-color: #dadada25;
+  min-height: 100vh;
+
+  h2 {
+    margin-left: 50px;
+  }
+
+  .user-table {
+    margin-left: 7%;
+    margin-right: 15%;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.335);
+
+    th,
+    td {
+      padding: 10px 30px;
+      &:not(:last-child) {
+        border-right: 1px solid rgba(0, 0, 0, 0.057);
+      }
+    }
+
+    th {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.335);
     }
   }
 }
