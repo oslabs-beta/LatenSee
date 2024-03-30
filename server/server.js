@@ -1,13 +1,19 @@
-const path = require('path');
+const path = require('path')
 const express = require('express');
+const initializeJobs = require('./runJobs')
+const dataRouter = require(path.join(__dirname, './routes/dataRouter.js')); 
+const configRouter = require(path.join(__dirname, './routes/configRouter.js')); 
 
-// set up server configuration
-const app = express();
-const PORT = 3000;
+// set up server configuration 
+const app = express(); 
+const PORT = 3000; 
 
-// set up parsing request body
+// set up parsing request body 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/data', dataRouter); 
+app.use('/config', configRouter); 
+
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/dist', express.static(path.join(__dirname, '../dist')));
@@ -21,26 +27,30 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// Catch all route handler
+// Catch all route handler 
 app.use((req, res) => res.status(404).send('This page cannot be found'));
 
 // Global error handler
 app.use((err, req, res, next) => {
-  const defaultErr = {
-    log: 'Unknown middleware error',
-    status: 500,
-    message: { err: 'An error has occured' },
-  };
+    const defaultErr = {
+      log: 'Unknown middleware error',
+      status: 500,
+      message: { err: 'An error has occured' },
+    };
+  
+    const errorObj = Object.assign({}, defaultErr, err);
+    console.log(errorObj.log); 
+  
+    return res.status(errorObj.status).json(errorObj.message);
+  });
 
-  const errorObj = Object.assign({}, defaultErr, err);
-  console.log(errorObj.log);
+  // initializeJobs();
 
-  return res.status(errorObj.status).json(errorObj.message);
-});
 
 // set up listener
 app.listen(PORT, () => {
-  console.log(`server listening on port ${PORT}: http://localhost:${PORT}/`);
-});
+    console.log(`server listening on port ${PORT}: http://localhost:${PORT}/`);
+  });
 
-module.export = app;
+  module.export = app; 
+  
