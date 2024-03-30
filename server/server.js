@@ -16,7 +16,6 @@ if (process.env.NODE_ENV === 'production') {
   });
 } else {
   app.use(express.static(path.resolve(__dirname, '../src')));
-
   app.get('/', (req, res) => {
     return res.status(200).sendFile(path.join(__dirname, '../src/index.html'));
   });
