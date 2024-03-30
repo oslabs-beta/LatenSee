@@ -12,7 +12,7 @@ const userfileName = path.resolve(__dirname, `../storage/${userID}.csv`);
 
 const dataController = {}; 
 
-// middleware that gets the data on our lamda function from the ENV file 
+// middleware gets all the functions that the user has from the user file
 dataController.getData = async (req, res, next)=>{ 
     try { 
         const results = []; 
@@ -21,7 +21,7 @@ dataController.getData = async (req, res, next)=>{
       .on('data', (data)=> results.push(data))
       .on('end', ()=>{
         res.locals.records = results; 
-        console.log(results); 
+        // console.log(results); 
         return next(); 
       })
     }
@@ -51,9 +51,12 @@ dataController.getRuns = async (req, res, next) => {
     const {records} = res.locals; 
     const data = await csvFuncs.getAllRows (datafileName)
     const totalRuns = []; 
+    // for each function in the user file, calculate the number of runs between two specified dates 
     records.forEach(row => {
+      // count tracks number of runs for each function in specified date
       let count = csvFuncs.getTotalRuns(data, row.funcID, 0, Date.now()); 
-      totalRuns.push({id: row.funcID, name:row.funcName, totalRuns: count}); 
+      // push count into the totalRuns array with additional infoprmation about the current function
+      totalRuns.push({id: row.funcID, name:row.funcName, totalRuns: count}); // for funcid= 1 [{id: 1, name: testfuncforApp1, totalRuns=count=10, numberRun:xx, numWarm }]
     })
     res.locals.runs = totalRuns
     // console.log(res.locals.runs);
