@@ -11,7 +11,7 @@ router.post('/new', configController.addNew, (req, res) => {
 
 })
 
-router.put('/', configController.editFunc, (req, res)=>{
+router.patch('/', configController.editFunc, (req, res)=>{
     res.status(200).json('func updated'); 
 })
 

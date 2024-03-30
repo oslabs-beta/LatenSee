@@ -43,15 +43,7 @@ const callAndLog = async (endpoint, invokeTime) => {
 
     // parse the fetch results
     let result = await response.json();
-
-    /*
-    // make an async request to write these results to the DB:
-    // const SQL = `
-    //   INSERT INTO logs ("name", "url", "invokeTime", "formattedResponse", "functionInitialLoad", "functionInnertime", "msSinceFunctionLoad", "firstRun", "serverStart", "serverEnd", "serverDifference")
-    //   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
-    //   RETURNING *
-    // `;
-    */
+    /*result = {...firstRun: true/false}*/
 
     const params = [
     [endpoint.id,
@@ -107,25 +99,28 @@ const callAndLog = async (endpoint, invokeTime) => {
  * Every...10s, 1m, 5m, 15m, 30m, 1hr, 2hr, 3hr, 4hr, 5hr
  */
 
+
+// gets an array of all the function that have the warmer turned on
 const getOnFuncs = async () => {
-  // NEED TO MOVE THIS INTO A CONTROLLER
   const srcfileName = path.resolve(__dirname, `./storage/${userID}.csv`);
   // get all functions that from user is tracking that are turned on 
   
   // get array of all functions in the users file 
-  const records = await csvFuncs.getAllRows(srcfileName);
+  const records = await csvFuncs.getAllRows(srcfileName); //[{funcID:xx ,appName:xx ,funcName:xx ,funcFreq:xx, userID:xx ,warmerOn: Yes/No }]
   const onFuncs = []
   records.forEach((element)=>{
     if(element.warmerOn === 'Yes'){
       onFuncs.push(element); 
     } 
   })
+  // returns an array of objects which are all the functions that have warmer turned on 
   return onFuncs; 
 }
 
 const initializeJobs = async () => {
   const funcsList = await getOnFuncs()
   funcsList.forEach(element =>{
+    //specify endpoint information for all the functions in the list of warmerOn functions
     let endpoint = {
       url: process.env[`${element.funcID}_URL`],
       name: element.funcName, 
