@@ -21,6 +21,7 @@ dataController.getData = async (req, res, next)=>{
       .on('data', (data)=> results.push(data))
       .on('end', ()=>{
         res.locals.records = results; 
+        console.log(results); 
         return next(); 
       })
     }
@@ -52,7 +53,7 @@ dataController.getRuns = async (req, res, next) => {
     const totalRuns = []; 
     records.forEach(row => {
       let count = csvFuncs.getTotalRuns(data, row.funcID, 0, Date.now()); 
-      totalRuns.push({id: row.funcID, totalRuns: count}); 
+      totalRuns.push({id: row.funcID, name:row.funcName, totalRuns: count}); 
     })
     res.locals.runs = totalRuns
     // console.log(res.locals.runs);

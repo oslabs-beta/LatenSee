@@ -4,56 +4,52 @@ import Papa from 'papaparse';
 // import Chart from '../components/Chart';
 
 function Dashboard() {
-  const myArray = [
-    {
-      funcName: 'function1',
-      firstRun: 'true',
-      timestamp: '2024-03-20 04:35:00+00',
-      serverDiff: '988',
-    },
-    {
-      funcName: 'function2',
-      firstRun: 'false',
-      timestamp: '2024-03-20 04:35:00+00',
-      serverDiff: '188',
-    },
-    {
-      funcName: 'function3',
-      firstRun: 'true',
-      timestamp: '2024-03-20 04:35:00+00',
-      serverDiff: '38',
-    },
-  ];
+  // const myArray = [
+  //   {
+  //     funcName: 'function1',
+  //     firstRun: 'true',
+  //     timestamp: '2024-03-20 04:35:00+00',
+  //     serverDiff: '988',
+  //   },
+  //   {
+  //     funcName: 'function2',
+  //     firstRun: 'false',
+  //     timestamp: '2024-03-20 04:35:00+00',
+  //     serverDiff: '188',
+  //   },
+  //   {
+  //     funcName: 'function3',
+  //     firstRun: 'true',
+  //     timestamp: '2024-03-20 04:35:00+00',
+  //     serverDiff: '38',
+  //   },
+  // ];
+  const [data, setData] = useState([]);
 
-  const [data, setData] = useState(myArray);
+  useEffect(() => {
+    fetch('/api/data')
+    .then((data)=> data.json())
+    .then((data=> {
+      console.log("our data", data)
+      setData(data)
+    }))
+    .catch (error => {
+        console.log('Failed to load data', error);
+      }
+      )},[]);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch('./fake_data.txt');
-  //       // see response
-  //       console.log('I am reponse from fetch fake_data: ', response);
-  //       const text = await response.text();
-  //       //see response in text format
-  //       // console.log('I am response in text format: ', text);
-  //       Papa.parse(text, {
-  //         header: true,
-  //         complete: (result) => {
-  //           //see data structure of result
-  //           console.log('I am result after papa.parse: ', result.data);
-  //           setData(result.data);
-  //         },
-  //       });
-  //       const data = await response.json();
-  //       // const data = await text.json();
-  //       setData(data);
-  //     } catch (error) {
-  //       console.error('Failed to load data', error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
+  // fetch('/config', {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify(body),
+  // })
+  //   .then((res) => res.json())
+  //   .then((data) => {
+  //     console.log(data);
+  //   })
+  //   .catch((err) => console.log(' add func fetch /config: ERROR: ', err));
 
   return (
     <div className="dashboard-page">
@@ -61,6 +57,7 @@ function Dashboard() {
       {/* <Graph data={data}/> */}
       {/* <Chart /> */}
       <h1>This is table</h1>
+      <h1>This data</h1>
       <FunctionPerformanceTable data={data} />
     </div>
   );
