@@ -1,6 +1,7 @@
 import React from 'react';
 
-function FunctionPerformanceTable({ data }) {
+function FunctionPerformanceTable({data}) {
+  console.log('props data', data)
   return (
     <table>
       <thead>
@@ -18,10 +19,10 @@ function FunctionPerformanceTable({ data }) {
       <tbody>
         {data.map((item, index) => (
           <tr key={index}>
-            <td>{item.funcName}</td>
-            <td>{item.firstRun}</td>
-            <td>{item.timestamp}</td>
-            <td>{item.serverDiff}</td>
+            <td>{item.name}</td>
+            <td>{item.totalRuns}</td>
+            {/* <td>{item.timestamp}</td>
+            <td>{item.serverDiff}</td> */}
             {/* <td>{item.averageLatency}</td>
             <td>{item.coldStartLatency}</td>
             <td>{item.warmStartLatency}</td>
