@@ -11,7 +11,7 @@ const PORT = 3000;
 // set up parsing request body 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/data', dataRouter); 
+app.use('/api', dataRouter); 
 app.use('/config', configRouter); 
 
 

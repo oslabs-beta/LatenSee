@@ -6,7 +6,7 @@ const dataController = require('../controllers/dataController.js')
 
 const router = express.Router(); 
 
-router.get('/', dataController.getData,dataController.getRuns, (req, res) => {
+router.get('/data', dataController.getData,dataController.getRuns, (req, res) => {
     // console.log("from response", res.locals.funcData); 
     res.status(200).json(res.locals.runs); 
 
