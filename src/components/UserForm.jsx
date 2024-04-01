@@ -7,7 +7,7 @@ const UserForm = () => {
 
   // fetch all functions from server on load
   useEffect(() => {
-    fetch('/api/config/all')
+    fetch('/api/user')
       .then((data) => data.json())
       .then((data) => {
         setData(data);
