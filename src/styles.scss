@@ -193,6 +193,9 @@ $background-color: #a7c9e3;
 // }
 
 .overview-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   width: $sidebar-width;
   position: fixed;
   right: 0;
@@ -201,4 +204,9 @@ $background-color: #a7c9e3;
   background-color: $background-color;
   padding: 20px;
   overflow-y: auto;
+}
+
+.percentage-change {
+  align-self: flex-start;
+  padding: 10px 0;
 }
