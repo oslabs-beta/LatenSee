@@ -6,7 +6,7 @@ Improve first-run latency and visualize the latency of server-less function inv
 
 In your Lambda function, add these two lines surrounding function's declaration:
 
-```JavaScript diff
+```diff
 + let cold=true;
 export const handler = async (event) => {
 +   if(event.body==='LatenSee'){const body={cold};cold=false;return{statusCode:200,body:JSON.stringify(body)};}cold=false;
