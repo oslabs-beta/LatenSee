@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import FunctionPerformanceTable from '../components/FunctionPerformanceTable';
-import Papa from 'papaparse';
 import Chart from '../components/Chart';
+import OverviewPanel from '../components/OverviewPanel';
 
 function Dashboard() {
   const [data, setData] = useState([]);
@@ -19,19 +19,34 @@ function Dashboard() {
   }, []);
 
   return (
-    <div className="dashboard-page">
-      <h1>This is chart</h1>
-      {data ? (
-        <Chart data={data} height={375} width="70%" />
-      ) : (
-        <div>Loading chart...</div>
-      )}
-      <h1>This is table</h1>
-      {data ? (
-        <FunctionPerformanceTable data={data} />
-      ) : (
-        <div>Loading table...</div>
-      )}
+    <div className="dashboard-container">
+      <div className="dashboard-content">
+        <h1>This is chart</h1>
+        <div className="chart">
+          {data ? (
+            <Chart data={data} height={375} width="70%" />
+          ) : (
+            <div>Loading chart...</div>
+          )}
+        </div>
+        <h1>This is table</h1>
+        <div className="table">
+          {data ? (
+            <FunctionPerformanceTable data={data} />
+          ) : (
+            <div>Loading table...</div>
+          )}
+        </div>
+
+        <div className="overview-panel">
+          <h1>This is Overview</h1>
+          {data ? (
+            <OverviewPanel data={data} />
+          ) : (
+            <div>Loading overview...</div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

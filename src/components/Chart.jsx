@@ -22,7 +22,7 @@ const Chart = ({ data, height, width = '100%' }) => {
   //setup categories (what's on x-axis)
   const categories = data.map((item) => item.name);
 
-  //setup chart
+  //setup chart type, assign series, assign xaxis
   const options = {
     chart: {
       type: 'line',
