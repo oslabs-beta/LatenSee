@@ -35,7 +35,6 @@
 
 // export default WeeklyColdWarmRatio;
 
-// ColdStartPercentageChange.js
 import React from 'react';
 
 //accepting props from Overview component
@@ -54,7 +53,7 @@ const ColdStartPercentage = ({
   const increaseDecreaseText = percentageChange >= 0 ? 'increase' : 'decrease';
 
   return (
-    <div className="percentage-change">
+    <div className="coldStart-percentage-change">
       <div style={{ color, fontSize: '24px', textAlign: 'center' }}>
         {percentageChange.toFixed(2)}%
       </div>

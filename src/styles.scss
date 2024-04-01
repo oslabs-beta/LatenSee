@@ -204,9 +204,19 @@ $background-color: #a7c9e3;
   background-color: $background-color;
   padding: 20px;
   overflow-y: auto;
+
+  .side-by-side {
+    display: flex;
+    justify-content: space-between; // Place children side by side
+
+    // You might want to ensure these components don't get too narrow
+    > div {
+      flex-basis: 48%; // Example: each takes roughly half the container's width
+    }
+  }
 }
 
-.percentage-change {
-  align-self: flex-start;
-  padding: 10px 0;
-}
+// .coldStart-percentage-change {
+//   align-self: flex-start;
+//   padding: 10px 0;
+// }
