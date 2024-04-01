@@ -6,6 +6,8 @@ const {stringify} = require('csv-stringify/sync');
 
 const configController = {}; 
 let funcID; 
+// keeping userID hardcoded for now until we work out authentication 
+const userID = 'abc123';  
 // setting up headers for the user file that lists all the functions for a single user
 const heading = [{key: 'funcID'}, {key: 'appName'}, {key: 'funcName'}, {key: 'funcFreq'}, {key: 'userID'}, {key: 'warmerOn'}]; 
 
@@ -13,8 +15,7 @@ const heading = [{key: 'funcID'}, {key: 'appName'}, {key: 'funcName'}, {key: 'fu
 configController.addNew = async (req, res, next) => {
 
     try {
-        // keeping userID hardcoded for now until we work out authentication 
-        const userID = 'abc123'
+        
         // deconstructing information from body 
         const {appName, funcName, funcUrl, funcFreq, warmerOn} = req.body; 
 
@@ -63,12 +64,11 @@ configController.addNew = async (req, res, next) => {
 // If the user wants to edit the frequency the function is pinged, 
 configController.editFunc = async (req, res, next) => {
     try {
-        const userID = 'abc123';  
         const {funcID, funcURL, funcFreq, warmerOn} = req.body 
-        const fileName = path.resolve(__dirname, `../storage/${userID}.csv`); 
+        const userfileName = path.resolve(__dirname, `../storage/${userID}.csv`); 
     
         // get array of all functions in the users file 
-        const records = await csvFuncs.getAllRows(fileName); 
+        const records = await csvFuncs.getAllRows(userfileName); 
         
         // iterate through records to get object with funcID
         let selectedIndex; 
@@ -82,7 +82,7 @@ configController.editFunc = async (req, res, next) => {
         // if new frequency is specified, update the frequency of the function and re-write file
         if (funcFreq){
             records[selectedIndex].funcFreq = funcFreq; 
-            fs.writeFileSync(fileName, stringify(records, {header: true, columns: heading} , function (err, str) {
+            fs.writeFileSync(userfileName, stringify(records, {header: true, columns: heading} , function (err, str) {
                 if (err) {
                     console.log(err); 
                 } else {
@@ -108,6 +108,38 @@ configController.editFunc = async (req, res, next) => {
             log: `Error in middleware ${err}`,
             status: 500,
             message: `Error in edit function middleware`,
+        }); 
+
+    }
+}
+
+configController.deleteFunc = async (req, res, next) => {
+    try {
+        // TO CONFIRM IF QUERY OR PARAM WITH FRONT END 
+        const funcID = req.query.id
+        // get correct file, which is user file that contains all the functions user is tracking
+        const userfileName = path.resolve(__dirname, `../storage/${userID}.csv`); 
+
+        // get array of all functions in the users file 
+        let records = await csvFuncs.getAllRows(userfileName);
+        records.forEach((row, index) => {
+            if (row.funcID === funcID){
+                records = records.slice(0,index).concat(records.slice(index+1))
+            }
+        })
+        
+        fs.writeFileSync(userfileName, stringify(records, {header: true, columns: heading} , function (err, str) {
+            if (err) {
+                console.log(err); 
+            } else {
+                console.log('function deleted')
+            } }))
+        return next(); 
+    }   catch (err) {
+        return next({
+            log: `Error in delete function middleware ${err}`,
+            status: 500,
+            message: `Error in delete function middleware`,
         }); 
 
     }
