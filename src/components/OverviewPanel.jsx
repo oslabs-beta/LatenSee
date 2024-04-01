@@ -1,6 +1,7 @@
 import React from 'react';
 import ColdStartPercentage from './ColdStartPercentage';
 import SpeedPerformance from './SpeedPerformance';
+import DailyPerformance from './DailyPerformance';
 
 const OverviewPanel = ({ data }) => {
   return (
@@ -18,7 +19,20 @@ const OverviewPanel = ({ data }) => {
           averageLatencythisWeek={0.35}
         />
       </div>
-      <div>{/* <WeeklyPerformance /> */}</div>
+      <div className="separator-bar"></div>
+      <div className="daily-performance">
+        <DailyPerformance
+          data={data}
+          avgLatencyM={0.3}
+          avgLatencyT={0.35}
+          avgLatencyW={0.29}
+          avgLatencyTh={0.41}
+          avgLatencyF={0.47}
+          avgLatencyS={0.5}
+          avgLatencySu={0.39}
+        />
+      </div>
+      <div className="separator-bar"></div>
     </div>
   );
 };

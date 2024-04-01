@@ -214,6 +214,12 @@ $background-color: #a7c9e3;
       flex-basis: 48%; // Example: each takes roughly half the container's width
     }
   }
+
+  .separator-bar {
+    height: 2px;
+    background-color: gray;
+    margin: 20px 0;
+  }
 }
 
 // .coldStart-percentage-change {
