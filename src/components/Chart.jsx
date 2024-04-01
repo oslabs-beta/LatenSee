@@ -14,13 +14,17 @@ const Chart = ({ data, height, width = '100%' }) => {
   // setup series (what's on y-axis)
   const series = [
     {
-      name: 'Function Total Runs',
-      data: data.map((item) => item.totalRuns),
+      name: 'Function id 1',
+      data: data.map((item) => item[1]),
+    },
+    {
+      name: 'Function id 4',
+      data: data.map((item) => item[4]),
     },
   ];
 
   //setup categories (what's on x-axis)
-  const categories = data.map((item) => item.name);
+  const categories = data.map((item) => item.day);
 
   //setup chart type, assign series, assign xaxis
   const options = {

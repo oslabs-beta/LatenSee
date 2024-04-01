@@ -20,7 +20,7 @@ dataController.getData = async (req, res, next) => {
       .on('data', (data) => results.push(data))
       .on('end', () => {
         res.locals.records = results;
-        console.log('I am result from userID.csv: ', results);
+       
         return next();
       });
   } catch (err) {
@@ -144,7 +144,7 @@ dataController.getPeriodData = async (req, res, next) => {
     for (let i = 0; i < 7 - 1; i++) {
       let dayData = {};
       records.forEach((row) => {
-        console.log(row.funcID, week[i + 1], week[i]);
+        
         let count = csvFuncs.getTotalRuns(
           data,
           row.funcID,
