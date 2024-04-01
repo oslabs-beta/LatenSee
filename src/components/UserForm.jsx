@@ -31,7 +31,7 @@ const UserForm = () => {
     // form updated status body to send to server
     const body = {
       funcID: funcID,
-      status: newStatus,
+      warmerOn: newStatus,
     };
 
     // send updated status to server
@@ -78,16 +78,16 @@ const UserForm = () => {
             <tr key={item.funcId}>
               <td>{item.funcName}</td>
               <td>
-                <button onClick={() => updateStatus(item.funcID, 'Running')}>
+                <button onClick={() => updateStatus(item.funcID, 'Yes')}>
                   start button
                 </button>
               </td>
               <td>
-                <button onClick={() => updateStatus(item.funcID, 'Stopped')}>
+                <button onClick={() => updateStatus(item.funcID, 'No')}>
                   stop button
                 </button>
               </td>
-              <td>{item.status}</td>
+              <td>{item.status === 'Yes' ? 'Running' : 'Stopped'}</td>
               <td>
                 <button>edit button</button>
               </td>
