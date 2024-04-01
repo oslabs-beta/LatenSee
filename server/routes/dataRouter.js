@@ -18,4 +18,9 @@ router.get('/data', dataController.getData,dataController.getRuns, (req, res) =>
 
 })
 
+router.get('/period', dataController.getData,dataController.getPeriodData, (req, res) => {
+    res.status(200).json(res.locals.weeklyLats); 
+
+})
+
 module.exports = router; 

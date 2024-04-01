@@ -61,13 +61,11 @@ dataController.getRuns = async (req, res, next) => {
       let count = csvFuncs.getTotalRuns(data, row.funcID, startDate, endDate); 
       // count cold tracks the number of runs for each function where 'firstRun' is true
       let countCold = csvFuncs.getCold(data, row.funcID, '1', startDate, endDate); 
-      let countWarm = count - countCold
-
             
       // sumLat calculates the sum of the latency for each function
       let sumLat = csvFuncs.getAverage(data, row.funcID, 'serverDifference',startDate, endDate, null)
-      let sumWarmLat = csvFuncs.getAverage(data, row.funcID, 'serverDifference',startDate, endDate, '')/(count-countCold)
-      let sumColdLat = csvFuncs.getAverage(data, row.funcID, 'serverDifference',startDate, endDate, '1')/countCold
+      let avWarmLat = csvFuncs.getAverage(data, row.funcID, 'serverDifference',startDate, endDate, '')/(count-countCold)
+      let avColdLat = csvFuncs.getAverage(data, row.funcID, 'serverDifference',startDate, endDate, '1')/countCold
       
       // percCold is the average number of cold starts and avLat is the average latency
       let percCold = 0;  
@@ -85,9 +83,9 @@ dataController.getRuns = async (req, res, next) => {
         coldStarts: countCold, 
         percentCold: percCold, 
         aveLatency: avLat,
-        coldLatency: sumColdLat ? sumColdLat : 0,
-        warmLatency: sumWarmLat ? sumWarmLat : 0,
-        coldToWarm: sumColdLat/sumWarmLat ? sumColdLat/sumWarmLat : 0,
+        coldLatency: avColdLat ? avColdLat : 0,
+        warmLatency: avWarmLat ? avWarmLat : 0,
+        coldToWarm: avColdLat/avWarmLat ? avColdLat/avWarmLat : 0,
   }); // for funcid= 1 [{id: 1, name: testfuncforApp1, totalRuns=count=10, numberRun:xx, numWarm }]
     })
     res.locals.runs = totalRuns
@@ -101,10 +99,52 @@ dataController.getRuns = async (req, res, next) => {
   })
 
   }
-  
+}
 
+dataController.getPeriodData = async (req, res, next) => {
+
+  try {
+    const records = res.locals.records
+  const data = await csvFuncs.getAllRows (datafileName)
+
+  // create an array of the past 7 days where each element is an object representing the day
+  //[{0:today}, {1: today -1}, {2: today -2}, {3: today -3},  etc.}]
+  const today = Date.now()
+  let week = []
+  for (let i = 0; i < 7; i++){
+    week.push(today - i * 86400000)
+  }
+
+  const weeklyLats = []
+
+
+  for (let i=0; i<7-1; i++){
+    let dayData = {}
+    records.forEach(row => {
+      console.log(row.funcID, week[i+1], week[i])
+      let count = csvFuncs.getTotalRuns(data, row.funcID, week[i+1], week[i]); 
+      let avLat = csvFuncs.getAverage(data, row.funcID, 'serverDifference',week[i+1], week[i], null)
+      
+      dayData[row.funcID] = (avLat / count) ? (avLat / count) : 0;  
+      dayData['day'] = new Date(week[i])
+    })
+    weeklyLats.push(dayData)
+  }
+  res.locals.weeklyLats = weeklyLats
+  
+  return next()
+  } catch(err) {
+    return next({
+    log: `Error in dataController within getPeriodData: ${err}`, 
+    status: 500, 
+    message: 'Error in dataController within getPeriodData '
+})
 
 }
+
+  
+}
+
 
 
 module.exports = dataController; 
