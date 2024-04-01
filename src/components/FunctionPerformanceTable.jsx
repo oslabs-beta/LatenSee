@@ -21,6 +21,12 @@ function FunctionPerformanceTable({data}) {
           <tr key={index}>
             <td>{item.name}</td>
             <td>{item.totalRuns}</td>
+            <td>{item.coldStarts}</td>
+            <td>{(item.percentCold*100).toFixed(1)}</td>
+            <td>{item.aveLatency.toFixed(1)}</td>
+            <td>{item.coldLatency.toFixed(1)}</td>
+            <td>{item.warmLatency.toFixed(1)}</td>
+            <td>{(item.coldToWarm).toFixed(1)}</td>
             {/* <td>{item.timestamp}</td>
             <td>{item.serverDiff}</td> */}
             {/* <td>{item.averageLatency}</td>

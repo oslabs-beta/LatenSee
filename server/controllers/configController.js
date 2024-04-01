@@ -93,7 +93,7 @@ configController.editFunc = async (req, res, next) => {
 
         if (warmerOn){
             records[selectedIndex].warmerOn = warmerOn; 
-            fs.writeFileSync(fileName, stringify(records, {header: true, columns: heading} , function (err, str) {
+            fs.writeFileSync(userfileName, stringify(records, {header: true, columns: heading} , function (err, str) {
                 if (err) {
                     console.log(err); 
                 } else {
