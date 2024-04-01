@@ -11,6 +11,7 @@ const userID = 'abc123';
 // setting up headers for the user file that lists all the functions for a single user
 const heading = [{key: 'funcID'}, {key: 'appName'}, {key: 'funcName'}, {key: 'funcFreq'}, {key: 'userID'}, {key: 'warmerOn'}]; 
 
+
 // middleware that takes information from the configure page POST request body and saves information where is is required. 
 configController.addNew = async (req, res, next) => {
 
@@ -127,7 +128,7 @@ configController.deleteFunc = async (req, res, next) => {
                 records = records.slice(0,index).concat(records.slice(index+1))
             }
         })
-        
+
         fs.writeFileSync(userfileName, stringify(records, {header: true, columns: heading} , function (err, str) {
             if (err) {
                 console.log(err); 

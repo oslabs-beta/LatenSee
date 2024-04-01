@@ -36,23 +36,15 @@ dataController.getData = async (req, res, next)=>{
 }
 
 
-/* INTERNAL NOTE TO DELETE
-plan is to update this to get more data:
-number of runs per day and per week and overall 
-number of cold starts per day and per week and overall
-number of warm starts per day and per week and overall
-average latency per day and per week and overall
-latency for cold starts per day and per week and overall
-latency for warm starts per day and per week and overall
-*/
+
 // middleware that gets number of runs for each function using all data available  
 dataController.getRuns = async (req, res, next) => {
   try {
     // get array of all the functions from previous middleware 
     const {records} = res.locals; 
 
-    // get period of calculation (day, week, all data) from queryparams HARDCODED FOR NOW - TO DISCUSS WITH STEPHEN
-    // if one day period = 1, if one week period = 7, if all data available, period = Date.now()/86400000
+    /* NOTE HERE ------------- get period of calculation (day, week, all data) from queryparams HARDCODED FOR NOW - TO DISCUSS WITH STEPHEN
+    if one day period = 1, if one week period = 7, if all data available, period = Date.now()/86400000 --------------------*/
     const period = Date.now()/86400000
     //change period to milliseconds
     const periodMS = period * 86400000
