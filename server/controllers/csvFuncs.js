@@ -42,17 +42,49 @@ csvFuncs.getTotalRuns = (arr, funcID, startDate, endDate) => {
     return selectedRows.length
 }
 
-
-csvFuncs.getAllDaily = async(startDate, endDate, userfileName, datafileName) => { 
-    const records =  await csvFuncs.getAllRows(userfileName);
-    const result = []
-    records.forEach(element => {
-      csvFuncs.getTotalRuns(element.funcID, startDate, endDate, datafileName)
-      .then(data => result.push(data))
-      .then (()=> result)
-    });
-    return result
+csvFuncs.getCold = (arr, funcID, value, startDate, endDate)=>{
+    const selectedRows = []
+    arr.forEach(row=>{
+        if (row.invokeTime>= startDate && row.invokeTime <= endDate && row.funcID === funcID ){
+            if (row.firstRun === value){
+                selectedRows.push(row); 
+            }
+        }
+    })
+    return selectedRows.length
 }
+
+
+csvFuncs.getAverage = (arr, funcID, avColumn, startDate, endDate, firstRun = null) => {
+    let total = 0; 
+    arr.forEach(row=>{
+        if (row.invokeTime>= startDate && row.invokeTime <= endDate && row.funcID === funcID ){
+            if(firstRun !==null){
+                if (row.firstRun === firstRun){
+                    total = total + Number(row[avColumn])
+                }
+            }
+            else {
+                total = total + Number(row[avColumn])
+            }
+        }
+    })
+    return total
+    
+}
+
+
+
+// csvFuncs.getAllDaily = async(startDate, endDate, userfileName, datafileName) => { 
+//     const records =  await csvFuncs.getAllRows(userfileName);
+//     const result = []
+//     records.forEach(element => {
+//       csvFuncs.getTotalRuns(element.funcID, startDate, endDate, datafileName)
+//       .then(data => result.push(data))
+//       .then (()=> result)
+//     });
+//     return result
+// }
 
 module.exports = csvFuncs;
 

@@ -6,9 +6,20 @@ const dataController = require('../controllers/dataController.js')
 
 const router = express.Router(); 
 
+router.get('/user', dataController.getData, (req, res) => {
+    // console.log("from response", res.locals.funcData); 
+    res.status(200).json(res.locals.records); 
+
+})
+
 router.get('/data', dataController.getData,dataController.getRuns, (req, res) => {
     // console.log("from response", res.locals.funcData); 
     res.status(200).json(res.locals.runs); 
+
+})
+
+router.get('/period', dataController.getData,dataController.getPeriodData, (req, res) => {
+    res.status(200).json(res.locals.weeklyLats); 
 
 })
 

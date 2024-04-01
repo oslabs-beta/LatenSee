@@ -14,4 +14,8 @@ router.patch('/', configController.editFunc, (req, res) => {
   res.status(200).json('func updated');
 });
 
+router.delete('/delete', configController.deleteFunc, (req, res) => {
+  res.status(200).json('func deleted');
+});
+
 module.exports = router;
