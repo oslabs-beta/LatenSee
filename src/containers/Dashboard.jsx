@@ -45,7 +45,7 @@ function Dashboard() {
         <h1>This is table</h1>
         <div className="table">
           {data ? (
-            <FunctionPerformanceTable data={data} />
+            <FunctionPerformanceTable data={data} width="calc(100% - 350px)" />
           ) : (
             <div>Loading table...</div>
           )}
