@@ -66,6 +66,7 @@ configController.addNew = async (req, res, next) => {
 configController.editFunc = async (req, res, next) => {
     try {
         const {funcID, funcURL, funcFreq, warmerOn} = req.body 
+
         const userfileName = path.resolve(__dirname, `../storage/${userID}.csv`); 
     
         // get array of all functions in the users file 
