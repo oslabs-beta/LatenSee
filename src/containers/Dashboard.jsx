@@ -6,6 +6,7 @@ import OverviewPanel from '../components/OverviewPanel';
 function Dashboard() {
   const [data, setData] = useState([]);
   const [periodicData, setPeriodicData] = useState([]);
+  const [comparisonData, setComparisonData] = useState([]);
 
   useEffect(() => {
     fetch('/api/data')
@@ -29,6 +30,20 @@ function Dashboard() {
       .catch((error) => {
         console.log('Failed to load data', error);
       });
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('api/comps');
+        const data = response.json();
+        console.log('comparison  data: ', data);
+        setComparisonData(data);
+      } catch (error) {
+        console.log('Failed to load data', error);
+      }
+    };
+    fetchData();
   }, []);
 
   return (
@@ -58,7 +73,7 @@ function Dashboard() {
         <div className="overview-panel">
           <h1>This is Overview</h1>
           {data ? (
-            <OverviewPanel data={data} />
+            <OverviewPanel data={comparisonData} />
           ) : (
             <div>Loading overview...</div>
           )}

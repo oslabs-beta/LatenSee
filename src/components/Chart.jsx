@@ -18,7 +18,7 @@ const Chart = ({ data, height, width = '100%' }) => {
     if (keys[i] !== 'day') {
       let point = {
         name: keys[i],
-        data: data.map((item) => item[keys[i]].toFixed(1).reverse()),
+        data: data.map((item) => item[keys[i]].toFixed(1)).reverse(),
       };
       console.log('this is data for setting up series: ', data);
       series.push(point);
@@ -44,7 +44,7 @@ const Chart = ({ data, height, width = '100%' }) => {
     yaxis: {
       // adding title to y-axis
       title: {
-        text: 'Milliseconds',
+        text: 'Average Latency (Milliseconds)',
         //rotate the text
         rotate: -90,
         style: {
