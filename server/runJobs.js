@@ -33,8 +33,10 @@ const callAndLog = async (endpoint, invokeTime) => {
     const fileName = path.resolve(__dirname, `./storage/data.csv`);
     // create a variable for starting time in ms, serverStart
     let serverStart = Date.now();
-    // make a fetch for endpoint.url
-    let response = await fetch(endpoint.url); 
+    // make a fetch for endpoint.url, with body identifying LatenSee as the source
+    let response = await fetch(endpoint.url, {
+      body: 'LatenSee',
+    }); 
 
     // create a variable for return time in ms, serverEnd
     let serverEnd = Date.now();
@@ -43,12 +45,12 @@ const callAndLog = async (endpoint, invokeTime) => {
 
     // parse the fetch results
     let result = await response.json();
-    /*result = {...firstRun: true/false}*/
+    /*result = {cold: true/false} */
 
     const params = [
     [endpoint.id,
       endpoint.name,
-      result.firstRun, 
+      result.cold, 
       invokeTime,
       serverStart,
       serverEnd,
@@ -66,12 +68,17 @@ const callAndLog = async (endpoint, invokeTime) => {
     columns: [
       'funcID',
       'name',
-      'firstRun',
+      'cold',
       'invokeTime',
       'serverStart',
       'serverEnd',
       'serverDifference' 
     ]
+    , cast: {
+      boolean: function(value){
+        return value ? 'true' : 'false';
+      }
+    }
   }, function (err, str){
     return str; 
   })
