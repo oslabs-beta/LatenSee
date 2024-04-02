@@ -114,6 +114,10 @@ dataController.getRuns = async (req, res, next) => {
         coldToWarm: avColdLat / avWarmLat ? avColdLat / avWarmLat : 0,
       }); // for funcid= 1 [{id: 1, name: testfuncforApp1, totalRuns=count=10, numberRun:xx, numWarm }]
     });
+
+    // calculate totals and averages for all the functions in totalRuns
+   
+
     res.locals.runs = totalRuns;
     // console.log(res.locals.runs);
     return next();
@@ -141,7 +145,7 @@ dataController.getPeriodData = async (req, res, next) => {
 
     const weeklyLats = [];
 
-    for (let i = 0; i < 7 - 1; i++) {
+    for (let i = 0; i < 7; i++) {
       let dayData = {};
       records.forEach((row) => {
         let count = csvFuncs.getTotalRuns(
@@ -159,13 +163,13 @@ dataController.getPeriodData = async (req, res, next) => {
           null
         );
 
-        dayData[row.funcID] = avLat / count ? avLat / count : 0;
-        dayData['day'] = new Date(week[i]);
-        dayData['funcName'] = row.funcName
+        dayData[row.funcName] = avLat / count ? avLat / count : 0;
+        dayData['day'] = new Date(week[i]).toDateString().slice(3,11);
       });
       weeklyLats.push(dayData);
     }
     res.locals.weeklyLats = weeklyLats;
+    // console.log(weeklyLats)
 
     return next();
   } catch (err) {
