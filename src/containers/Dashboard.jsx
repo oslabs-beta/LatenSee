@@ -11,7 +11,7 @@ function Dashboard() {
     fetch('/api/data')
       .then((data) => data.json())
       .then((data) => {
-        console.log('This is data from data.csv', data);
+        // console.log('This is data from data.csv', data);
         setData(data);
       })
       .catch((error) => {
@@ -23,7 +23,7 @@ function Dashboard() {
     fetch('/api/period')
       .then((data) => data.json())
       .then((data) => {
-        console.log('This is data from data.csv', data);
+        // console.log('This is data from data.csv', data);
         setPeriodicData(data);
       })
       .catch((error) => {
