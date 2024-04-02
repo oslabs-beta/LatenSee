@@ -35,6 +35,8 @@ const callAndLog = async (endpoint, invokeTime) => {
     let serverStart = Date.now();
     // make a fetch for endpoint.url, with body identifying LatenSee as the source
     let response = await fetch(endpoint.url, {
+      // GET request cannot have a body, so this is POST (generic usecase) which is creating a resource telling the lambda to be warm
+      method: 'POST', 
       body: 'LatenSee',
     }); 
 
