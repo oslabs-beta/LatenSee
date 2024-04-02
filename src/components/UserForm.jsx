@@ -90,6 +90,7 @@ const UserForm = () => {
       <table>
         <thead>
           <tr>
+            <th>App name</th>
             <th>Function name</th>
             <th>Start/Stop</th>
             <th>Status</th>
@@ -100,6 +101,7 @@ const UserForm = () => {
         <tbody>
           {data.map((item) => (
             <tr key={item.funcId}>
+              <td>{item.appName}</td>
               <td>{item.funcName}</td>
               <td>
                 <button onClick={() => updateStatus(item.funcID)}>
@@ -113,14 +115,15 @@ const UserForm = () => {
                   id="freq"
                   onChange={(e) => editFuncFreq(item.funcID, e.target.value)}
                 >
-                  <option value="*/10 * * * * *">10S</option>
-                  <option value="0 */1 * * * *">1M</option>
-                  <option value="0 */5 * * * *">5M</option>
-                  <option value="0 */15 * * * *">15M</option>
-                  <option value="0 */30 * * * *">30M</option>
-                  <option value="0 0 */1 * * *">1H</option>
-                  <option value="0 0 */2 * * *">2H</option>
-                  <option value="0 0 */3 * * *">3H</option>
+                  <option value="current-freq">{item.funcFreq}</option>
+                  <option value="10S">10S</option>
+                  <option value="1M">1M</option>
+                  <option value="5M">5M</option>
+                  <option value="15M">15M</option>
+                  <option value="30M">30M</option>
+                  <option value="1H">1H</option>
+                  <option value="2H">2H</option>
+                  <option value="3H">3H</option>
                 </select>
               </td>
               <td>
