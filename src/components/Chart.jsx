@@ -19,12 +19,14 @@ const Chart = ({ data, height, width = '100%' }) => {
     if (keys[i] !== 'day') {
       let point = {
         name: keys[i], 
-        data: data.map (item => item[keys[i]])
+        data: data.map (item => item[keys[i]]).reverse()
       }
       series.push(point)
+      console.log('point', point)
 
     }
   }
+  console.log('series', series)
 
 
   //setup categories (what's on x-axis)

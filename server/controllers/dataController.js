@@ -20,7 +20,6 @@ dataController.getData = async (req, res, next) => {
       .on('data', (data) => results.push(data))
       .on('end', () => {
         res.locals.records = results;
-
         return next();
       });
   } catch (err) {
@@ -40,7 +39,7 @@ dataController.getRuns = async (req, res, next) => {
 
     /* NOTE HERE ------------- get period of calculation (day, week, all data) from queryparams HARDCODED FOR NOW - TO DISCUSS WITH STEPHEN
     if one day period = 1, if one week period = 7, if all data available, period = Date.now()/86400000 --------------------*/
-    const period = Date.now() / 86400000;
+    const period = 7;
     //change period to milliseconds
     const periodMS = period * 86400000;
     // calculate startDate as current date minus the period we are covering in milliseconds
@@ -64,7 +63,7 @@ dataController.getRuns = async (req, res, next) => {
       );
 
       // sumLat calculates the sum of the latency for each function
-      let sumLat = csvFuncs.getAverage(
+      let sumLat = csvFuncs.getSum(
         data,
         row.funcID,
         'serverDifference',
@@ -73,7 +72,7 @@ dataController.getRuns = async (req, res, next) => {
         null
       );
       let avWarmLat =
-        csvFuncs.getAverage(
+        csvFuncs.getSum(
           data,
           row.funcID,
           'serverDifference',
@@ -83,7 +82,7 @@ dataController.getRuns = async (req, res, next) => {
         ) /
         (count - countCold);
       let avColdLat =
-        csvFuncs.getAverage(
+        csvFuncs.getSum(
           data,
           row.funcID,
           'serverDifference',
@@ -154,7 +153,7 @@ dataController.getPeriodData = async (req, res, next) => {
           week[i + 1],
           week[i]
         );
-        let avLat = csvFuncs.getAverage(
+        let avLat = csvFuncs.getSum(
           data,
           row.funcID,
           'serverDifference',
@@ -180,5 +179,107 @@ dataController.getPeriodData = async (req, res, next) => {
     });
   }
 };
+
+
+dataController.getComparison = async (req, res, next) => {
+
+  try {
+
+    // get array of all the functions from previous middleware
+    const { records } = res.locals;
+    const data = await csvFuncs.getAllRows(datafileName);
+    const thisWeekEnd = Date.now()
+    const thisWeekStart = thisWeekEnd - 7 * 86400000; 
+
+    
+    const lastWeekStart = thisWeekEnd - 7 * 86400000; 
+
+    // calculate metrics for current week 
+    // sum of latency for all functions, sum of all cold starts, maximum latency 
+    let thisWkLat = 0 
+    let thisWkCold = 0
+    let max = -Infinity
+    let maxFunc;
+    let maxFuncID; 
+    let thisWkRuns = 0; 
+    data.forEach((row, index) => {
+      if (row.invokeTime > thisWeekStart, row.invokeTime <= thisWeekEnd) {
+        thisWkRuns ++; 
+        // calculate sum of all latency in this period
+        thisWkLat = thisWkLat + Number(row.serverDifference)
+        // calculate total cold starts in this period
+        if (row.firstRun === '1'){
+          thisWkCold ++; 
+        } 
+
+        // function with maximum latency 
+        if (Number(row.serverDifference) > max){
+          max = row.serverDifference
+          maxFunc = row.name
+          maxFuncID = row.funcID
+        }
+
+      }  
+    })
+    // calculate average latency
+    const thisWkAvLat = (thisWkLat / thisWkRuns) ? (thisWkLat / thisWkRuns): 0;  
+
+    // calculate metrics for last week 
+    // sum of latency for all functions, sum of all cold starts, maximum latency 
+    let lastWkLat = 0 
+    let lastWkCold = 0
+    let lastWkmax = -Infinity
+    let lastWkmaxFunc; 
+    let lastWkmaxFuncID; 
+    let lastWkRuns = 0; 
+    data.forEach((row, index) => {
+      if (row.invokeTime > lastWeekStart, row.invokeTime <= thisWeekStart) {
+        lastWkRuns ++; 
+        // calculate sum of all latency in this period
+        lastWkLat = lastWkLat + Number(row.serverDifference)
+        // calculate total cold starts in this period
+        if (row.firstRun === '1'){
+          lastWkCold ++; 
+        } 
+
+        // function with maximum latency 
+        if (Number(row.serverDifference) > max){
+          lastWkmax = row.serverDifference
+          lastWkmaxFunc = row.name
+          lastWkmaxFuncID = row.funcID
+        }
+
+      }  
+    })
+    // calculate average latency
+    const lastWkAvLat = (lastWkLat / lastWkRuns) ? (lastWkLat / lastWkRuns): 0; 
+
+    // returns an array with this weeks data followed by last week's data 
+    res.locals.comparison = [
+      { avLatency : thisWkAvLat, 
+        totalColdStarts: thisWkCold, 
+        maxLatency: max, 
+        maxLatFunc: maxFunc, 
+        maxLatId: maxFuncID, 
+      }, 
+      { avLatency : lastWkAvLat, 
+        totalColdStarts: lastWkCold, 
+        maxLatency: lastWkmax, 
+        maxLatFunc: lastWkmaxFunc ? lastWkmaxFunc :0, 
+        maxLatId: lastWkmaxFuncID ? lastWkmaxFuncID: 0 , 
+      }
+    ]
+
+    return next()
+  } catch (err) {
+    
+    return next({
+      log: `Error in dataController within getComparison: ${err}`,
+      status: 500,
+      message: 'Error in dataController within getComparison ',
+    });
+
+  } 
+}
 
 module.exports = dataController;

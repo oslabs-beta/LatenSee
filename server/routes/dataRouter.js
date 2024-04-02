@@ -23,4 +23,9 @@ router.get('/period', dataController.getData,dataController.getPeriodData, (req,
 
 })
 
+router.get('/comps', dataController.getData,dataController.getComparison, (req, res) => {
+    res.status(200).json(res.locals.comparison); 
+
+})
+
 module.exports = router; 

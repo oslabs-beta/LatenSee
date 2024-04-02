@@ -55,7 +55,7 @@ csvFuncs.getCold = (arr, funcID, value, startDate, endDate)=>{
 }
 
 
-csvFuncs.getAverage = (arr, funcID, avColumn, startDate, endDate, firstRun = null) => {
+csvFuncs.getSum = (arr, funcID, avColumn, startDate, endDate, firstRun = null) => {
     let total = 0; 
     arr.forEach(row=>{
         if (row.invokeTime>= startDate && row.invokeTime <= endDate && row.funcID === funcID ){
