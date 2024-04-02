@@ -15,12 +15,14 @@ const UserForm = () => {
       .catch((error) => {
         console.log('Failed to load functions', error);
       });
-  }, [data]); // TO DELETE NOTE : updated here by adding data to the bracket because start/stop were not automatically updating
+  }, []); 
 
   // On click of 'start/stop', update function's status
   const updateStatus = (funcID, warmerOn) => {
     // TO DELETE NOTE : updated here to make this faster because it was sticking
-    const newStatus = (warmerOn === 'Yes' ? 'No': 'Yes')      
+    const newStatus = data.find((item) => item.funcID === funcID).status === 'Yes'
+          ? 'No'
+          : 'Yes';
     const updatedData = data.map((item) => {
       // find the function that matches the id and update its status (for immediate UI feedback in status column)
       if (item.funcID === funcID) {
@@ -87,8 +89,7 @@ const UserForm = () => {
       .catch((err) => console.log('Error deleting function: ', err));
   };
 
-  /* TO DELETE NOTE : made two changes here - first on line 110 and 113 changed item.status to item.warmerOn because thats what it was called in the props. 
-  second - updated option values in the drop down to match the csv file (10S, 1M etc). 
+  /* TO DELETE NOTE : updated option values in the drop down to match the csv file (10S, 1M etc). 
     */
   return (
     <div className="user-table">
@@ -107,11 +108,11 @@ const UserForm = () => {
             <tr key={item.funcId}>
               <td>{item.funcName}</td>
               <td>
-                <button onClick={() => updateStatus(item.funcID, item.warmerOn)}>
-                  {item.warmerOn === 'Yes' ? 'Stop' : 'Start'} 
+                <button onClick={() => updateStatus(item.funcID)}>
+                  {item.status === 'Yes' ? 'Stop' : 'Start'} 
                 </button>
               </td>
-              <td>{item.warmerOn === 'Yes' ? 'Running' : 'Stopped'}</td>
+              <td>{item.status === 'Yes' ? 'Running' : 'Stopped'}</td>
               <td>
                 <select
                   name="funcFreq"
