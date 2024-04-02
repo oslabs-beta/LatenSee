@@ -1,64 +1,65 @@
 import React, { useState, useEffect } from 'react';
 import FunctionPerformanceTable from '../components/FunctionPerformanceTable';
-import Papa from 'papaparse';
-// import Chart from '../components/Chart';
+import Chart from '../components/Chart';
+import OverviewPanel from '../components/OverviewPanel';
 
 function Dashboard() {
-  // const myArray = [
-  //   {
-  //     funcName: 'function1',
-  //     firstRun: 'true',
-  //     timestamp: '2024-03-20 04:35:00+00',
-  //     serverDiff: '988',
-  //   },
-  //   {
-  //     funcName: 'function2',
-  //     firstRun: 'false',
-  //     timestamp: '2024-03-20 04:35:00+00',
-  //     serverDiff: '188',
-  //   },
-  //   {
-  //     funcName: 'function3',
-  //     firstRun: 'true',
-  //     timestamp: '2024-03-20 04:35:00+00',
-  //     serverDiff: '38',
-  //   },
-  // ];
   const [data, setData] = useState([]);
+  const [periodicData, setPeriodicData] = useState([]);
 
   useEffect(() => {
     fetch('/api/data')
-    .then((data)=> data.json())
-    .then((data=> {
-      console.log("our data", data)
-      setData(data)
-    }))
-    .catch (error => {
+      .then((data) => data.json())
+      .then((data) => {
+        console.log('This is data from data.csv', data);
+        setData(data);
+      })
+      .catch((error) => {
         console.log('Failed to load data', error);
-      }
-      )},[]);
+      });
+  }, []);
 
-  // fetch('/config', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify(body),
-  // })
-  //   .then((res) => res.json())
-  //   .then((data) => {
-  //     console.log(data);
-  //   })
-  //   .catch((err) => console.log(' add func fetch /config: ERROR: ', err));
+  useEffect(() => {
+    fetch('/api/period')
+      .then((data) => data.json())
+      .then((data) => {
+        console.log('This is data from data.csv', data);
+        setPeriodicData(data);
+      })
+      .catch((error) => {
+        console.log('Failed to load data', error);
+      });
+  }, []);
 
   return (
-    <div className="dashboard-page">
-      <h1>This is graph</h1>
-      {/* <Graph data={data}/> */}
-      {/* <Chart /> */}
-      <h1>This is table</h1>
-      <h1>This data</h1>
-      <FunctionPerformanceTable data={data} />
+    <div className="dashboard-container">
+      <div className="dashboard-content">
+        <h1>This is chart</h1>
+        <div className="chart">
+          {data ? (
+            <Chart data={periodicData} height={375} width="70%" />
+          ) : (
+            <div>Loading chart...</div>
+          )}
+        </div>
+        <h1>This is table</h1>
+        <div className="table">
+          {data ? (
+            <FunctionPerformanceTable data={data} />
+          ) : (
+            <div>Loading table...</div>
+          )}
+        </div>
+
+        <div className="overview-panel">
+          <h1>This is Overview</h1>
+          {data ? (
+            <OverviewPanel data={data} />
+          ) : (
+            <div>Loading overview...</div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

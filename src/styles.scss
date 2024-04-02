@@ -99,7 +99,7 @@ body {
       }
 
       span {
-        margin-left: 13px; /* Adds space between the icon and text */
+        margin-left: 14px; /* Adds space between the icon and text */
       }
     }
   }
@@ -136,13 +136,71 @@ body {
       margin-bottom: 30px;
     }
 
+    .switch {
+      display: inline-flex;
+      align-items: center;
+      height: 37px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .switch input:checked + .slider {
+      background-color: #2196f3;
+
+      &:before {
+        transform: translateX(16px);
+      }
+    }
+
+    .switch input:focus + .slider {
+      box-shadow: 0 0 1px #2196f3;
+    }
+
+    .slider {
+      cursor: pointer;
+      background-color: #ccc;
+      transition: 0.4s;
+      height: 20px;
+      width: 37px;
+      margin-left: 5px;
+
+      &:before {
+        content: '';
+        height: 16px;
+        width: 16px;
+        background-color: white;
+        transition: 0.4s;
+        display: inline-block;
+        margin: 2px;
+      }
+
+      &.round {
+        border-radius: 34px;
+
+        &:before {
+          border-radius: 50%;
+        }
+      }
+    }
+
     button {
-      margin-top: 10px;
+      margin-top: 35px;
       padding: 5px;
       background-color: #50b9ffb7;
       color: white;
       border: none;
       cursor: pointer;
+    }
+
+    span {
+      color: green;
+      margin-left: 15px;
+      font-size: 12px;
+      font-weight: bold;
     }
   }
 }
@@ -174,3 +232,55 @@ body {
     }
   }
 }
+// Width of the overview panel
+$sidebar-width: 250px;
+// Background color of the panel
+$background-color: #a7c9e3;
+
+// // Styling for the dashboard container
+// .dashboard-container {
+//   display: flex;
+//   min-height: 100vh; // Full viewport height
+//   padding-right: $sidebar-width; // Make space for the fixed sidebar
+
+//   // Styling for the content area (excluding the sidebar)
+//   .dashboard-content {
+//     flex-grow: 1;
+//     // Add additional styling for the content area if needed
+//   }
+// }
+
+.overview-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: $sidebar-width;
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: $background-color;
+  padding: 20px;
+  overflow-y: auto;
+
+  .side-by-side {
+    display: flex;
+    justify-content: space-between; // Place children side by side
+
+    // You might want to ensure these components don't get too narrow
+    > div {
+      flex-basis: 48%; // Example: each takes roughly half the container's width
+    }
+  }
+
+  .separator-bar {
+    height: 2px;
+    background-color: gray;
+    margin: 20px 0;
+  }
+}
+
+// .coldStart-percentage-change {
+//   align-self: flex-start;
+//   padding: 10px 0;
+// }

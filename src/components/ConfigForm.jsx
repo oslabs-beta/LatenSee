@@ -15,20 +15,21 @@ const ConfigForm = () => {
   const [funcName, setFuncName] = useInput('');
   const [url, setUrl] = useInput('');
   const [invRate, setInvRate] = useInput('');
-
-  //form body to send to server
-  const body = {
-    appName: appName,
-    funcName: funcName,
-    funcUrl: url,
-    funcFreq: invRate,
-    warmerOn:'' 
-    //stretch: add userId field for auth
-  };
+  const [successMessage, setSuccessMessage] = useState('');
 
   //on submit, send form data to server
   const handleSubmit = (e) => {
     e.preventDefault();
+    //form body to send to server
+    const body = {
+      appName: appName,
+      funcName: funcName,
+      funcUrl: url,
+      funcFreq: invRate,
+      warmerOn: '',
+      //stretch: add userId field for auth
+    };
+
     fetch('/api/config/new', {
       method: 'POST',
       headers: {
@@ -39,8 +40,12 @@ const ConfigForm = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        setSuccessMessage('Function successfully added!'); //set success message on successful post
       })
-      .catch((err) => console.log(' add func fetch /config: ERROR: ', err));
+      .catch((err) => {
+        console.log(' add func fetch api/config/new: ERROR: ', err);
+        setSuccessMessage(''); //reset the success message on error
+      });
   };
 
   return (
@@ -85,7 +90,14 @@ const ConfigForm = () => {
           onChange={setInvRate}
         />
         <br></br>
+        <label class="switch">
+          Warmer on:
+          <input type="checkbox" />
+          <span class="slider round"></span>
+        </label>
+        <br></br>
         <button type="submit">Save</button>
+        {successMessage && <span>{successMessage}</span>}
       </form>
     </div>
   );
