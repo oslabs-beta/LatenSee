@@ -9,22 +9,30 @@ const Chart = ({ data, height, width = '100%' }) => {
   }
 
   //see what data looks like
-  console.log('This is data passing down from Dashboard: ', data);
+  // console.log('This is data passing down from Dashboard: ', data);
 
   // setup series (what's on y-axis)
-  const series = [
-    {
-      name: 'Function id 1',
-      data: data.map((item) => item[1]),
-    },
-    {
-      name: 'Function id 4',
-      data: data.map((item) => item[4]),
-    },
-  ];
+  const series = [] 
+  let keys = Object.keys(data[0])
+  for (let i= 0; i<keys.length; i++){
+    
+    if (keys[i] !== 'day') {
+      let point = {
+        name: keys[i], 
+        data: data.map (item => item[keys[i]])
+      }
+      series.push(point)
+
+    }
+  }
+
 
   //setup categories (what's on x-axis)
-  const categories = data.map((item) => item.day);
+  const categories = [] 
+  for (let i = data.length-1; i >= 0; i--){
+    categories.push(data[i].day)
+
+  }
 
   //setup chart type, assign series, assign xaxis
   const options = {

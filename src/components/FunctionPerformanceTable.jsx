@@ -34,12 +34,6 @@ function FunctionPerformanceTable({ data, width }) {
               <td>{item.coldLatency.toFixed(1)}</td>
               <td>{item.warmLatency.toFixed(1)}</td>
               <td>{item.coldToWarm.toFixed(1)}</td>
-              {/* <td>{item.timestamp}</td>
-            <td>{item.serverDiff}</td> */}
-              {/* <td>{item.averageLatency}</td>
-            <td>{item.coldStartLatency}</td>
-            <td>{item.warmStartLatency}</td>
-            <td>{item.coldStartLatencyVsWarm}</td> */}
             </tr>
           ))}
         </tbody>
