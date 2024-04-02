@@ -161,6 +161,7 @@ dataController.getPeriodData = async (req, res, next) => {
 
         dayData[row.funcID] = avLat / count ? avLat / count : 0;
         dayData['day'] = new Date(week[i]);
+        dayData['funcName'] = row.funcName
       });
       weeklyLats.push(dayData);
     }
