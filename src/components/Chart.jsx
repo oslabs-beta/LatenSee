@@ -12,29 +12,26 @@ const Chart = ({ data, height, width = '100%' }) => {
   // console.log('This is data passing down from Dashboard: ', data);
 
   // setup series (what's on y-axis)
-  const series = [] 
-  let keys = Object.keys(data[0])
-  for (let i= 0; i<keys.length; i++){
-    
+  const series = [];
+  let keys = Object.keys(data[0]);
+  for (let i = 0; i < keys.length; i++) {
     if (keys[i] !== 'day') {
       let point = {
-        name: keys[i], 
-        data: data.map (item => item[keys[i]])
-      }
-      series.push(point)
-
+        name: keys[i],
+        data: data.map((item) => item[keys[i]].toFixed(1)),
+      };
+      console.log('this is data for setting up series: ', data);
+      series.push(point);
     }
   }
 
-
   //setup categories (what's on x-axis)
-  const categories = [] 
-  for (let i = data.length-1; i >= 0; i--){
-    categories.push(data[i].day)
-
+  const categories = [];
+  for (let i = data.length - 1; i >= 0; i--) {
+    categories.push(data[i].day);
   }
 
-  //setup chart type, assign series, assign xaxis
+  //setup chart type, assign series, assign xaxis, title
   const options = {
     chart: {
       type: 'line',
@@ -43,6 +40,19 @@ const Chart = ({ data, height, width = '100%' }) => {
     series: series,
     xaxis: {
       categories: categories,
+    },
+    yaxis: {
+      // adding title to y-axis
+      title: {
+        text: 'Milliseconds',
+        //rotate the text
+        rotate: -90,
+        style: {
+          fontSize: '12px',
+          fontFamily: 'Helvetica, Arial, sans-serif',
+          fontWeight: 600,
+        },
+      },
     },
   };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function FunctionPerformanceTable({ data, width }) {
+function FunctionPerformanceTable({ data, width, className }) {
   console.log('props data', data);
 
   const tableStyle = {
@@ -10,17 +10,17 @@ function FunctionPerformanceTable({ data, width }) {
 
   return (
     <div style={tableStyle}>
-      <table>
+      <table className={className}>
         <thead>
           <tr>
             <th>Function</th>
             <th>Number of Pings</th>
-            <th>Number Of Cold Starts</th>
+            <th>Number of Cold Starts</th>
             <th>Cold Start %</th>
             <th>Average Latency</th>
             <th>Cold Start Latency</th>
             <th>Warm Start Latency</th>
-            <th>Cold Start Latency vs Warm</th>
+            <th>Cold vs Warm Latency</th>
           </tr>
         </thead>
         <tbody>
