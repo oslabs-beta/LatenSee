@@ -40,11 +40,11 @@ const ConfigForm = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setSuccessMessage('Function successfully added!'); // Set success message on successful post
+        setSuccessMessage('Function successfully added!'); //set success message on successful post
       })
       .catch((err) => {
         console.log(' add func fetch api/config/new: ERROR: ', err);
-        setSuccessMessage(''); // Reset the success message on error
+        setSuccessMessage(''); //reset the success message on error
       });
   };
 
