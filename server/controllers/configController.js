@@ -39,7 +39,8 @@ configController.addNew = async (req, res, next) => {
             // first check last id and create id for func
             const records = await csvFuncs.getAllRows(fileName)
             //records = [{funcid:1, funName:xxx, funcFreq:10 etc..}]
-            funcID = parseInt(records[records.length-1].funcID) + 1;  // 1 + 1 // new funcID = 1+1 = 2
+            // If records has no rows, set funcID to 1, otherwise set it equal to one more than the ID of the last function in records.
+            funcID = records.length === 0 ? 1 : parseInt(records[records.length-1].funcID) + 1;
             // then append funcID, userID, appName, funcName and funcFreq to user's file)
             fs.appendFileSync(fileName, stringify([{funcID,appName,funcName,funcFreq,userID, warmerOn}], {header: false}, function (err, str) {
                 if (err) {
