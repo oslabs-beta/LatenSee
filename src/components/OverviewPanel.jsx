@@ -3,26 +3,28 @@ import ColdStartPercentage from './ColdStartPercentage';
 import SpeedPerformance from './SpeedPerformance';
 import DailyPerformance from './DailyPerformance';
 
+//accepting props (data) from Dashboard
 const OverviewPanel = ({ data }) => {
+  console.log('comparison data from overview: ', data);
+  //destructuring and naming first object dataThisWeek, second object dataLastWeek
+  const [dataThisWeek, dataLastWeek] = data;
   return (
     <div className="general-overview">
       <div className="side-by-side">
         <ColdStartPercentage
-          data={data}
-          coldStartPercentagelastWeek={6}
-          coldStartPercentagethisWeek={10}
+          dataThisWeek={dataThisWeek}
+          dataLastWeek={dataLastWeek}
         />
 
         <SpeedPerformance
-          data={data}
-          averageLatencylastWeek={0.4}
-          averageLatencythisWeek={0.35}
+          dataThisWeek={dataThisWeek}
+          dataLastWeek={dataLastWeek}
         />
       </div>
       <div className="separator-bar"></div>
       <div className="daily-performance">
         <DailyPerformance
-          data={data}
+          // data={data}
           avgLatencyM={0.3}
           avgLatencyT={0.35}
           avgLatencyW={0.29}
