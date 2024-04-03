@@ -30,20 +30,6 @@ function Dashboard() {
       });
   }, []);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch('/api/comps');
-  //       const data = response.json();
-  //       console.log('comparison  data: ', data);
-  //       setComparisonData(data);
-  //     } catch (error) {
-  //       console.log('Failed to load data', error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
-
   useEffect(() => {
     fetch('/api/comps')
       .then((response) => {
