@@ -115,7 +115,6 @@ dataController.getRuns = async (req, res, next) => {
     });
 
     // calculate totals and averages for all the functions in totalRuns
-   
 
     res.locals.runs = totalRuns;
     // console.log(res.locals.runs);
@@ -163,7 +162,7 @@ dataController.getPeriodData = async (req, res, next) => {
         );
 
         dayData[row.funcName] = avLat / count ? avLat / count : 0;
-        dayData['day'] = new Date(week[i]).toDateString().slice(3,11);
+        dayData['day'] = new Date(week[i]).toDateString().slice(3, 11);
       });
       weeklyLats.push(dayData);
     }
@@ -180,106 +179,100 @@ dataController.getPeriodData = async (req, res, next) => {
   }
 };
 
-
 dataController.getComparison = async (req, res, next) => {
-
   try {
-
     // get array of all the functions from previous middleware
     const { records } = res.locals;
     const data = await csvFuncs.getAllRows(datafileName);
-    const thisWeekEnd = Date.now()
-    const thisWeekStart = thisWeekEnd - 7 * 86400000; 
+    const thisWeekEnd = Date.now();
+    const thisWeekStart = thisWeekEnd - 7 * 86400000;
 
-    
-    const lastWeekStart = thisWeekEnd - 7 * 86400000; 
+    const lastWeekStart = thisWeekStart - 7 * 86400000;
 
-    // calculate metrics for current week 
-    // sum of latency for all functions, sum of all cold starts, maximum latency 
-    let thisWkLat = 0 
-    let thisWkCold = 0
-    let max = -Infinity
+    // calculate metrics for current week
+    // sum of latency for all functions, sum of all cold starts, maximum latency
+    let thisWkLat = 0;
+    let thisWkCold = 0;
+    let max = -Infinity;
     let maxFunc;
-    let maxFuncID; 
-    let thisWkRuns = 0; 
+    let maxFuncID;
+    let thisWkRuns = 0;
     data.forEach((row, index) => {
-      if (row.invokeTime > thisWeekStart, row.invokeTime <= thisWeekEnd) {
-        thisWkRuns ++; 
+      if (row.invokeTime > thisWeekStart && row.invokeTime <= thisWeekEnd) {
+        thisWkRuns++;
         // calculate sum of all latency in this period
-        thisWkLat = thisWkLat + Number(row.serverDifference)
+        thisWkLat = thisWkLat + Number(row.serverDifference);
         // calculate total cold starts in this period
-        if (row.firstRun === '1'){
-          thisWkCold ++; 
-        } 
-
-        // function with maximum latency 
-        if (Number(row.serverDifference) > max){
-          max = row.serverDifference
-          maxFunc = row.name
-          maxFuncID = row.funcID
+        if (row.firstRun === '1') {
+          thisWkCold++;
         }
 
-      }  
-    })
-    // calculate average latency
-    const thisWkAvLat = (thisWkLat / thisWkRuns) ? (thisWkLat / thisWkRuns): 0;  
-
-    // calculate metrics for last week 
-    // sum of latency for all functions, sum of all cold starts, maximum latency 
-    let lastWkLat = 0 
-    let lastWkCold = 0
-    let lastWkmax = -Infinity
-    let lastWkmaxFunc; 
-    let lastWkmaxFuncID; 
-    let lastWkRuns = 0; 
-    data.forEach((row, index) => {
-      if (row.invokeTime > lastWeekStart, row.invokeTime <= thisWeekStart) {
-        lastWkRuns ++; 
-        // calculate sum of all latency in this period
-        lastWkLat = lastWkLat + Number(row.serverDifference)
-        // calculate total cold starts in this period
-        if (row.firstRun === '1'){
-          lastWkCold ++; 
-        } 
-
-        // function with maximum latency 
-        if (Number(row.serverDifference) > max){
-          lastWkmax = row.serverDifference
-          lastWkmaxFunc = row.name
-          lastWkmaxFuncID = row.funcID
+        // function with maximum latency
+        if (Number(row.serverDifference) > max) {
+          max = Number(row.serverDifference);
+          maxFunc = row.name;
+          maxFuncID = row.funcID;
         }
-
-      }  
-    })
-    // calculate average latency
-    const lastWkAvLat = (lastWkLat / lastWkRuns) ? (lastWkLat / lastWkRuns): 0; 
-
-    // returns an array with this weeks data followed by last week's data 
-    res.locals.comparison = [
-      { avLatency : thisWkAvLat, 
-        totalColdStarts: thisWkCold, 
-        maxLatency: max, 
-        maxLatFunc: maxFunc, 
-        maxLatId: maxFuncID, 
-      }, 
-      { avLatency : lastWkAvLat, 
-        totalColdStarts: lastWkCold, 
-        maxLatency: lastWkmax, 
-        maxLatFunc: lastWkmaxFunc ? lastWkmaxFunc :0, 
-        maxLatId: lastWkmaxFuncID ? lastWkmaxFuncID: 0 , 
       }
-    ]
+    });
+    // calculate average latency
+    const thisWkAvLat = thisWkLat / thisWkRuns ? thisWkLat / thisWkRuns : 0;
 
-    return next()
+    // calculate metrics for last week
+    // sum of latency for all functions, sum of all cold starts, maximum latency
+    let lastWkLat = 0;
+    let lastWkCold = 0;
+    let lastWkmax = -Infinity;
+    let lastWkmaxFunc;
+    let lastWkmaxFuncID;
+    let lastWkRuns = 0;
+    data.forEach((row, index) => {
+      if ((row.invokeTime > lastWeekStart, row.invokeTime <= thisWeekStart)) {
+        lastWkRuns++;
+        // calculate sum of all latency in this period
+        lastWkLat = lastWkLat + Number(row.serverDifference);
+        // calculate total cold starts in this period
+        if (row.firstRun === '1') {
+          lastWkCold++;
+        }
+
+        // function with maximum latency
+        if (Number(row.serverDifference) > lastWkmax) {
+          lastWkmax = Number(row.serverDifference);
+          lastWkmaxFunc = row.name;
+          lastWkmaxFuncID = row.funcID;
+        }
+      }
+    });
+    // calculate average latency
+    const lastWkAvLat = lastWkLat / lastWkRuns ? lastWkLat / lastWkRuns : 0;
+
+    // returns an array with this weeks data followed by last week's data
+    res.locals.comparison = [
+      {
+        avLatency: thisWkAvLat,
+        totalColdStarts: thisWkCold,
+        maxLatency: max,
+        maxLatFunc: maxFunc,
+        maxLatId: maxFuncID,
+      },
+      {
+        avLatency: lastWkAvLat,
+        totalColdStarts: lastWkCold,
+        maxLatency: lastWkmax,
+        maxLatFunc: lastWkmaxFunc ? lastWkmaxFunc : 0,
+        maxLatId: lastWkmaxFuncID ? lastWkmaxFuncID : 0,
+      },
+    ];
+
+    return next();
   } catch (err) {
-    
     return next({
       log: `Error in dataController within getComparison: ${err}`,
       status: 500,
       message: 'Error in dataController within getComparison ',
     });
-
-  } 
-}
+  }
+};
 
 module.exports = dataController;

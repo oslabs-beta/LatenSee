@@ -6,12 +6,12 @@ import OverviewPanel from '../components/OverviewPanel';
 function Dashboard() {
   const [data, setData] = useState([]);
   const [periodicData, setPeriodicData] = useState([]);
+  const [comparisonData, setComparisonData] = useState([]);
 
   useEffect(() => {
     fetch('/api/data')
       .then((data) => data.json())
       .then((data) => {
-        // console.log('This is data from data.csv', data);
         setData(data);
       })
       .catch((error) => {
@@ -23,8 +23,24 @@ function Dashboard() {
     fetch('/api/period')
       .then((data) => data.json())
       .then((data) => {
-        // console.log('This is data from data.csv', data);
         setPeriodicData(data);
+      })
+      .catch((error) => {
+        console.log('Failed to load data', error);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch('/api/comps')
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Network response was not ok.');
+      })
+      .then((data) => {
+        console.log('comparison data: ', data);
+        setComparisonData(data);
       })
       .catch((error) => {
         console.log('Failed to load data', error);
@@ -45,7 +61,11 @@ function Dashboard() {
         <h1>This is table</h1>
         <div className="table">
           {data ? (
-            <FunctionPerformanceTable data={data} />
+            <FunctionPerformanceTable
+              className="performance-table"
+              data={data}
+              width="calc(100% - 350px)"
+            />
           ) : (
             <div>Loading table...</div>
           )}
@@ -54,7 +74,7 @@ function Dashboard() {
         <div className="overview-panel">
           <h1>This is Overview</h1>
           {data ? (
-            <OverviewPanel data={data} />
+            <OverviewPanel data={comparisonData} />
           ) : (
             <div>Loading overview...</div>
           )}

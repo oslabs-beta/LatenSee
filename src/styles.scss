@@ -331,11 +331,10 @@ $background-color: #a7c9e3;
 
   .side-by-side {
     display: flex;
-    justify-content: space-between; // Place children side by side
+    justify-content: space-between;
 
-    // You might want to ensure these components don't get too narrow
     > div {
-      flex-basis: 48%; // Example: each takes roughly half the container's width
+      flex-basis: 48%;
     }
   }
 
@@ -344,6 +343,14 @@ $background-color: #a7c9e3;
     background-color: gray;
     margin: 20px 0;
   }
+}
+
+.performance-table th,
+.performance-table td {
+  text-align: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 10px;
 }
 
 // .coldStart-percentage-change {
