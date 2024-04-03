@@ -51,50 +51,61 @@ const ConfigForm = () => {
   return (
     <div className="config-form">
       <form onSubmit={handleSubmit}>
-        <label for="appName">App name: </label>
-        <input
-          placeholder='Enter app name (e.g. "MyApp")'
-          type="text"
-          id="appName"
-          name="appName"
-          value={appName}
-          onChange={setAppName}
-        />
-        <label htmlFor="funcname"> Function name: </label>
-        <input
-          placeholder='Enter function name (e.g. "sendEmail")'
-          type="text"
-          id="funcname"
-          name="funcname"
-          value={funcName}
-          onChange={setFuncName}
-        />
+        <div className="name-fields">
+          <div>
+            <label for="appName">App name: </label>
+            <input
+              placeholder='Enter app name (e.g. "MyApp")'
+              type="text"
+              id="appName"
+              name="appName"
+              value={appName}
+              onChange={setAppName}
+            />
+          </div>
+          <div>
+            <label htmlFor="funcname"> Function name: </label>
+            <input
+              placeholder='Enter function name (e.g. "sendEmail")'
+              type="text"
+              id="funcname"
+              name="funcname"
+              value={funcName}
+              onChange={setFuncName}
+            />
+          </div>
+        </div>
         <br></br>
-        <label for="url">Function URL: </label>
-        <input
-          placeholder="Enter function URL"
-          type="text"
-          id="url"
-          name="url"
-          value={url}
-          onChange={setUrl}
-        />
+        <div className="url-div">
+          <label for="url">Function URL: </label> <br></br>
+          <input
+            placeholder="Enter function URL"
+            type="text"
+            id="url"
+            name="url"
+            value={url}
+            onChange={setUrl}
+          />
+        </div>
         <br></br>
-        <label for="invRate">Invocation rate: </label>
-        <input
-          placeholder="Enter as CRON expression (e.g. 0 0 12 * * ?)"
-          type="text"
-          id="invRate"
-          name="invRate"
-          value={invRate}
-          onChange={setInvRate}
-        />
-        <br></br>
-        <label class="switch">
-          Warmer on:
-          <input type="checkbox" />
-          <span class="slider round"></span>
-        </label>
+        <div className="invRate-warmer-div">
+          <label for="invRate">Invocation rate: </label>
+          <input
+            placeholder="Enter as CRON expression (e.g. 0 0 12 * * ?)"
+            type="text"
+            id="invRate"
+            name="invRate"
+            value={invRate}
+            onChange={setInvRate}
+          />
+          <div className="warmer">
+            <label class="switch">
+              Warmer on:
+              <input type="checkbox" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
         <br></br>
         <button type="submit">Save</button>
         {successMessage && <span>{successMessage}</span>}
