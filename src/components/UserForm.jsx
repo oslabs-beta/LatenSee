@@ -18,7 +18,8 @@ const UserForm = () => {
   }, []);
 
   // On click of 'start/stop', update function's status
-  const updateStatus = (funcID) => {
+  const updateStatus = (funcID, warmerOn) => {
+    // TO DELETE NOTE : updated here to make this faster because it was sticking
     const newStatus =
       data.find((item) => item.funcID === funcID).status === 'Yes'
         ? 'No'
@@ -75,7 +76,11 @@ const UserForm = () => {
 
   // On click of 'delete', delete function from server
   const deleteFunc = (funcID) => {
-    fetch('/api/config/delete', { method: 'DELETE' })
+    /* TO DELETE NOTE : updated here because it was not deleting from the csv file,
+     the way that the delete route works is that it uses query params to specify which 
+     function id to delete so I added that here
+    */
+    fetch(`/api/config/delete?id=${funcID}`, { method: 'DELETE' })
       .then(() => {
         console.log('Function deleted');
         // remove the function from the state
@@ -85,6 +90,8 @@ const UserForm = () => {
       .catch((err) => console.log('Error deleting function: ', err));
   };
 
+  /* TO DELETE NOTE : updated option values in the drop down to match the csv file (10S, 1M etc).
+   */
   return (
     <div className="user-table">
       <table>
