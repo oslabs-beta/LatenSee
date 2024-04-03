@@ -55,9 +55,9 @@ configController.addNew = async (req, res, next) => {
         
         } catch (err) {
             return next({
-                log: `Error in middleware ${err}`,
+                log: `Error in configController.addNew middleware ${err}`,
                 status: 500,
-                message: `Error in middleware`,
+                message: `Error in configController.addNew middleware`,
             }); 
         }
 }
@@ -107,9 +107,9 @@ configController.editFunc = async (req, res, next) => {
 
     } catch (err) {
         return next({
-            log: `Error in middleware ${err}`,
+            log: `Error in configController editFunc middleware ${err}`,
             status: 500,
-            message: `Error in edit function middleware`,
+            message: `Error in configController editFunc middleware`,
         }); 
 
     }
@@ -139,9 +139,9 @@ configController.deleteFunc = async (req, res, next) => {
         return next(); 
     }   catch (err) {
         return next({
-            log: `Error in delete function middleware ${err}`,
+            log: `Error in configController deleteFunc middleware ${err}`,
             status: 500,
-            message: `Error in delete function middleware`,
+            message: `Error in configController deleteFunc middleware`,
         }); 
 
     }
