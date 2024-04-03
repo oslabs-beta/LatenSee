@@ -197,10 +197,18 @@ body {
       font-size: 14px;
     }
 
+    select {
+      border-color: white;
+      outline: none;
+      background-color: white;
+      border: 1px solid #aaaaaaac;
+      height: 22px;
+    }
+
     .switch {
       display: inline-flex;
       align-items: center;
-      height: 37px;
+      height: 36px;
     }
 
     .switch input {
@@ -227,7 +235,7 @@ body {
       transition: 0.4s;
       height: 20px;
       width: 37px;
-      margin-left: 5px;
+      margin-left: 0px;
 
       &:before {
         content: '';
@@ -295,6 +303,22 @@ body {
 
     th {
       border-bottom: 1px solid rgba(0, 0, 0, 0.335);
+    }
+
+    button {
+      background: transparent;
+      border: none;
+      padding: 0;
+      outline: none;
+      cursor: pointer;
+    }
+
+    select {
+      border-color: white;
+      outline: none;
+      background-color: white;
+      border: 1px solid #aaaaaaac;
+      height: 21px;
     }
   }
 }
