@@ -37,15 +37,17 @@
 
 import React from 'react';
 
-//accepting props from Overview component
-const ColdStartPercentage = ({
-  data,
-  coldStartPercentagelastWeek,
-  coldStartPercentagethisWeek,
-}) => {
+//accepting props (dataThisWeek and dataLastWeek) from OverviewPanel
+const ColdStartPercentage = ({ dataThisWeek, dataLastWeek }) => {
+  // NOTE! handle case where dataThisWeek or dataLastWeek is not available yet
+  if (!dataThisWeek || !dataLastWeek) {
+    return <div>Loading...</div>;
+  }
   // calculate the percentage increase or decrease
   const percentageChange =
-    coldStartPercentagethisWeek - coldStartPercentagelastWeek;
+    ((dataThisWeek.totalColdStarts - dataLastWeek.totalColdStarts) /
+      dataLastWeek.totalColdStarts) *
+    100;
 
   // color change based on positive or negative
   const color = percentageChange <= 0 ? 'green' : 'red';
@@ -58,7 +60,7 @@ const ColdStartPercentage = ({
         {percentageChange.toFixed(2)}%
       </div>
       <div style={{ color, fontSize: '14px', textAlign: 'center' }}>
-        {increaseDecreaseText} in cold starts
+        coldstart {increaseDecreaseText} since last week
       </div>
     </div>
   );

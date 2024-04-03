@@ -1,13 +1,16 @@
 import React from 'react';
 
-//accepting props from Overview component
-const SpeedPerformance = ({
-  data,
-  averageLatencylastWeek,
-  averageLatencythisWeek,
-}) => {
-  // calculate the percentage increase or decrease
-  const percentageChange = averageLatencythisWeek - averageLatencylastWeek;
+//accepting props (dataThisWeek, dataLastWeek) from Overview component
+const SpeedPerformance = ({ dataThisWeek, dataLastWeek }) => {
+  //hanlde case when data is not available yet
+  if (!dataThisWeek || !dataLastWeek) {
+    return <div>Loading...</div>;
+  }
+  // calculate the percentage
+  const percentageChange =
+    ((dataThisWeek.avLatency - dataLastWeek.avLatency) /
+      dataLastWeek.avLatency) *
+    100;
 
   // color change based on positive or negative
   const color = percentageChange >= 0 ? 'green' : 'red';
@@ -17,10 +20,10 @@ const SpeedPerformance = ({
   return (
     <div className="latency-percentage-change">
       <div style={{ color, fontSize: '24px', textAlign: 'center' }}>
-        {percentageChange.toFixed(2)}ms
+        {percentageChange.toFixed(2)}%
       </div>
       <div style={{ color, fontSize: '14px', textAlign: 'center' }}>
-        {increaseDecreaseText} in performance
+        performance {increaseDecreaseText} since last week
       </div>
     </div>
   );
