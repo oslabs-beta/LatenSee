@@ -12,7 +12,6 @@ function Dashboard() {
     fetch('/api/data')
       .then((data) => data.json())
       .then((data) => {
-        // console.log('This is data from data.csv', data);
         setData(data);
       })
       .catch((error) => {
@@ -24,7 +23,6 @@ function Dashboard() {
     fetch('/api/period')
       .then((data) => data.json())
       .then((data) => {
-        // console.log('This is data from data.csv', data);
         setPeriodicData(data);
       })
       .catch((error) => {
@@ -32,18 +30,35 @@ function Dashboard() {
       });
   }, []);
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch('/api/comps');
+  //       const data = response.json();
+  //       console.log('comparison  data: ', data);
+  //       setComparisonData(data);
+  //     } catch (error) {
+  //       console.log('Failed to load data', error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('api/comps');
-        const data = response.json();
-        console.log('comparison  data: ', data);
+    fetch('/api/comps')
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Network response was not ok.');
+      })
+      .then((data) => {
+        console.log('comparison data: ', data);
         setComparisonData(data);
-      } catch (error) {
+      })
+      .catch((error) => {
         console.log('Failed to load data', error);
-      }
-    };
-    fetchData();
+      });
   }, []);
 
   return (

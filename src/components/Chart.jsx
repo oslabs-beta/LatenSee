@@ -8,9 +8,6 @@ const Chart = ({ data, height, width = '100%' }) => {
     return <div>Loading chart data...</div>;
   }
 
-  //see what data looks like
-  // console.log('This is data passing down from Dashboard: ', data);
-
   // setup series (what's on y-axis)
   const series = [];
   let keys = Object.keys(data[0]);
@@ -20,7 +17,6 @@ const Chart = ({ data, height, width = '100%' }) => {
         name: keys[i],
         data: data.map((item) => item[keys[i]].toFixed(1)).reverse(),
       };
-      console.log('this is data for setting up series: ', data);
       series.push(point);
     }
   }
