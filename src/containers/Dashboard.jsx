@@ -95,10 +95,14 @@ function Dashboard() {
             <div>Loading table...</div>
           )}
         </div>
-        <div className="ping-table">
-          <h1>Ping Table</h1>
+        <h1>Ping Table</h1>
+        <div className="latest-pings-table">
           {pingData ? (
-            <LatestPingsTable data={pingData} />
+            <LatestPingsTable
+              className="pings-table"
+              data={pingData}
+              width="1500px"
+            />
           ) : (
             <div>Loading Ping Table...</div>
           )}

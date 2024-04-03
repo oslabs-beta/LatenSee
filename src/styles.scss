@@ -303,19 +303,6 @@ $sidebar-width: 250px;
 // Background color of the panel
 $background-color: #a7c9e3;
 
-// // Styling for the dashboard container
-// .dashboard-container {
-//   display: flex;
-//   min-height: 100vh; // Full viewport height
-//   padding-right: $sidebar-width; // Make space for the fixed sidebar
-
-//   // Styling for the content area (excluding the sidebar)
-//   .dashboard-content {
-//     flex-grow: 1;
-//     // Add additional styling for the content area if needed
-//   }
-// }
-
 .overview-panel {
   display: flex;
   flex-direction: column;
@@ -353,7 +340,11 @@ $background-color: #a7c9e3;
   padding-left: 10px;
 }
 
-// .coldStart-percentage-change {
-//   align-self: flex-start;
-//   padding: 10px 0;
-// }
+.pings-table th,
+.pings-table td {
+  justify-content: space-between;
+  text-align: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 10px;
+}

@@ -1,14 +1,17 @@
 import React from 'react';
 
-function LatestPingsTable({ data }) {
+function LatestPingsTable({ data, width, className }) {
   // Reverse to start with the last element and slice to get the last 5 items
   const lastFivePings = [...data].reverse().slice(0, 5);
   const coldStartYN = (value) => (value === '1' ? 'Yes' : 'No');
+  const pingTableStyle = {
+    width: width,
+    overflowX: 'auto',
+  };
 
   return (
-    <div className="latest-pings-table">
-      <h2>Last 5 Pings</h2>
-      <table>
+    <div style={pingTableStyle} className="latest-pings-table">
+      <table className={className}>
         <thead>
           <tr>
             <th>Function</th>
