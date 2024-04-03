@@ -195,7 +195,7 @@ const UserForm = () => {
 
   return (
     <div>
-      <div className="app-selection">
+      {/* <div className="app-selection">
         <label htmlFor="appSelect">Select App: </label>
         <select
           id="appSelect"
@@ -208,7 +208,7 @@ const UserForm = () => {
             </option>
           ))}
         </select>
-      </div>
+      </div> */}
       <div className="user-table">
         <table>
           <thead>
@@ -222,7 +222,7 @@ const UserForm = () => {
           </thead>
           <tbody>
             {data
-              .filter((item) => item.appName === selectedApp)
+              // .filter((item) => item.appName === selectedApp)
               .map((item) => (
                 <tr key={item.funcId}>
                   <td>{item.funcName}</td>
