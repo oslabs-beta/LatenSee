@@ -105,8 +105,8 @@ const UserForm = () => {
 
   // state to hold the list of all functions
   const [data, setData] = useState([]);
-  const [apps, setApps] = useState([]);
-  const [selectedApp, setSelectedApp] = useState('');
+  // const [apps, setApps] = useState([]);
+  // const [selectedApp, setSelectedApp] = useState('');
 
   // fetch all functions from server on load
   useEffect(() => {
@@ -240,7 +240,7 @@ const UserForm = () => {
                         editFuncFreq(item.funcID, e.target.value)
                       }
                     >
-                      <option value={`${item.funcFreq}`}>
+                      <option value={`${item.funcFreq}`} selected='selected'>
                         {item.funcFreq}
                       </option>
                       <option value="10S">10S</option>
