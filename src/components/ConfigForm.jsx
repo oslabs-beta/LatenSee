@@ -15,6 +15,7 @@ const ConfigForm = () => {
   const [funcName, setFuncName] = useInput('');
   const [url, setUrl] = useInput('');
   const [invRate, setInvRate] = useInput('');
+  const [warmerOn, setWarmerOn] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
   //on submit, send form data to server
@@ -26,7 +27,7 @@ const ConfigForm = () => {
       funcName: funcName,
       funcUrl: url,
       funcFreq: invRate,
-      warmerOn: '',
+      warmerOn: warmerOn ? 'Yes' : 'No',
       //stretch: add userId field for auth
     };
 
@@ -89,19 +90,30 @@ const ConfigForm = () => {
         </div>
         <br></br>
         <div className="invRate-warmer-div">
-          <label for="invRate">Invocation rate: </label>
-          <input
-            placeholder="Enter as CRON expression (e.g. 0 0 12 * * ?)"
-            type="text"
+          <label htmlFor="invRate">Invocation rate: </label>
+          <select
             id="invRate"
             name="invRate"
             value={invRate}
             onChange={setInvRate}
-          />
+          >
+            <option value="10S">10 Seconds</option>
+            <option value="1M">1 Minute</option>
+            <option value="5M">5 Minutes</option>
+            <option value="15M">15 Minutes</option>
+            <option value="30M">30 Minutes</option>
+            <option value="1H">1 Hour</option>
+            <option value="2H">2 Hours</option>
+            <option value="3H">3 Hours</option>
+          </select>
           <div className="warmer">
             <label class="switch">
               Warmer on:
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                checked={warmerOn}
+                onChange={(e) => setWarmerOn(e.target.checked)}
+              />
               <span class="slider round"></span>
             </label>
           </div>
