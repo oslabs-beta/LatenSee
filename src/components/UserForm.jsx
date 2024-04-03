@@ -15,14 +15,15 @@ const UserForm = () => {
       .catch((error) => {
         console.log('Failed to load functions', error);
       });
-  }, []); 
+  }, []);
 
   // On click of 'start/stop', update function's status
   const updateStatus = (funcID, warmerOn) => {
     // TO DELETE NOTE : updated here to make this faster because it was sticking
-    const newStatus = data.find((item) => item.funcID === funcID).status === 'Yes'
-          ? 'No'
-          : 'Yes';
+    const newStatus =
+      data.find((item) => item.funcID === funcID).status === 'Yes'
+        ? 'No'
+        : 'Yes';
     const updatedData = data.map((item) => {
       // find the function that matches the id and update its status (for immediate UI feedback in status column)
       if (item.funcID === funcID) {
@@ -89,13 +90,14 @@ const UserForm = () => {
       .catch((err) => console.log('Error deleting function: ', err));
   };
 
-  /* TO DELETE NOTE : updated option values in the drop down to match the csv file (10S, 1M etc). 
-    */
+  /* TO DELETE NOTE : updated option values in the drop down to match the csv file (10S, 1M etc).
+   */
   return (
     <div className="user-table">
       <table>
         <thead>
           <tr>
+            <th>App name</th>
             <th>Function name</th>
             <th>Start/Stop</th>
             <th>Status</th>
@@ -106,10 +108,11 @@ const UserForm = () => {
         <tbody>
           {data.map((item) => (
             <tr key={item.funcId}>
+              <td>{item.appName}</td>
               <td>{item.funcName}</td>
               <td>
                 <button onClick={() => updateStatus(item.funcID)}>
-                  {item.status === 'Yes' ? 'Stop' : 'Start'} 
+                  {item.status === 'Yes' ? 'Stop' : 'Start'}
                 </button>
               </td>
               <td>{item.status === 'Yes' ? 'Running' : 'Stopped'}</td>
@@ -119,6 +122,7 @@ const UserForm = () => {
                   id="freq"
                   onChange={(e) => editFuncFreq(item.funcID, e.target.value)}
                 >
+                  <option value="current-freq">{item.funcFreq}</option>
                   <option value="10S">10S</option>
                   <option value="1M">1M</option>
                   <option value="5M">5M</option>
