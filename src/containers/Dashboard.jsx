@@ -3,24 +3,30 @@ import FunctionPerformanceTable from '../components/FunctionPerformanceTable';
 import Chart from '../components/Chart';
 import OverviewPanel from '../components/OverviewPanel';
 import ExportButton from '../components/ExportButton';
+import LatestPingsTable from '../components/LatestPingsTable';
 
 function Dashboard() {
   const [data, setData] = useState([]);
+  const [pingData, setPingData] = useState([]);
   const [periodicData, setPeriodicData] = useState([]);
   const [comparisonData, setComparisonData] = useState([]);
+  const [dateRange, setDateRange] = useState('');
 
+  //for FunctionPerformanceTable and LatestPingsTable
   useEffect(() => {
     fetch('/api/data')
       .then((data) => data.json())
       .then((data) => {
         setData(data[0]);
-        console.log("trying on", data[1])
+        setPingData(data[1]);
+        console.log('newly added data: ', data[1]);
       })
       .catch((error) => {
         console.log('Failed to load data', error);
       });
   }, []);
 
+  //for Chart
   useEffect(() => {
     fetch('/api/period')
       .then((data) => data.json())
@@ -32,6 +38,7 @@ function Dashboard() {
       });
   }, []);
 
+  //for OverviewPanel
   useEffect(() => {
     fetch('/api/comps')
       .then((response) => {
@@ -49,10 +56,27 @@ function Dashboard() {
       });
   }, []);
 
+  //for title of FunctionPerformanceTable
+  useEffect(() => {
+    // Date range calculation
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(endDate.getDate() - 6);
+
+    const formatDate = (date) => {
+      return `${date.getMonth() + 1}/${date.getDate()}`;
+    };
+
+    const formattedDateRange = `${formatDate(startDate)} - ${formatDate(
+      endDate
+    )}`;
+    setDateRange(formattedDateRange);
+  }, []);
+
   return (
     <div className="dashboard-container">
       <div className="dashboard-content">
-        <h1>Serverless Function Pings</h1>
+        <h1>Average Latency Trends Across Functions</h1>
         <ExportButton />
         <div className="chart">
           {data ? (
@@ -61,7 +85,7 @@ function Dashboard() {
             <div>Loading chart...</div>
           )}
         </div>
-        <h1>This is table</h1>
+        <h1>Performance Table ({dateRange})</h1>
         <div className="table">
           {data ? (
             <FunctionPerformanceTable
@@ -73,9 +97,20 @@ function Dashboard() {
             <div>Loading table...</div>
           )}
         </div>
-
+        <h1>Ping Table</h1>
+        <div className="latest-pings-table">
+          {pingData ? (
+            <LatestPingsTable
+              className="pings-table"
+              data={pingData}
+              width="1500px"
+            />
+          ) : (
+            <div>Loading Ping Table...</div>
+          )}
+        </div>
         <div className="overview-panel">
-          <h1>This is Overview</h1>
+          <h1>Overview</h1>
           {data ? (
             <OverviewPanel data={comparisonData} />
           ) : (

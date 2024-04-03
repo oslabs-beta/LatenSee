@@ -117,7 +117,7 @@ dataController.getRuns = async (req, res, next) => {
     // calculate totals and averages for all the functions in totalRuns
 
     res.locals.runs = totalRuns;
-    res.locals.all = data; 
+    res.locals.all = data;
     // console.log(res.locals.runs);
     return next();
   } catch (err) {
