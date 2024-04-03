@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import FunctionPerformanceTable from '../components/FunctionPerformanceTable';
 import Chart from '../components/Chart';
 import OverviewPanel from '../components/OverviewPanel';
+import ExportButton from '../components/ExportButton';
 
 function Dashboard() {
   const [data, setData] = useState([]);
@@ -50,7 +51,8 @@ function Dashboard() {
   return (
     <div className="dashboard-container">
       <div className="dashboard-content">
-        <h1>This is chart</h1>
+        <h1>Serverless Function Pings</h1>
+        <ExportButton />
         <div className="chart">
           {data ? (
             <Chart data={periodicData} height={375} width="70%" />
