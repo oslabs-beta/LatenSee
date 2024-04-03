@@ -106,45 +106,28 @@ configController.editFunc = async (req, res, next) => {
       }
     });
 
-    // if new frequency is specified, update the frequency of the function and re-write file
-    if (funcFreq) {
-      records[selectedIndex].funcFreq = funcFreq;
-      fs.writeFileSync(
-        userfileName,
-        stringify(
-          records,
-          { header: true, columns: heading },
-          function (err, str) {
-            if (err) {
-              console.log(err);
-            } else {
-              console.log('updated record');
-            }
-          }
-        )
-      );
-    }
+        // if new frequency is specified, update the frequency of the function and re-write file
+        if (funcFreq){
+            records[selectedIndex].funcFreq = funcFreq; 
+            fs.writeFileSync(userfileName, stringify(records, {header: true, columns: heading} , function (err, str) {
+                if (err) {
+                    console.log(err); 
+                } else {
+                    console.log('updated record')
+                } }))
+        }
 
-    if (warmerOn) {
-      records[selectedIndex].warmerOn = warmerOn;
-      fs.writeFileSync(
-        userfileName,
-        stringify(
-          records,
-          { header: true, columns: heading },
-          function (err, str) {
-            if (err) {
-              console.log(err);
-            } else {
-              console.log('updated record');
-            }
-          }
-        )
-      );
-    }
+        if (warmerOn){
+            records[selectedIndex].warmerOn = warmerOn; 
+            fs.writeFileSync(userfileName, stringify(records, {header: true, columns: heading} , function (err, str) {
+                if (err) {
+                    console.log(err); 
+                } else {
+                    console.log('updated record')
+                } }))
 
-        initializeJobsOnce()
-
+        }
+    initializeJobsOnce()
     return next();
   } catch (err) {
     return next({
@@ -184,6 +167,7 @@ configController.deleteFunc = async (req, res, next) => {
         }
       )
     );
+    initializeJobsOnce()
     return next();
   } catch (err) {
     return next({
