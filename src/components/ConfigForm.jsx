@@ -16,6 +16,7 @@ const ConfigForm = () => {
   const [url, setUrl] = useInput('');
   const [invRate, setInvRate] = useInput('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [warmerOn, setWarmerOn] = useState(true)
 
   //on submit, send form data to server
   const handleSubmit = (e) => {
@@ -26,7 +27,7 @@ const ConfigForm = () => {
       funcName: funcName,
       funcUrl: url,
       funcFreq: invRate,
-      warmerOn: '',
+      warmerOn: warmerOn ? 'Yes' : 'No',
       //stretch: add userId field for auth
     };
 
@@ -101,7 +102,7 @@ const ConfigForm = () => {
           <div className="warmer">
             <label class="switch">
               Warmer on:
-              <input type="checkbox" />
+              <input type="checkbox" name="warmer" value="Yes" checked={warmerOn} onChange={() => {console.log('Status was: ', warmerOn); setWarmerOn((oldState) => !oldState);}}/>
               <span class="slider round"></span>
             </label>
           </div>
