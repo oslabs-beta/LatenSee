@@ -156,7 +156,7 @@ body {
     }
 
     .url-div {
-      margin-bottom: -17px;
+      margin-bottom: -5px;
 
       input {
         margin-top: 8px;
@@ -198,11 +198,17 @@ body {
     }
 
     select {
+      padding: 8px;
+      border-radius: 4px;
       border-color: white;
       outline: none;
       background-color: white;
-      border: 1px solid #aaaaaaac;
-      height: 22px;
+      border: 1px solid #e0e0e0;
+      height: 21px;
+
+      &:focus {
+        outline: 1px solid #1a73e8;
+      }
     }
 
     .switch {
@@ -287,22 +293,62 @@ body {
     margin-left: 50px;
   }
 
-  .user-table {
-    margin-left: 7%;
-    margin-right: 15%;
+  select {
+    padding: 8px;
+    border-radius: 4px;
+    border-color: white;
+    outline: none;
     background-color: white;
-    border: 1px solid rgba(0, 0, 0, 0.335);
+    border: 1px solid #e0e0e0;
+    height: 21px;
+
+    &:focus {
+      outline: 1px solid #1a73e8;
+    }
+  }
+
+  .app-selection {
+    margin-left: 120px;
+    margin-bottom: 20px;
+
+    label {
+      margin-right: 10px;
+    }
+
+    select {
+      cursor: pointer;
+    }
+  }
+
+  .user-table {
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
 
     th,
     td {
-      padding: 10px 30px;
-      &:not(:last-child) {
-        border-right: 1px solid rgba(0, 0, 0, 0.057);
+      text-align: center;
+      padding: 12px 15px;
+      border-bottom: 1px solid #e0e0e0;
+      // &:not(:last-child) {
+      //   border-right: 1px solid rgba(0, 0, 0, 0.057);
+      // }
+      &:last-child {
+        text-align: center;
       }
     }
 
     th {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.335);
+      background-color: #f5f5f5;
+      color: #333;
+      font-weight: bold;
+      // border-bottom: 1px solid rgba(0, 0, 0, 0.335);
+    }
+
+    tbody tr:hover {
+      background-color: #fafafa;
     }
 
     button {
@@ -312,33 +358,13 @@ body {
       outline: none;
       cursor: pointer;
     }
-
-    select {
-      border-color: white;
-      outline: none;
-      background-color: white;
-      border: 1px solid #aaaaaaac;
-      height: 21px;
-    }
   }
 }
+
 // Width of the overview panel
 $sidebar-width: 250px;
 // Background color of the panel
 $background-color: #a7c9e3;
-
-// // Styling for the dashboard container
-// .dashboard-container {
-//   display: flex;
-//   min-height: 100vh; // Full viewport height
-//   padding-right: $sidebar-width; // Make space for the fixed sidebar
-
-//   // Styling for the content area (excluding the sidebar)
-//   .dashboard-content {
-//     flex-grow: 1;
-//     // Add additional styling for the content area if needed
-//   }
-// }
 
 .overview-panel {
   display: flex;
@@ -363,21 +389,18 @@ $background-color: #a7c9e3;
   }
 
   .separator-bar {
-    height: 2px;
-    background-color: gray;
+    height: 1.5px;
+    background-color: rgba(128, 128, 128, 0.166);
     margin: 20px 0;
   }
 }
 
-.performance-table th,
-.performance-table td {
-  text-align: center;
-  padding-bottom: 10px;
-  padding-top: 10px;
-  padding-left: 10px;
+.performance-table {
+  th,
+  td {
+    text-align: center;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 10px;
+  }
 }
-
-// .coldStart-percentage-change {
-//   align-self: flex-start;
-//   padding: 10px 0;
-// }

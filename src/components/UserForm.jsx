@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 const UserForm = () => {
   const openEyeSVG = (
     <svg
-      width="34px"
-      height="34px"
+      width="30px"
+      height="30px"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -37,8 +37,8 @@ const UserForm = () => {
 
   const closedEyeSVG = (
     <svg
-      width="34px"
-      height="34px"
+      width="30px"
+      height="30px"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -63,8 +63,8 @@ const UserForm = () => {
 
   const deleteSVG = (
     <svg
-      width="30px"
-      height="30px"
+      width="25px"
+      height="25px"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -105,13 +105,20 @@ const UserForm = () => {
 
   // state to hold the list of all functions
   const [data, setData] = useState([]);
+  const [apps, setApps] = useState([]);
+  const [selectedApp, setSelectedApp] = useState('');
 
   // fetch all functions from server on load
   useEffect(() => {
     fetch('/api/user')
-      .then((data) => data.json())
+      .then((res) => res.json())
       .then((data) => {
         setData(data); // Set the state with the fetched data
+        const appNames = [...new Set(data.map((item) => item.appName))]; // Get all unique app names
+        setApps(appNames); // Set the state with the unique app names
+        if (appNames.length > 0) {
+          setSelectedApp(appNames[0]);
+        }
       })
       .catch((error) => {
         console.log('Failed to load functions', error);
@@ -120,7 +127,6 @@ const UserForm = () => {
 
   // On click of 'start/stop', update function's status
   const updateStatus = (funcID, warmerOn) => {
-    // TO DELETE NOTE : updated here to make this faster because it was sticking
     const newStatus =
       data.find((item) => item.funcID === funcID).status === 'Yes'
         ? 'No'
@@ -194,55 +200,75 @@ const UserForm = () => {
   /* TO DELETE NOTE : updated option values in the drop down to match the csv file (10S, 1M etc).
    */
   return (
-    <div className="user-table">
-      <table>
-        <thead>
-          <tr>
-            <th>App name</th>
-            <th>Function name</th>
-            <th>Start/Stop</th>
-            <th>Status</th>
-            <th>Edit Frequency</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((item) => (
-            <tr key={item.funcId}>
-              <td>{item.appName}</td>
-              <td>{item.funcName}</td>
-              <td>
-                <button onClick={() => updateStatus(item.funcID)}>
-                  {item.status === 'Yes' ? openEyeSVG : closedEyeSVG}
-                </button>
-              </td>
-              <td>{item.status === 'Yes' ? 'Running' : 'Stopped'}</td>
-              <td>
-                <select
-                  name="funcFreq"
-                  id="freq"
-                  onChange={(e) => editFuncFreq(item.funcID, e.target.value)}
-                >
-                  <option value={`${item.funcFreq}`}>{item.funcFreq}</option>
-                  <option value="10S">10S</option>
-                  <option value="1M">1M</option>
-                  <option value="5M">5M</option>
-                  <option value="15M">15M</option>
-                  <option value="30M">30M</option>
-                  <option value="1H">1H</option>
-                  <option value="2H">2H</option>
-                  <option value="3H">3H</option>
-                </select>
-              </td>
-              <td>
-                <button onClick={() => deleteFunc(item.funcID)}>
-                  {deleteSVG}
-                </button>
-              </td>
-            </tr>
+    <div>
+      <div className="app-selection">
+        <label htmlFor="appSelect">Select App: </label>
+        <select
+          id="appSelect"
+          value={selectedApp}
+          onChange={(e) => setSelectedApp(e.target.value)}
+        >
+          {apps.map((app) => (
+            <option key={app} value={app}>
+              {app}
+            </option>
           ))}
-        </tbody>
-      </table>
+        </select>
+      </div>
+      <div className="user-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Function name</th>
+              <th>Start/Stop</th>
+              <th>Status</th>
+              <th>Edit Frequency</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data
+              .filter((item) => item.appName === selectedApp)
+              .map((item) => (
+                <tr key={item.funcId}>
+                  <td>{item.funcName}</td>
+                  <td>
+                    <button onClick={() => updateStatus(item.funcID)}>
+                      {item.status === 'Yes' ? openEyeSVG : closedEyeSVG}
+                    </button>
+                  </td>
+                  <td>{item.status === 'Yes' ? 'Running' : 'Stopped'}</td>
+                  <td>
+                    <select
+                      name="funcFreq"
+                      id="freq"
+                      onChange={(e) =>
+                        editFuncFreq(item.funcID, e.target.value)
+                      }
+                    >
+                      <option value={`${item.funcFreq}`}>
+                        {item.funcFreq}
+                      </option>
+                      <option value="10S">10S</option>
+                      <option value="1M">1M</option>
+                      <option value="5M">5M</option>
+                      <option value="15M">15M</option>
+                      <option value="30M">30M</option>
+                      <option value="1H">1H</option>
+                      <option value="2H">2H</option>
+                      <option value="3H">3H</option>
+                    </select>
+                  </td>
+                  <td>
+                    <button onClick={() => deleteFunc(item.funcID)}>
+                      {deleteSVG}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
