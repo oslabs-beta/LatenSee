@@ -143,9 +143,12 @@ const initializeJobs = () => {
     else {
       console.log('ran again')
       /*cancel jobs*/
-      cache.forEach (job => {
+      cache.forEach ((job) => {
         job.cancel()
+        console.log('cancelled')
       })
+      cache = []
+      console.log('showing', cache); 
       const funcsList = await getOnFuncs()
       funcsList.forEach(element =>{
         //specify endpoint information for all the functions in the list of warmerOn functions
@@ -157,6 +160,7 @@ const initializeJobs = () => {
         /*Re-schedule the jobs*/
         let myJobs = schedule.scheduleJob(`${scheduling[element.funcFreq]}`, () =>
         callAndLog(endpoint, Date.now()));
+        cache.push(myJobs); 
         
       })
     }

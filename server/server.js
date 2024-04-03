@@ -45,7 +45,7 @@ app.use((err, req, res, next) => {
 
 initializeJobsOnce()
 
-setInterval(()=>(initializeJobsOnce()), 20000)
+// setInterval(()=>(initializeJobsOnce()), 20000)
 
 // set up listener
 app.listen(PORT, () => {

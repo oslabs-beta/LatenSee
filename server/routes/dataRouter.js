@@ -14,7 +14,7 @@ router.get('/user', dataController.getData, (req, res) => {
 
 router.get('/data', dataController.getData,dataController.getRuns, (req, res) => {
     // console.log("from response", res.locals.funcData); 
-    res.status(200).json(res.locals.runs); 
+    res.status(200).json([res.locals.runs, res.locals.all]); 
 
 })
 

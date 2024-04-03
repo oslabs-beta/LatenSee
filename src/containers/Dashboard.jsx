@@ -12,7 +12,8 @@ function Dashboard() {
     fetch('/api/data')
       .then((data) => data.json())
       .then((data) => {
-        setData(data);
+        setData(data[0]);
+        console.log("trying on", data[1])
       })
       .catch((error) => {
         console.log('Failed to load data', error);

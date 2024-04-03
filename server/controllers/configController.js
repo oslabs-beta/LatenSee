@@ -3,6 +3,7 @@ const path = require('path');
 const csvFuncs = require(path.resolve(__dirname, './csvFuncs.js'));
 const parse = require ('csv-parser');
 const {stringify} = require('csv-stringify/sync'); 
+const initializeJobsOnce = require('../runJobs');
 
 const configController = {}; 
 let funcID; 
@@ -51,6 +52,7 @@ configController.addNew = async (req, res, next) => {
             // append funcURL to .env file with unique name 'funcID-URL'
             fs.appendFileSync('.env', `${funcID}_URL = '${funcUrl}'\n`)
         }
+        initializeJobsOnce()
         return next(); 
         
         } catch (err) {
@@ -102,6 +104,8 @@ configController.editFunc = async (req, res, next) => {
                 } }))
 
         }
+
+        initializeJobsOnce()
 
         return next(); 
 

@@ -15,14 +15,14 @@ const UserForm = () => {
       .catch((error) => {
         console.log('Failed to load functions', error);
       });
-  }, []);
+  }, [data]);
 
   // On click of 'start/stop', update function's status
   const updateStatus = (funcID, warmerOn) => {
-    const newStatus =
-      data.find((item) => item.funcID === funcID).status === 'Yes'
-        ? 'No'
-        : 'Yes';
+    const newStatus = (warmerOn === 'Yes' ? 'No': 'Yes')
+      // data.find((item) => item.funcID === funcID).status === 'Yes'
+      //   ? 'No'
+      //   : 'Yes';
     const updatedData = data.map((item) => {
       // find the function that matches the id and update its status (for immediate UI feedback in status column)
       if (item.funcID === funcID) {
@@ -104,11 +104,11 @@ const UserForm = () => {
               <td>{item.appName}</td>
               <td>{item.funcName}</td>
               <td>
-                <button onClick={() => updateStatus(item.funcID)}>
-                  {item.status === 'Yes' ? 'Stop' : 'Start'}
+                <button onClick={() => updateStatus(item.funcID, item.warmerOn)}>
+                  {item.warmerOn === 'Yes' ? 'Stop' : 'Start'}
                 </button>
               </td>
-              <td>{item.status === 'Yes' ? 'Running' : 'Stopped'}</td>
+              <td>{item.warmerOn === 'Yes' ? 'Running' : 'Stopped'}</td>
               <td>
                 <select
                   name="funcFreq"
