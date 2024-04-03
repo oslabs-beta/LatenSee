@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import FunctionPerformanceTable from '../components/FunctionPerformanceTable';
 import Chart from '../components/Chart';
 import OverviewPanel from '../components/OverviewPanel';
+import ExportButton from '../components/ExportButton';
 import LatestPingsTable from '../components/LatestPingsTable';
 
 function Dashboard() {
@@ -76,6 +77,7 @@ function Dashboard() {
     <div className="dashboard-container">
       <div className="dashboard-content">
         <h1>Average Latency Trends Across Functions</h1>
+        <ExportButton />
         <div className="chart">
           {data ? (
             <Chart data={periodicData} height={375} width="70%" />

@@ -1,6 +1,7 @@
 // Require needed modules
 const express = require('express');
 const dataController = require('../controllers/dataController.js');
+const path = require('path');
 
 // Require controllers
 
@@ -38,5 +39,10 @@ router.get(
     res.status(200).json(res.locals.comparison);
   }
 );
+
+// Send the raw csv file with all pings that have been recorded
+router.get('/dataExport', (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, '../storage/data.csv'));
+});
 
 module.exports = router;
