@@ -27,7 +27,7 @@ const ConfigForm = () => {
       funcName: funcName,
       funcUrl: url,
       funcFreq: invRate,
-      warmerOn: '',
+      warmerOn: warmerOn ? 'Yes' : 'No',
       //stretch: add userId field for auth
     };
 

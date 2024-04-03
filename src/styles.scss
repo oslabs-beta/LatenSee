@@ -395,12 +395,19 @@ $background-color: #a7c9e3;
   }
 }
 
-.performance-table {
-  th,
-  td {
-    text-align: center;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    padding-left: 10px;
-  }
+.performance-table th,
+.performance-table td {
+  text-align: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.pings-table th,
+.pings-table td {
+  justify-content: space-between;
+  text-align: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 10px;
 }
