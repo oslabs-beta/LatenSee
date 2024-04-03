@@ -1,6 +1,6 @@
 const path = require('path');
 const express = require('express');
-const initializeJobs = require('./runJobs');
+const initializeJobsOnce = require('./runJobs');
 const dataRouter = require(path.join(__dirname, './routes/dataRouter.js'));
 const configRouter = require(path.join(__dirname, './routes/configRouter.js'));
 
@@ -43,7 +43,9 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message);
 });
 
-// initializeJobs();
+initializeJobsOnce()
+
+setInterval(()=>(initializeJobsOnce()), 20000)
 
 // set up listener
 app.listen(PORT, () => {
