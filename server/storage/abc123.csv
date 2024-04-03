@@ -1,4 +1,1 @@
 funcID,appName,funcName,funcFreq,userID,warmerOn
-3,myCoolApp3,testfuncforApp3,5M,abc123,No
-4,myCoolApp4,testfuncforApp5,1M,abc123,Yes
-9,myCoolApp5,testfuncforApp10,10S,abc123,Yes
