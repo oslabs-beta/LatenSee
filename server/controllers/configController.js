@@ -49,7 +49,7 @@ configController.addNew = async (req, res, next) => {
                 } }))
 
             // append funcURL to .env file with unique name 'funcID-URL'
-            fs.appendFileSync('.env', `${funcID}_URL = '${funcUrl}'\n`)
+            fs.appendFileSync('.env', `${funcID}_URL="${funcUrl}"\n`)
         }
         return next(); 
         

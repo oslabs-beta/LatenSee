@@ -53,11 +53,11 @@ dataController.getRuns = async (req, res, next) => {
     records.forEach((row) => {
       // count tracks number of runs for each function in specified date
       let count = csvFuncs.getTotalRuns(data, row.funcID, startDate, endDate);
-      // count cold tracks the number of runs for each function where 'firstRun' is true
+      // count cold tracks the number of runs for each function where 'cold' is true
       let countCold = csvFuncs.getCold(
         data,
         row.funcID,
-        '1',
+        true,
         startDate,
         endDate
       );
@@ -69,7 +69,7 @@ dataController.getRuns = async (req, res, next) => {
         'serverDifference',
         startDate,
         endDate,
-        null
+        false
       );
       let avWarmLat =
         csvFuncs.getSum(
@@ -78,7 +78,7 @@ dataController.getRuns = async (req, res, next) => {
           'serverDifference',
           startDate,
           endDate,
-          ''
+          false
         ) /
         (count - countCold);
       let avColdLat =
@@ -88,7 +88,7 @@ dataController.getRuns = async (req, res, next) => {
           'serverDifference',
           startDate,
           endDate,
-          '1'
+          true
         ) / countCold;
 
       // percCold is the average number of cold starts and avLat is the average latency
@@ -158,7 +158,7 @@ dataController.getPeriodData = async (req, res, next) => {
           'serverDifference',
           week[i + 1],
           week[i],
-          null
+          false
         );
 
         dayData[row.funcName] = avLat / count ? avLat / count : 0;
@@ -203,7 +203,7 @@ dataController.getComparison = async (req, res, next) => {
         // calculate sum of all latency in this period
         thisWkLat = thisWkLat + Number(row.serverDifference);
         // calculate total cold starts in this period
-        if (row.firstRun === '1') {
+        if (row.cold === true) {
           thisWkCold++;
         }
 
@@ -232,7 +232,7 @@ dataController.getComparison = async (req, res, next) => {
         // calculate sum of all latency in this period
         lastWkLat = lastWkLat + Number(row.serverDifference);
         // calculate total cold starts in this period
-        if (row.firstRun === '1') {
+        if (row.cold === true) {
           lastWkCold++;
         }
 
