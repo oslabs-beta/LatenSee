@@ -15,14 +15,14 @@ const UserForm = () => {
       .catch((error) => {
         console.log('Failed to load functions', error);
       });
-  }, []);
+  }, []); 
 
   // On click of 'start/stop', update function's status
-  const updateStatus = (funcID) => {
-    const newStatus =
-      data.find((item) => item.funcID === funcID).status === 'Yes'
-        ? 'No'
-        : 'Yes';
+  const updateStatus = (funcID, warmerOn) => {
+    // TO DELETE NOTE : updated here to make this faster because it was sticking
+    const newStatus = data.find((item) => item.funcID === funcID).status === 'Yes'
+          ? 'No'
+          : 'Yes';
     const updatedData = data.map((item) => {
       // find the function that matches the id and update its status (for immediate UI feedback in status column)
       if (item.funcID === funcID) {
@@ -75,7 +75,11 @@ const UserForm = () => {
 
   // On click of 'delete', delete function from server
   const deleteFunc = (funcID) => {
-    fetch('/api/config/delete', { method: 'DELETE' })
+    /* TO DELETE NOTE : updated here because it was not deleting from the csv file,
+     the way that the delete route works is that it uses query params to specify which 
+     function id to delete so I added that here
+    */
+    fetch(`/api/config/delete?id=${funcID}`, { method: 'DELETE' })
       .then(() => {
         console.log('Function deleted');
         // remove the function from the state
@@ -85,6 +89,8 @@ const UserForm = () => {
       .catch((err) => console.log('Error deleting function: ', err));
   };
 
+  /* TO DELETE NOTE : updated option values in the drop down to match the csv file (10S, 1M etc). 
+    */
   return (
     <div className="user-table">
       <table>
@@ -103,7 +109,7 @@ const UserForm = () => {
               <td>{item.funcName}</td>
               <td>
                 <button onClick={() => updateStatus(item.funcID)}>
-                  {item.status === 'Yes' ? 'Stop' : 'Start'}
+                  {item.status === 'Yes' ? 'Stop' : 'Start'} 
                 </button>
               </td>
               <td>{item.status === 'Yes' ? 'Running' : 'Stopped'}</td>
@@ -113,14 +119,14 @@ const UserForm = () => {
                   id="freq"
                   onChange={(e) => editFuncFreq(item.funcID, e.target.value)}
                 >
-                  <option value="*/10 * * * * *">10S</option>
-                  <option value="0 */1 * * * *">1M</option>
-                  <option value="0 */5 * * * *">5M</option>
-                  <option value="0 */15 * * * *">15M</option>
-                  <option value="0 */30 * * * *">30M</option>
-                  <option value="0 0 */1 * * *">1H</option>
-                  <option value="0 0 */2 * * *">2H</option>
-                  <option value="0 0 */3 * * *">3H</option>
+                  <option value="10S">10S</option>
+                  <option value="1M">1M</option>
+                  <option value="5M">5M</option>
+                  <option value="15M">15M</option>
+                  <option value="30M">30M</option>
+                  <option value="1H">1H</option>
+                  <option value="2H">2H</option>
+                  <option value="3H">3H</option>
                 </select>
               </td>
               <td>
