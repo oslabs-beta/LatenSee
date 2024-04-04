@@ -63,7 +63,7 @@ csvFuncs.getCold = (arr, funcID, value, startDate, endDate) => {
       row.invokeTime <= endDate &&
       row.funcID === funcID
     ) {
-      if (row.cold === value) {
+      if (row.cold == value) {
         selectedRows.push(row);
       }
     }
