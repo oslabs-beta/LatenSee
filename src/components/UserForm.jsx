@@ -114,11 +114,11 @@ const UserForm = () => {
       .then((res) => res.json())
       .then((data) => {
         setData(data); // Set the state with the fetched data
-        const appNames = [...new Set(data.map((item) => item.appName))]; // Get all unique app names
-        setApps(appNames); // Set the state with the unique app names
-        if (appNames.length > 0) {
-          setSelectedApp(appNames[0]);
-        }
+        // const appNames = [...new Set(data.map((item) => item.appName))]; // Get all unique app names
+        // setApps(appNames); // Set the state with the unique app names
+        // if (appNames.length > 0) {
+        //   setSelectedApp(appNames[0]);
+        // }
       })
       .catch((error) => {
         console.log('Failed to load functions', error);
@@ -238,10 +238,8 @@ const UserForm = () => {
                       id="freq"
                       onChange={(e) =>
                         editFuncFreq(item.funcID, e.target.value)
-                      }
-                    >
-                      <option value={`${item.funcFreq}`} selected='selected'>
-                        {item.funcFreq}
+                      }>
+                      <option value={`${item.funcFreq}`} selected>{item.funcFreq}
                       </option>
                       <option value="10S">10S</option>
                       <option value="1M">1M</option>

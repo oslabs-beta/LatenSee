@@ -1,7 +1,7 @@
 // Imports
 const csvFuncs = require('./controllers/csvFuncs');
 const schedule = require('node-schedule');
-require('dotenv').config();
+require('dotenv').config({path:'./.env'});
 const fs = require('fs');
 const path = require('path');
 const { stringify } = require('csv-stringify/sync');
@@ -49,6 +49,7 @@ const callAndLog = async (endpoint, invokeTime) => {
     // parse the fetch results
     let result = await response.json();
     /*result = {cold: true/false} */
+    
 
     const params = [
       [
@@ -165,6 +166,7 @@ const initializeJobs = () => {
       cache = []
       console.log('showing', cache); 
       const funcsList = await getOnFuncs()
+      console.log('func list', funcsList)
       funcsList.forEach(element =>{
         //specify endpoint information for all the functions in the list of warmerOn functions
         let endpoint = {
