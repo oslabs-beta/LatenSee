@@ -3,7 +3,7 @@ import React from 'react';
 function LatestPingsTable({ data, width, className }) {
   // Reverse to start with the last element and slice to get the last 5 items
   const lastFivePings = [...data].reverse().slice(0, 5);
-  const coldStartYN = (value) => (value === '1' ? 'Yes' : 'No');
+  const coldStartYN = (value) => (value == 'true' ? 'Yes' : 'No');
   const pingTableStyle = {
     width: width,
     overflowX: 'auto',
