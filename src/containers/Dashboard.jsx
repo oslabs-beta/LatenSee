@@ -74,51 +74,61 @@ function Dashboard() {
   }, []);
 
   return (
-    <div className="dashboard-container">
-      <div className="dashboard-content">
-        <h1>Average Latency Trends Across Functions</h1>
-        <ExportButton />
-        <div className="chart">
-          {data ? (
-            <Chart data={periodicData} height={375} width="70%" />
-          ) : (
-            <div>Loading chart...</div>
-          )}
+    <>
+      <div className="dashboard-container">
+        <div className="dashboard-content">
+          <h1 className="chart-title">
+            Average Latency Trends Across Functions
+          </h1>
+          <div className="export-button-wrapper">
+            <ExportButton className="export-button" />
+          </div>
+          <div className="chart">
+            {data ? (
+              <Chart data={periodicData} height={375} width="100%" />
+            ) : (
+              <div>Loading chart...</div>
+            )}
+          </div>
+          <h1 className="performance-table-title">
+            Performance Table ({dateRange})
+          </h1>
+          <div className="performance-table">
+            {data ? (
+              <FunctionPerformanceTable
+                className="performance-table"
+                data={data}
+                // width="calc(100% - 350px)"
+              />
+            ) : (
+              <div>Loading table...</div>
+            )}
+          </div>
+          <h1 className="pings-table-title">Most Recent Pings</h1>
+          <div className="pings-table">
+            {pingData ? (
+              <LatestPingsTable
+                className="pings-table"
+                data={pingData}
+                // width="calc(100% - 350px)"
+              />
+            ) : (
+              <div>Loading Ping Table...</div>
+            )}
+          </div>
         </div>
-        <h1>Performance Table ({dateRange})</h1>
-        <div className="table">
+      </div>
+      <div className="overview-panel">
+        <div className="overview-content">
+          <h1 className="overview-title">Overview</h1>
           {data ? (
-            <FunctionPerformanceTable
-              className="performance-table"
-              data={data}
-              width="calc(100% - 350px)"
-            />
-          ) : (
-            <div>Loading table...</div>
-          )}
-        </div>
-        <h1>Ping Table</h1>
-        <div className="latest-pings-table">
-          {pingData ? (
-            <LatestPingsTable
-              className="pings-table"
-              data={pingData}
-              width="1500px"
-            />
-          ) : (
-            <div>Loading Ping Table...</div>
-          )}
-        </div>
-        <div className="overview-panel">
-          <h1>Overview</h1>
-          {data ? (
-            <OverviewPanel data={comparisonData} />
+            <OverviewPanel className="overview-panel" data={comparisonData} />
           ) : (
             <div>Loading overview...</div>
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
