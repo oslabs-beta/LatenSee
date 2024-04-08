@@ -116,7 +116,7 @@ const UserForm = () => {
           </thead>
           <tbody>
             {data
-              .filter((item) =>( item.appName === selectedApp))
+              .filter((item) => item.appName === selectedApp)
               .map((item) => (
                 <tr key={item.funcId}>
                   <td>{item.funcName}</td>
@@ -133,7 +133,7 @@ const UserForm = () => {
                       onChange={(e) =>
                         editFuncFreq(item.funcID, e.target.value)
                       }>
-                      <option value={`${item.funcFreq}`} selected>{item.funcFreq}
+                      <option value={`${item.funcFreq}`}>{item.funcFreq}
                       </option>
                       <option value="10S">10S</option>
                       <option value="1M">1M</option>
