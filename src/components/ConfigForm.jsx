@@ -20,8 +20,14 @@ const ConfigForm = () => {
 
   //on submit, send form data to server
   const handleSubmit = (e) => {
+    console.log("rate", invRate)
     e.preventDefault();
-    //form body to send to server
+    if (!invRate || invRate === 'Select' || !appName || !funcName || !url || !warmerOn) {
+      setSuccessMessage('Please fill in all required feilds')
+
+    }
+    else {
+      //form body to send to server
     const body = {
       appName: appName,
       funcName: funcName,
@@ -47,6 +53,9 @@ const ConfigForm = () => {
         console.log(' add func fetch api/config/new: ERROR: ', err);
         setSuccessMessage(''); //reset the success message on error
       });
+
+    }
+    
   };
 
   return (
