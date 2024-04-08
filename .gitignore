@@ -2,6 +2,3 @@ node_modules/
 dist/
 .env
 *.DS_Store
-
-#Ignore test files
-__tests__/
