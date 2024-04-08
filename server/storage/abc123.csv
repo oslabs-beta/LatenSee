@@ -1,9 +1,9 @@
 funcID,appName,funcName,funcFreq,userID,warmerOn
-1,Evans Lambdas,10S,10S,abc123,Yes
-2,Evans Lambdas,10M,1M,abc123,Yes
-3,Evans Lambdas,5M,5M,abc123,Yes
-4,Evans Lambdas,3H,10S,abc123,Yes
-5,Evans Lambdas,15M,1M,abc123,Yes
-6,Evans Lambdas,2H,5M,abc123,Yes
-7,Evans Lambdas,1H,10S,abc123,Yes
-8,Evans Lambdas,30M,10S,abc123,Yes
+1,Evans Lambdas,10S,10S,abc123,No
+2,Evans Lambdas,10M,1M,abc123,No
+3,Evans Lambdas,5M,5M,abc123,No
+4,Evans Lambdas,3H,10S,abc123,No
+5,Evans Lambdas,15M,1M,abc123,No
+6,Evans Lambdas,2H,5M,abc123,No
+7,Evans Lambdas,1H,10S,abc123,No
+8,Evans Lambdas,30M,10S,abc123,No
