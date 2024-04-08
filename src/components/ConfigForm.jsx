@@ -11,6 +11,10 @@ const useInput = (init) => {
 };
 
 const ConfigForm = () => {
+  // defining frequencies drop down options 
+  const freqOptions = ['Select', '10S', '1M', '5M', '15M', '30M', '1H', '2H', '3H']
+
+
   const [appName, setAppName] = useInput('');
   const [funcName, setFuncName] = useInput('');
   const [url, setUrl] = useInput('');
@@ -106,15 +110,9 @@ const ConfigForm = () => {
             value={invRate}
             onChange={setInvRate}
           >
-            <option value="Select">Select</option>
-            <option value="10S">10 Seconds</option>
-            <option value="1M">1 Minute</option>
-            <option value="5M">5 Minutes</option>
-            <option value="15M">15 Minutes</option>
-            <option value="30M">30 Minutes</option>
-            <option value="1H">1 Hour</option>
-            <option value="2H">2 Hours</option>
-            <option value="3H">3 Hours</option>
+            {freqOptions.map((frequency) => (
+                    <option value={frequency}>{frequency}</option>))
+                    }
           </select>
           <div className="warmer">
             <label class="switch">
