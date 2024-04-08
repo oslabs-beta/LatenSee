@@ -1,32 +1,14 @@
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
 
-const DailyPerformance = ({
-  data,
-  avgLatencyM,
-  avgLatencyT,
-  avgLatencyW,
-  avgLatencyTh,
-  avgLatencyF,
-  avgLatencyS,
-  avgLatencySu,
-}) => {
-  // setup series
+const DailyPerformance = ({ averageLatencyEachDay }) => {
+  // setup series. call map on averageLatencyEachDay to populate the y axis
   const series = [
     {
       name: 'Average Latency',
-      data: [
-        avgLatencyM,
-        avgLatencyT,
-        avgLatencyW,
-        avgLatencyTh,
-        avgLatencyF,
-        avgLatencyS,
-        avgLatencySu,
-      ],
+      data: averageLatencyEachDay.map((data) => data.average),
     },
   ];
-
   // Chart options
   const options = {
     chart: {
@@ -37,32 +19,22 @@ const DailyPerformance = ({
       bar: {
         horizontal: false,
         columnWidth: '55%',
-        endingShape: 'rounded',
       },
     },
     dataLabels: {
       enabled: false,
     },
-    stroke: {
-      show: true,
-      width: 2,
-      colors: ['transparent'],
-    },
+    //call map on averageLatencyEachDay to populate the x-axis
     xaxis: {
-      categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      categories: averageLatencyEachDay.map((data) => data.day),
     },
     yaxis: {
       title: {
-        text: 'Average Latency (ms)',
+        text: 'Average Latency (milliseconds)',
       },
-    },
-    fill: {
-      opacity: 1,
-    },
-    tooltip: {
-      y: {
-        formatter: function (val) {
-          return val + ' ms';
+      labels: {
+        formatter: (val) => {
+          return val.toFixed(1);
         },
       },
     },
