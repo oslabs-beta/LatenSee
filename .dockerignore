@@ -1,6 +1,9 @@
 # Node modules will be installed by docker
 node_modules/
 
+# Ignore tests file
+__tests__/
+
 # Not sharing github readme material
 public/
 LICENSE
