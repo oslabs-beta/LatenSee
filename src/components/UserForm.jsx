@@ -9,7 +9,7 @@ const UserForm = () => {
   // state to hold the list of all functions
   const [data, setData] = useState([]);
   const [apps, setApps] = useState([]);
-  const [selectedApp, setSelectedApp] = useState(['']);
+  const [selectedApp, setSelectedApp] = useState('All');
 
   // fetch all functions from server on load
   useEffect(() => {
@@ -96,7 +96,7 @@ const UserForm = () => {
         <label htmlFor="appSelect">Select App: </label>
         <select
           id="appSelect"
-          value= {selectedApp ? selectedApp : apps[0]}
+          value= {selectedApp ? selectedApp : 'All'}
           onChange={(e) => setSelectedApp(e.target.value)}
         >
           {apps.map((app) => (
@@ -119,7 +119,7 @@ const UserForm = () => {
           </thead>
           <tbody>
             {data
-              .filter((item) => item.appName === selectedApp)
+            .filter((item) => selectedApp !== 'All' ? item.appName === selectedApp : item.appName !== null)
               .map((item) => (
                 <tr key={item.funcId}>
                   <td>{item.funcName}</td>
