@@ -122,8 +122,8 @@ const UserForm = () => {
 
   // state to hold the list of all functions
   const [data, setData] = useState([]);
-  const [apps, setApps] = useState([]);
-  const [selectedApp, setSelectedApp] = useState('');
+  // const [apps, setApps] = useState([]);
+  // const [selectedApp, setSelectedApp] = useState('');
 
   // fetch all functions from server on load
   useEffect(() => {
@@ -131,23 +131,23 @@ const UserForm = () => {
       .then((res) => res.json())
       .then((data) => {
         setData(data); // Set the state with the fetched data
-        const appNames = [...new Set(data.map((item) => item.appName))]; // Get all unique app names
-        setApps(appNames); // Set the state with the unique app names
-        if (appNames.length > 0) {
-          setSelectedApp(appNames[0]);
-        }
+        // const appNames = [...new Set(data.map((item) => item.appName))]; // Get all unique app names
+        // setApps(appNames); // Set the state with the unique app names
+        // if (appNames.length > 0) {
+        //   setSelectedApp(appNames[0]);
+        // }
       })
       .catch((error) => {
         console.log('Failed to load functions', error);
       });
-  }, []);
+  }, [data]);
 
   // On click of 'start/stop', update function's status
   const updateStatus = (funcID, warmerOn) => {
-    const newStatus =
-      data.find((item) => item.funcID === funcID).status === 'Yes'
-        ? 'No'
-        : 'Yes';
+    const newStatus = (warmerOn === 'Yes' ? 'No': 'Yes')
+      // data.find((item) => item.funcID === funcID).status === 'Yes'
+      //   ? 'No'
+      //   : 'Yes';
     const updatedData = data.map((item) => {
       // find the function that matches the id and update its status (for immediate UI feedback in status column)
       if (item.funcID === funcID) {
@@ -212,7 +212,7 @@ const UserForm = () => {
 
   return (
     <div>
-      <div className="app-selection">
+      {/* <div className="app-selection">
         <label htmlFor="appSelect">Select App: </label>
         <select
           id="appSelect"
@@ -225,7 +225,7 @@ const UserForm = () => {
             </option>
           ))}
         </select>
-      </div>
+      </div> */}
       <div className="user-table">
         <table>
           <thead>
@@ -239,26 +239,24 @@ const UserForm = () => {
           </thead>
           <tbody>
             {data
-              .filter((item) => item.appName === selectedApp)
+              // .filter((item) => item.appName === selectedApp)
               .map((item) => (
                 <tr key={item.funcId}>
                   <td>{item.funcName}</td>
                   <td>
-                    <button onClick={() => updateStatus(item.funcID)}>
-                      {item.status === 'Yes' ? openEyeSVG : closedEyeSVG}
+                    <button onClick={() => updateStatus(item.funcID, item.warmerOn)}>
+                      {item.warmerOn === 'Yes' ? openEyeSVG : closedEyeSVG}
                     </button>
                   </td>
-                  <td>{item.status === 'Yes' ? 'Running' : 'Stopped'}</td>
+                  <td>{item.warmerOn === 'Yes' ? 'Running' : 'Stopped'}</td>
                   <td>
                     <select
                       name="funcFreq"
                       id="freq"
                       onChange={(e) =>
                         editFuncFreq(item.funcID, e.target.value)
-                      }
-                    >
-                      <option value={`${item.funcFreq}`}>
-                        {item.funcFreq}
+                      }>
+                      <option value={`${item.funcFreq}`} selected>{item.funcFreq}
                       </option>
                       <option value="10S">10S</option>
                       <option value="1M">1M</option>

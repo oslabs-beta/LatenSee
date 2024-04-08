@@ -198,7 +198,7 @@ body {
     }
 
     select {
-      padding: 8px;
+      // padding: 8px;
       border-radius: 4px;
       border-color: white;
       outline: none;
@@ -361,9 +361,73 @@ body {
   }
 }
 
-// Width of the overview panel
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 900px 1fr 300px;
+  gap: -10px;
+}
+
+.dashboard-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 80vw;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.export-button-wrapper {
+  justify-self: start;
+  padding-left: 50px;
+  align-self: start;
+}
+
+.chart,
+.performance-table {
+  width: 100%;
+  margin-bottom: 30px;
+  margin-left: 20px;
+}
+.pings-table {
+  width: 100%;
+  margin-bottom: 30px;
+  margin-left: 10px;
+}
+
+.chart-title,
+.performance-table-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: rgb(66, 66, 66);
+  text-align: center;
+  margin-bottom: 10px;
+  text-decoration: underline;
+}
+
+.pings-table-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: rgb(66, 66, 66);
+  text-align: center;
+  margin-bottom: 5px;
+  text-decoration: underline;
+}
+
+.overview-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: rgb(66, 66, 66);
+  text-align: center;
+  margin-top: -5px;
+  margin-bottom: 20px;
+  margin-left: 10px;
+  text-decoration: underline;
+}
+
 $sidebar-width: 250px;
-// Background color of the panel
 $background-color: #a7c9e3;
 
 .overview-panel {
@@ -378,36 +442,26 @@ $background-color: #a7c9e3;
   background-color: $background-color;
   padding: 20px;
   overflow-y: auto;
-
-  .side-by-side {
-    display: flex;
-    justify-content: space-between;
-
-    > div {
-      flex-basis: 48%;
-    }
-  }
-
-  .separator-bar {
-    height: 1.5px;
-    background-color: rgba(128, 128, 128, 0.166);
-    margin: 20px 0;
-  }
 }
 
 .performance-table th,
-.performance-table td {
-  text-align: center;
-  padding-bottom: 10px;
-  padding-top: 10px;
-  padding-left: 10px;
-}
-
+.performance-table td,
 .pings-table th,
 .pings-table td {
-  justify-content: space-between;
   text-align: center;
-  padding-bottom: 10px;
-  padding-top: 10px;
-  padding-left: 10px;
+  padding: 10px;
+}
+
+.side-by-side {
+  display: flex;
+  justify-content: space-between;
+  > div {
+    flex-basis: 48%;
+  }
+}
+
+.separator-bar {
+  height: 1.5px;
+  background-color: rgba(128, 128, 128, 0.166);
+  margin: 20px 0;
 }

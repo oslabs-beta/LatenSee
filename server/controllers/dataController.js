@@ -57,7 +57,7 @@ dataController.getRuns = async (req, res, next) => {
       let countCold = csvFuncs.getCold(
         data,
         row.funcID,
-        true,
+        'true',
         startDate,
         endDate
       );
@@ -88,7 +88,7 @@ dataController.getRuns = async (req, res, next) => {
           'serverDifference',
           startDate,
           endDate,
-          true
+          'true'
         ) / countCold;
 
       // percCold is the average number of cold starts and avLat is the average latency
@@ -204,7 +204,7 @@ dataController.getComparison = async (req, res, next) => {
         // calculate sum of all latency in this period
         thisWkLat = thisWkLat + Number(row.serverDifference);
         // calculate total cold starts in this period
-        if (row.cold === true) {
+        if (row.cold === 'true') {
           thisWkCold++;
         }
 
@@ -233,7 +233,7 @@ dataController.getComparison = async (req, res, next) => {
         // calculate sum of all latency in this period
         lastWkLat = lastWkLat + Number(row.serverDifference);
         // calculate total cold starts in this period
-        if (row.cold === true) {
+        if (row.cold === 'true') {
           lastWkCold++;
         }
 

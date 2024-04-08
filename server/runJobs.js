@@ -1,7 +1,7 @@
 // Imports
 const csvFuncs = require('./controllers/csvFuncs');
 const schedule = require('node-schedule');
-require('dotenv').config();
+require('dotenv').config({ path: './.env' });
 const fs = require('fs');
 const path = require('path');
 const { stringify } = require('csv-stringify/sync');
@@ -18,6 +18,9 @@ const scheduling = {
   '1H': '0 0 */1 * * *',
   '2H': '0 0 */2 * * *',
   '3H': '0 0 */3 * * *',
+  '1D': '0 0 0 */1 * *',
+  '2D': '0 0 0 */2 * *',
+  '3D': '0 0 0 */3 * *',
 };
 
 /**
@@ -132,26 +135,74 @@ const getOnFuncs = async () => {
   return onFuncs;
 };
 
-const initializeJobs = async () => {
-  const funcsList = await getOnFuncs();
-  funcsList.forEach((element) => {
-    //specify endpoint information for all the functions in the list of warmerOn functions
-    let endpoint = {
-      url: process.env[`${element.funcID}_URL`],
-      name: element.funcName,
-      id: element.funcID,
-    };
-
-    console.log(
-      'In scheduling, current schedule is: ',
-      element.funcFreq
-    );
-
-    /* Run the jobs */
-    schedule.scheduleJob(`${scheduling[element.funcFreq]}`, () =>
-      callAndLog(endpoint, Date.now())
-    );
-  });
+// create once memoization for initializeJobs
+const initializeJobs = () => {
+  let calledOnce = false;
+  let cache = [];
+  const inner = async (...args) => {
+    if (!calledOnce) {
+      const funcsList = await getOnFuncs();
+      funcsList.forEach((element) => {
+        //specify endpoint information for all the functions in the list of warmerOn functions
+        let endpoint = {
+          url: process.env[`${element.funcID}_URL`],
+          name: element.funcName,
+          id: element.funcID,
+        };
+        /* Run the jobs */
+        let myJobs = schedule.scheduleJob(
+          `${scheduling[element.funcFreq]}`,
+          () => callAndLog(endpoint, Date.now())
+        );
+        cache.push(myJobs);
+      });
+      calledOnce = true;
+      console.log('passed once', 'cache', cache);
+    } else {
+      console.log('ran again');
+      /*cancel jobs*/
+      cache.forEach((job) => {
+        job.cancel();
+        console.log('cancelled');
+      });
+      cache = [];
+      console.log('showing', cache);
+      const funcsList = await getOnFuncs();
+      console.log('func list', funcsList);
+      funcsList.forEach((element) => {
+        //specify endpoint information for all the functions in the list of warmerOn functions
+        let endpoint = {
+          url: process.env[`${element.funcID}_URL`],
+          name: element.funcName,
+          id: element.funcID,
+        };
+        /*Re-schedule the jobs*/
+        let myJobs = schedule.scheduleJob(
+          `${scheduling[element.funcFreq]}`,
+          () => callAndLog(endpoint, Date.now())
+        );
+        cache.push(myJobs);
+      });
+    }
+  };
+  return inner;
 };
 
-module.exports = initializeJobs;
+const initializeJobsOnce = initializeJobs();
+
+// const initializeJobs = async () => {
+//   const funcsList = await getOnFuncs()
+//   funcsList.forEach(element =>{
+//     //specify endpoint information for all the functions in the list of warmerOn functions
+//     let endpoint = {
+//       url: process.env[`${element.funcID}_URL`],
+//       name: element.funcName,
+//       id:element.funcID,
+//     }
+//     /* Run the jobs */
+//     let myJobs = schedule.scheduleJob(`${scheduling[element.funcFreq]}`, () =>
+//     callAndLog(endpoint, Date.now()));
+//   })
+// };
+
+module.exports = initializeJobsOnce;

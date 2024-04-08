@@ -3,6 +3,7 @@ const path = require('path');
 const csvFuncs = require(path.resolve(__dirname, './csvFuncs.js'));
 const parse = require('csv-parser');
 const { stringify } = require('csv-stringify/sync');
+const initializeJobsOnce = require('../runJobs');
 
 const configController = {};
 let funcID;
@@ -73,7 +74,7 @@ configController.addNew = async (req, res, next) => {
       );
     }
     // append funcURL to .env file with unique name 'funcID-URL'
-    fs.appendFileSync('.env', `${funcID}_URL="${funcUrl}"\n`);
+    fs.appendFileSync('.env', `${funcID}_URL='${funcUrl}'\n`);
 
     return next();
   } catch (err) {
@@ -104,43 +105,28 @@ configController.editFunc = async (req, res, next) => {
       }
     });
 
-    // if new frequency is specified, update the frequency of the function and re-write file
-    if (funcFreq) {
-      records[selectedIndex].funcFreq = funcFreq;
-      fs.writeFileSync(
-        userfileName,
-        stringify(
-          records,
-          { header: true, columns: heading },
-          function (err, str) {
-            if (err) {
-              console.log(err);
-            } else {
-              console.log('updated record');
-            }
-          }
-        )
-      );
-    }
+        // if new frequency is specified, update the frequency of the function and re-write file
+        if (funcFreq){
+            records[selectedIndex].funcFreq = funcFreq; 
+            fs.writeFileSync(userfileName, stringify(records, {header: true, columns: heading} , function (err, str) {
+                if (err) {
+                    console.log(err); 
+                } else {
+                    console.log('updated record')
+                } }))
+        }
 
-    if (warmerOn) {
-      records[selectedIndex].warmerOn = warmerOn;
-      fs.writeFileSync(
-        userfileName,
-        stringify(
-          records,
-          { header: true, columns: heading },
-          function (err, str) {
-            if (err) {
-              console.log(err);
-            } else {
-              console.log('updated record');
-            }
-          }
-        )
-      );
-    }
+        if (warmerOn){
+            records[selectedIndex].warmerOn = warmerOn; 
+            fs.writeFileSync(userfileName, stringify(records, {header: true, columns: heading} , function (err, str) {
+                if (err) {
+                    console.log(err); 
+                } else {
+                    console.log('updated record')
+                } }))
 
+        }
+    initializeJobsOnce()
     return next();
   } catch (err) {
     return next({
@@ -180,6 +166,7 @@ configController.deleteFunc = async (req, res, next) => {
         }
       )
     );
+    initializeJobsOnce()
     return next();
   } catch (err) {
     return next({
