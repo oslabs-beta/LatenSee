@@ -97,6 +97,7 @@ const ConfigForm = () => {
             value={invRate}
             onChange={setInvRate}
           >
+            <option value="Select">Select</option>
             <option value="10S">10 Seconds</option>
             <option value="1M">1 Minute</option>
             <option value="5M">5 Minutes</option>

@@ -3,6 +3,9 @@ import { useState, useEffect } from 'react';
 import SVGfiles from './SVGfiles';
 
 const UserForm = () => {
+  // defining frequencies drop down options 
+  const freqOptions = ['10S', '1M', '5M', '15M', '30M', '1H', '2H', '3H']
+
   // state to hold the list of all functions
   const [data, setData] = useState([]);
   const [apps, setApps] = useState([]);
@@ -133,16 +136,10 @@ const UserForm = () => {
                       onChange={(e) =>
                         editFuncFreq(item.funcID, e.target.value)
                       }>
-                      <option value={`${item.funcFreq}`}>{item.funcFreq}
-                      </option>
-                      <option value="10S">10S</option>
-                      <option value="1M">1M</option>
-                      <option value="5M">5M</option>
-                      <option value="15M">15M</option>
-                      <option value="30M">30M</option>
-                      <option value="1H">1H</option>
-                      <option value="2H">2H</option>
-                      <option value="3H">3H</option>
+                      <option value={`${item.funcFreq}`}>{item.funcFreq}</option>
+                      {freqOptions.map((frequency) => (
+                        frequency !== item.funcFreq ? <option value={frequency}>{frequency}</option> : null))
+                    }
                     </select>
                   </td>
                   <td>
