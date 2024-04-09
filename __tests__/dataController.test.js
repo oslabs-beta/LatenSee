@@ -1,6 +1,4 @@
 const dataController = require('../server/controllers/dataController');
-import mockCsvFuncs from '../server/controllers/csvFuncs';
-
 
 // We want to mock the csvFuncs controller
 jest.mock('../server/controllers/csvFuncs');
@@ -58,16 +56,17 @@ describe('Data Controller: getRuns Unit Testing', () => {
     next = jest.fn();
   });
 
-  xit('Should should call next one time.', () => {
+  it('Should should call next one time.', () => {
     dataController.getRuns(req, res, next);
 
     expect(next.mock.calls.length).toEqual(1);
   });
 
-  it('Should set res.locals.all to the result of csvFUncs.getAllRows().', async () => {
+  it('Should set res.locals.all to the result of csvFuncs.getAllRows().', async () => {
     console.log('inside second test. Beginning res object is: ', res);
     await dataController.getRuns(req, res, next);
     console.log('inside second test. Ending res object is: ', res);
+    console.log('inside second test. Ending res.locals.runs object is: ', res.locals.runs);
     console.log('Function checks res.locals.all at ', Date.now());
     expect(res.locals.all.length).toBe(3);
   });
