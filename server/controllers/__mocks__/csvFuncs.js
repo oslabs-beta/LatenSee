@@ -12,7 +12,7 @@ csvFuncs.getAllRows = async () => {
   //   });
   // });
 
-  return [1, 2, 3];
+  return Promise.resolve([1, 2, 3]);
 
 };
 
