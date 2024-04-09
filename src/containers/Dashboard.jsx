@@ -6,13 +6,18 @@ import ExportButton from '../components/ExportButton';
 import LatestPingsTable from '../components/LatestPingsTable';
 
 function Dashboard() {
+  //FunctionPerformanceTable
   const [data, setData] = useState([]);
+  //LatestPingsTable
   const [pingData, setPingData] = useState([]);
+  //Chart
   const [periodicData, setPeriodicData] = useState([]);
+  //OverviewPanel
   const [comparisonData, setComparisonData] = useState([]);
+  //title for FunctionPerformanceTable
   const [dateRange, setDateRange] = useState('');
 
-  //for FunctionPerformanceTable and LatestPingsTable
+  //data fetched for FunctionPerformanceTable and LatestPingsTable
   useEffect(() => {
     fetch('/api/data')
       .then((data) => data.json())
@@ -26,7 +31,7 @@ function Dashboard() {
       });
   }, []);
 
-  //for Chart and DailyPerformance
+  //data fetched for Chart and DailyPerformance
   useEffect(() => {
     fetch('/api/period')
       .then((data) => data.json())
@@ -38,7 +43,7 @@ function Dashboard() {
       });
   }, []);
 
-  //for OverviewPanel
+  //data fetched for OverviewPanel
   useEffect(() => {
     fetch('/api/comps')
       .then((response) => {
@@ -56,7 +61,7 @@ function Dashboard() {
       });
   }, []);
 
-  //for title of FunctionPerformanceTable
+  //data fetched for title of FunctionPerformanceTable
   useEffect(() => {
     // Date range calculation
     const endDate = new Date();
