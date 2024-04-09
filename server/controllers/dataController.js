@@ -47,7 +47,9 @@ dataController.getRuns = async (req, res, next) => {
     // console.log("start date", startDate)
     const endDate = Date.now();
 
+    console.log('Inside getRuns setting data');
     const data = await csvFuncs.getAllRows(datafileName);
+    console.log('Inside getRuns set data to: ', data);
     const totalRuns = [];
     // for each function in the user file, calculate the number of runs between two specified dates (end date is alws now, and start date can be 1 day ago, 7 days ago or 0 for all data available)
     records.forEach((row) => {
@@ -116,9 +118,13 @@ dataController.getRuns = async (req, res, next) => {
 
     // calculate totals and averages for all the functions in totalRuns
 
+    console.log('Inside dataController setting res.locals');
+    console.log('Res object is: ', res);
     res.locals.runs = totalRuns;
     res.locals.all = data;
-    // console.log(res.locals.runs);
+    console.log('Function sets res.locals.all at ', Date.now());
+    console.log('Inside dataController set res.locals');
+    console.log('Res object is: ', res);
     return next();
   } catch (err) {
     return next({
