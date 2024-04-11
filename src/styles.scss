@@ -9,6 +9,20 @@ body {
   margin: 0;
 }
 
+$background-grey: #dadada24;
+$button-blue:  #2196f3; 
+$button-hover: #50b9ffb7; 
+$cancel-grey: #ccc; 
+
+/*container includes nav bar and main content*/
+.container {
+  background-color: $background-grey;
+  display: flex;
+  justify-content: baseline;
+  min-height: 100vh;
+}
+
+/* Side nav bar */
 .logo-container {
   display: flex;
 
@@ -21,7 +35,6 @@ body {
 }
 
 .logo {
-  margin-top: 20px;
   margin-left: -11px;
   margin-bottom: 20px;
 
@@ -105,113 +118,82 @@ body {
   }
 }
 
+/* Content of main page (excludes NAV BAR) */
 .main-content {
   margin-left: 200px;
+  margin-top: 0;
+  // border: solid black; 
+  width: 100%; 
+  // background-color: red;
 }
 
-.dashboard-page {
-  background-color: #dadada25;
-  min-height: 100vh; /* Ensures background color covers the entire page */
-}
+/*Configure page main content */
 
 .configure-page {
-  background-color: #dadada25;
-  min-height: 100vh;
+  padding: 0;
+  width: 100%;
+
+
+.config-form{
+  background-color: white;
+  // border: solid thin grey;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
 
   h2 {
+    margin-top: 30px;
     margin-left: 50px;
+    font-size: 1.2rem;
+    font-weight: 400; 
   }
 
   .config-form {
-    margin-left: 120px;
-    margin-top: 70px;
+    margin-left: 50px;
+    margin-right: 50px;
+    padding: 20px;
+    padding-right: 30px;
     display: flex;
     flex-direction: column;
-    width: 100%;
+
+    h3{
+      margin-top: 0;
+    }
 
     .name-fields {
-      display: flex;
-      justify-content: flex-start;
-      max-width: 660px;
 
-      div {
-        margin-right: 20px;
-        flex: 1; // makes app/function name divs take up equal space
-        min-width: 350px; // sets a minimum width for the divs
-        margin-bottom: -20px;
-
-        &:first-child {
-          margin-right: 60px; // adds space between the app/function name divs
-        }
-
-        label {
-          display: block; // makes the label take up the full width of the div
-          margin-bottom: 6px;
-        }
-
-        input {
-          width: 100%; // makes the input take up the full width of the div
-        }
+      select{
+        display: block; 
+        width: 101%; 
+        max-width: 1210px;
+        font-family: inherit;
+        font-size: 0.8rem; 
+        color: gray;
+        margin-top: 3px;
+        margin-right: 0;
+        height: 27px;
+        border: solid thin rgb(175, 175, 175);
+        border-radius: 5px;
       }
-    }
-
-    .url-div {
-      margin-bottom: -5px;
-
-      input {
-        margin-top: 8px;
-        width: 760px;
-      }
-    }
-
-    .invRate-warmer-div {
-      display: flex;
-      align-items: center;
-
-      label {
-        margin-right: 10px;
-      }
-
-      input {
-        margin-left: 5px;
-        padding: 5px;
-        margin-top: 0;
-        margin-bottom: 0;
-      }
-
-      .warmer {
-        margin-left: 40px;
-      }
-    }
-
-    input {
-      padding: 5px;
-      margin-top: 5px;
-      width: 300px;
-      margin-bottom: 30px;
-      border-radius: 5px;
-      border: 1.4px solid #42424268;
     }
 
     label {
       font-size: 14px;
     }
 
-    select {
-      // padding: 8px;
-      border-radius: 4px;
-      border-color: white;
-      outline: none;
-      background-color: white;
-      border: 1px solid #e0e0e0;
-      height: 21px;
-
-      &:focus {
-        outline: 1px solid #1a73e8;
-      }
+    input {
+      display: block;
+      width: 100%;
+      max-width: 1200px;
+      font-family: inherit;
+      padding: 5px;
+      margin-top: 5px;
+      margin-bottom: 30px;
+      border-radius: 5px;
+      border: 1.4px solid #42424268;
     }
 
     .switch {
+      margin-top: 20px;
       display: inline-flex;
       align-items: center;
       height: 36px;
@@ -224,7 +206,7 @@ body {
     }
 
     .switch input:checked + .slider {
-      background-color: #2196f3;
+      background-color: $button-blue;
 
       &:before {
         transform: translateX(16px);
@@ -232,12 +214,12 @@ body {
     }
 
     .switch input:focus + .slider {
-      box-shadow: 0 0 1px #2196f3;
+      box-shadow: 0 0 1px $button-blue;
     }
 
     .slider {
       cursor: pointer;
-      background-color: #ccc;
+      background-color: $cancel-grey;
       transition: 0.4s;
       height: 20px;
       width: 37px;
@@ -262,28 +244,50 @@ body {
       }
     }
 
-    button {
+    #btn-save {
       margin-top: 20px;
       padding: 5px 15px;
-      background-color: #50b9ffb7;
+      background-color: $button-blue;
       color: white;
       border: none;
       cursor: pointer;
       border-radius: 5px;
+      width: 7em;
+      float: right;
+      font-family: inherit;
 
       &:hover {
-        background-color: #0175c2ca;
+        background-color: $button-hover;
+      }
+    }
+
+    #btn-cancel {
+      margin-top: 20px;
+      padding: 5px 15px;
+      background-color: transparent;
+      color: darken($cancel-grey, 20%); 
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      width: 6.5em;
+      float: right;
+      font-family: inherit;
+
+      &:hover {
+        font-size: bold; 
       }
     }
 
     span {
-      color: green;
-      margin-left: 15px;
-      font-size: 12px;
-      font-weight: bold;
+      color: darken($cancel-grey, 20%);
+      font-size: 0.75rem;
+      font-weight: 400;
     }
   }
 }
+
+
+/*User page main content styling*/
 
 .user-page {
   background-color: #dadada25;
@@ -465,3 +469,4 @@ $background-color: #a7c9e3;
   background-color: rgba(128, 128, 128, 0.166);
   margin: 20px 0;
 }
+

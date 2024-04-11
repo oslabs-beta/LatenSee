@@ -5,7 +5,7 @@ import SideNavBar from '../components/SideNavBar';
 const Configure = () => {
   return (
     <div className="configure-page">
-      <h2>Configure</h2>
+      <h2> Configure</h2>
       <ConfigForm />
     </div>
   );

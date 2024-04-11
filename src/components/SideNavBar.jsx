@@ -83,7 +83,6 @@ const SideNavBar = () => {
   );
 
   return (
-    <div>
       <nav className="sidenav">
         <div className="logo">
           <Logo />
@@ -119,7 +118,6 @@ const SideNavBar = () => {
           </div>
         </a>
       </nav>
-    </div>
   );
 };
 

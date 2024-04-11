@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 //to take in user input & set values on change
@@ -67,6 +68,7 @@ const ConfigForm = () => {
       <form onSubmit={handleSubmit}>
         <div className="name-fields">
           <div>
+            <h3>Add New Function</h3>
             <label for="appName">App name: </label>
             <input
               placeholder='Enter app name (e.g. "MyApp")'
@@ -76,8 +78,6 @@ const ConfigForm = () => {
               value={appName}
               onChange={setAppName}
             />
-          </div>
-          <div>
             <label htmlFor="funcname"> Function name: </label>
             <input
               placeholder='Enter function name (e.g. "sendEmail")'
@@ -87,11 +87,7 @@ const ConfigForm = () => {
               value={funcName}
               onChange={setFuncName}
             />
-          </div>
-        </div>
-        <br></br>
-        <div className="url-div">
-          <label for="url">Function URL: </label> <br></br>
+             <label for="url">Function URL: </label> <br></br>
           <input
             placeholder="Enter function URL"
             type="text"
@@ -100,10 +96,8 @@ const ConfigForm = () => {
             value={url}
             onChange={setUrl}
           />
-        </div>
-        <br></br>
-        <div className="invRate-warmer-div">
-          <label htmlFor="invRate">Invocation rate: </label>
+
+        <label htmlFor="invRate">Invocation rate: </label>
           <select
             id="invRate"
             name="invRate"
@@ -114,9 +108,9 @@ const ConfigForm = () => {
                     <option value={frequency}>{frequency}</option>))
                     }
           </select>
-          <div className="warmer">
-            <label class="switch">
-              Warmer on:
+
+          <label class="switch">
+              Warmer:
               <input
                 type="checkbox"
                 checked={warmerOn}
@@ -126,8 +120,9 @@ const ConfigForm = () => {
             </label>
           </div>
         </div>
-        <br></br>
-        <button type="submit">Save</button>
+                 
+        <button type="submit" id='btn-save'>Save</button>
+        <Link to="/user"><button id='btn-cancel'>Cancel</button> </Link>
         {successMessage && <span>{successMessage}</span>}
       </form>
     </div>
