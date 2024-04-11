@@ -63,7 +63,8 @@ dataController.getRuns = async (req, res, next) => {
 
     const grabbedAllRows = Date.now();
 
-    res.locals.all = data;
+    // Sending only the last 25 records (a bit more than the front end needs, just in case, but less than the whole file).
+    res.locals.all = data.slice(data.length - 25);
 
     // declare FuncStatsCreator that accepts a funcId and funcName, we'll us this to keep track of calculated stats
     class FuncStatsCreator {
