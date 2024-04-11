@@ -48,6 +48,8 @@ dataController.getRuns = async (req, res, next) => {
     const endDate = Date.now();
 
     const data = await csvFuncs.getAllRows(datafileName);
+    const lastFiveData = data.slice(-5);
+
     const totalRuns = [];
     // for each function in the user file, calculate the number of runs between two specified dates (end date is alws now, and start date can be 1 day ago, 7 days ago or 0 for all data available)
     records.forEach((row) => {
@@ -117,8 +119,8 @@ dataController.getRuns = async (req, res, next) => {
     // calculate totals and averages for all the functions in totalRuns
 
     res.locals.runs = totalRuns;
-    res.locals.all = data;
-    // console.log(res.locals.runs);
+    res.locals.all = lastFiveData;
+
     return next();
   } catch (err) {
     return next({
@@ -164,11 +166,12 @@ dataController.getPeriodData = async (req, res, next) => {
 
         dayData[row.funcName] = avLat / count ? avLat / count : 0;
         dayData['day'] = new Date(week[i]).toDateString().slice(3, 11);
+        // console.log('i am dayDaya: ', dayData);
       });
       weeklyLats.push(dayData);
     }
     res.locals.weeklyLats = weeklyLats;
-    // console.log(weeklyLats)
+    // console.log(weeklyLats);
 
     return next();
   } catch (err) {
