@@ -70,7 +70,7 @@ dataController.getRuns = async (req, res, next) => {
       constructor(funcID, funcName) {
         this.id = funcID;
         this.name = funcName;
-        this.totalStarts = 0;
+        this.totalRuns = 0;
         this.coldStarts = 0;
         this.totalLatency = 0;
         this.coldTotalLatency = 0;
@@ -88,10 +88,11 @@ dataController.getRuns = async (req, res, next) => {
        */
       addRecord(cold, serverDifference) {
         // Add to the totals
-        this.totalStarts++;
+        this.totalRuns++;
         this.totalLatency = this.totalLatency + serverDifference;
         // If its cold, add to the cold properties, we'll calculate warm later
         if (cold) {
+
           this.coldStarts++;
           this.coldTotalLatency = this.coldTotalLatency + serverDifference;
         }
@@ -103,10 +104,10 @@ dataController.getRuns = async (req, res, next) => {
        */
       calculateStats() {
         // Avoid divide by zero
-        if (this.totalStarts < 1) return;
+        if (this.totalRuns < 1) return;
 
-        this.percentCold = this.coldStarts / this.totalStarts;
-        this.aveLatency = this.totalLatency / this.totalStarts;
+        this.percentCold = this.coldStarts / this.totalRuns;
+        this.aveLatency = this.totalLatency / this.totalRuns;
 
         // Ensure we have cold starts before calc
         if (this.coldStarts > 0) {
@@ -114,10 +115,10 @@ dataController.getRuns = async (req, res, next) => {
         }
 
         // Ensure we have warm starts before calc
-        if (this.totalStarts - this.coldStarts > 0) {
+        if (this.totalRuns - this.coldStarts > 0) {
           this.warmLatency =
             (this.totalLatency - this.coldTotalLatency) /
-            (this.totalStarts - this.coldStarts);
+            (this.totalRuns - this.coldStarts);
         }
 
         // Ensure we have both cold and warm latency before calc
@@ -148,7 +149,7 @@ dataController.getRuns = async (req, res, next) => {
         Object.hasOwn(aggregator, row.funcID)
       ) {
         aggregator[row.funcID].addRecord(
-          !!row.cold,
+          row.cold === 'true' ? true : false,
           Number(row.serverDifference)
         );
       }
@@ -166,7 +167,7 @@ dataController.getRuns = async (req, res, next) => {
       const funcObject = {};
       funcObject.id = aggregator[funcStat].id;
       funcObject.name = aggregator[funcStat].name;
-      funcObject.totalRuns = aggregator[funcStat].totalStarts;
+      funcObject.totalRuns = aggregator[funcStat].totalRuns;
       funcObject.coldStarts = aggregator[funcStat].coldStarts;
       funcObject.percentCold = aggregator[funcStat].percentCold;
       funcObject.aveLatency = aggregator[funcStat].aveLatency;
