@@ -105,6 +105,10 @@ const ConfigForm = () => {
             <option value="1H">1 Hour</option>
             <option value="2H">2 Hours</option>
             <option value="3H">3 Hours</option>
+            <option value="1D">Once Daily</option>
+            <option value="2D">Every 2 Days</option>
+            <option value="3D">Every 3 Days</option>
+            <option value="1W">Once Weekly</option>
           </select>
           <div className="warmer">
             <label class="switch">

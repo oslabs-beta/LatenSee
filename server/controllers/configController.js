@@ -17,6 +17,7 @@ const heading = [
   { key: 'funcFreq' },
   { key: 'userID' },
   { key: 'warmerOn' },
+  { key: 'funcUrl' },
 ];
 
 // middleware that takes information from the configure page POST request body and saves information where is is required.
@@ -24,7 +25,7 @@ configController.addNew = async (req, res, next) => {
   try {
     // deconstructing information from body
     // TEMPORARILY ADDING DEFAULT TO 'Yes' for waremerOn
-    const { appName, funcName, funcUrl, funcFreq, warmerOn = 'Yes'} = req.body;
+    const { appName, funcName, funcUrl, funcFreq, warmerOn = 'Yes' } = req.body;
 
     // if user file does not exist create file and set up file headers
 
@@ -35,10 +36,13 @@ configController.addNew = async (req, res, next) => {
       funcID = 1;
       fs.appendFileSync(
         fileName,
-        stringify([{ funcID, appName, funcName, funcFreq, userID, warmerOn }], {
-          header: true,
-          columns: heading,
-        }),
+        stringify(
+          [{ funcID, appName, funcName, funcFreq, userID, warmerOn, funcUrl }],
+          {
+            header: true,
+            columns: heading,
+          }
+        ),
         'utf-8',
         (err) => {
           if (err) console.log(err);
@@ -61,7 +65,7 @@ configController.addNew = async (req, res, next) => {
       fs.appendFileSync(
         fileName,
         stringify(
-          [{ funcID, appName, funcName, funcFreq, userID, warmerOn }],
+          [{ funcID, appName, funcName, funcFreq, userID, warmerOn, funcUrl }],
           { header: false },
           function (err, str) {
             if (err) {
@@ -74,7 +78,7 @@ configController.addNew = async (req, res, next) => {
       );
     }
     // append funcURL to .env file with unique name 'funcID-URL'
-    fs.appendFileSync('.env', `${funcID}_URL='${funcUrl}'\n`);
+    // fs.appendFileSync('.env', `${funcID}_URL='${funcUrl}'\n`);
 
     return next();
   } catch (err) {
@@ -89,7 +93,7 @@ configController.addNew = async (req, res, next) => {
 // If the user wants to edit the frequency the function is pinged,
 configController.editFunc = async (req, res, next) => {
   try {
-    const { funcID, funcURL, funcFreq, warmerOn } = req.body;
+    const { funcID, funcUrl, funcFreq, warmerOn } = req.body;
 
     const userfileName = path.resolve(__dirname, `../storage/${userID}.csv`);
 
@@ -105,28 +109,43 @@ configController.editFunc = async (req, res, next) => {
       }
     });
 
-        // if new frequency is specified, update the frequency of the function and re-write file
-        if (funcFreq){
-            records[selectedIndex].funcFreq = funcFreq; 
-            fs.writeFileSync(userfileName, stringify(records, {header: true, columns: heading} , function (err, str) {
-                if (err) {
-                    console.log(err); 
-                } else {
-                    console.log('updated record')
-                } }))
-        }
+    // if new frequency is specified, update the frequency of the function and re-write file
+    if (funcFreq) {
+      records[selectedIndex].funcFreq = funcFreq;
+      fs.writeFileSync(
+        userfileName,
+        stringify(
+          records,
+          { header: true, columns: heading },
+          function (err, str) {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log('updated record');
+            }
+          }
+        )
+      );
+    }
 
-        if (warmerOn){
-            records[selectedIndex].warmerOn = warmerOn; 
-            fs.writeFileSync(userfileName, stringify(records, {header: true, columns: heading} , function (err, str) {
-                if (err) {
-                    console.log(err); 
-                } else {
-                    console.log('updated record')
-                } }))
-
-        }
-    initializeJobsOnce()
+    if (warmerOn) {
+      records[selectedIndex].warmerOn = warmerOn;
+      fs.writeFileSync(
+        userfileName,
+        stringify(
+          records,
+          { header: true, columns: heading },
+          function (err, str) {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log('updated record');
+            }
+          }
+        )
+      );
+    }
+    initializeJobsOnce();
     return next();
   } catch (err) {
     return next({
@@ -166,7 +185,7 @@ configController.deleteFunc = async (req, res, next) => {
         }
       )
     );
-    initializeJobsOnce()
+    initializeJobsOnce();
     return next();
   } catch (err) {
     return next({

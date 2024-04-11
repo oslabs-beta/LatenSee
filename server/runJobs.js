@@ -21,6 +21,7 @@ const scheduling = {
   '1D': '0 0 0 */1 * *',
   '2D': '0 0 0 */2 * *',
   '3D': '0 0 0 */3 * *',
+  '1W': '0 0 0 ? * SUN *',
 };
 
 /**
@@ -145,7 +146,8 @@ const initializeJobs = () => {
       funcsList.forEach((element) => {
         //specify endpoint information for all the functions in the list of warmerOn functions
         let endpoint = {
-          url: process.env[`${element.funcID}_URL`],
+          // url: process.env[`${element.funcID}_URL`],
+          url: element.funcUrl,
           name: element.funcName,
           id: element.funcID,
         };
@@ -172,7 +174,8 @@ const initializeJobs = () => {
       funcsList.forEach((element) => {
         //specify endpoint information for all the functions in the list of warmerOn functions
         let endpoint = {
-          url: process.env[`${element.funcID}_URL`],
+          // url: process.env[`${element.funcID}_URL`],
+          url: element.funcUrl,
           name: element.funcName,
           id: element.funcID,
         };
