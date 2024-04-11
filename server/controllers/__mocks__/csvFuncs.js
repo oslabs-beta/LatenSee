@@ -2,18 +2,7 @@ const csvFuncs = {};
 
 // returns array of objects, each object is a row with key = column name and value = value in cell
 csvFuncs.getAllRows = async () => {
-  console.log('Called getAllRows in mock csvFuncs');
-  // return new Promise((resolve, reject) => {
-  //   console.log('Inside mock promise within mockGetAllRows');
-  //   const resultArray = [1, 2, 3];
-  //   process.nextTick(() => {
-  //     console.log('Inside mock resolving promise');
-  //     resolve[resultArray];
-  //   });
-  // });
-
   return Promise.resolve([1, 2, 3]);
-
 };
 
 /**

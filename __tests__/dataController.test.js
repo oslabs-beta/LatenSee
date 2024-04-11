@@ -7,7 +7,7 @@ jest.mock('../server/controllers/csvFuncs');
  * Testing getRuns within the dataController
  *
  */
-describe('Data Controller: getRuns Unit Testing', () => {
+describe('Data Controller: getRuns Unit Tests', () => {
   // get an array of all functions (records) from res.locals
 
   // get All Rows from a dataFile each object is a row with a key== column name and value = value in cell
@@ -60,14 +60,31 @@ describe('Data Controller: getRuns Unit Testing', () => {
     jest.clearAllMocks();
   });
 
+
+  it('Should set res.locals.all to the result of csvFuncs.getAllRows() and next() to be called once.', async () => {
+    await dataController.getRuns(req, res, next);
+    // Result is mocked in server/controllers/__mocks__/csvFuncs.js
+    expect(res.locals.all).toEqual([1, 2, 3]);
+  });
+
   it('Should should call next one time.', async () => {
     await dataController.getRuns(req, res, next);
 
     expect(next).toHaveBeenCalledTimes(1);
   });
 
-  it('Should set res.locals.all to the result of csvFuncs.getAllRows().', async () => {
+  it('Should have the name records in res.locals.runs as in res.locals.records', async () => {
     await dataController.getRuns(req, res, next);
-    expect(res.locals.all.length).toBe(3);
+    const resultingCalcs = res.locals.runs;
+    // Same length as input records
+    expect(res.locals.runs.length).toBe(3);
+
+    // Element has at least one of the three combos manually included but not any more
+    const includesInput = (current) => {
+      return (current.id === '1' && current.name === 'MockFunc1') ||
+        (current.id === '2' && current.name === 'MockFunc2') ||
+        (current.id === '3' && current.name === 'MockFunc3');
+    };
+    expect(res.locals.runs.every(includesInput)).toBe(true);
   });
 });
