@@ -133,8 +133,6 @@ dataController.getRuns = async (req, res, next) => {
       );
     });
 
-    console.log('Built aggregator, ', aggregator);
-
     // Process each row of data
     data.forEach((row) => {
       // Check that row.invokeTime is within startDate and endDate & is a function we're looking for
@@ -170,8 +168,6 @@ dataController.getRuns = async (req, res, next) => {
 
       totalRuns.push(funcObject);
     }
-
-    console.log('And now totalRuns is: ', totalRuns);
 
     res.locals.runs = totalRuns;
 
