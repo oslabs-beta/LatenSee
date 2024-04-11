@@ -41,11 +41,11 @@ describe('Test to time responses to dataController.getRuns()', () => {
     expect(Array.isArray(result)).toBe(true);
   });
 
-  it('Should have an average timing less than 10,000ms', async () => {
+  it('Should have an average timing less than 1,000ms', async () => {
     const timingArray = await timeRuns();
     const average = timingArray.reduce((a, b) => a + b) / timingArray.length;
     console.log('Timing results is: ', timingArray);
     console.log('Average time is: ', average);
-    expect(average).toBeLessThan(10000);
+    expect(average).toBeLessThan(1000);
   }, 100000);
 });
