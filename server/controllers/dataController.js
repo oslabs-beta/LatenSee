@@ -44,6 +44,7 @@ dataController.getData = async (req, res, next) => {
  */
 dataController.getRuns = async (req, res, next) => {
   try {
+    const enterGetRun = Date.now();
     // get array of all the functions from previous middleware
     const { records } = res.locals;
 
@@ -59,6 +60,9 @@ dataController.getRuns = async (req, res, next) => {
 
     // Set res.locals.all to the record of all rows in the csv
     const data = await csvFuncs.getAllRows(datafileName);
+
+    const grabbedAllRows = Date.now();
+
     res.locals.all = data;
 
     // declare FuncStatsCreator that accepts a funcId and funcName, we'll us this to keep track of calculated stats
@@ -133,6 +137,8 @@ dataController.getRuns = async (req, res, next) => {
       );
     });
 
+    const builtAggregator = Date.now();
+
     // Process each row of data
     data.forEach((row) => {
       // Check that row.invokeTime is within startDate and endDate & is a function we're looking for
@@ -147,6 +153,8 @@ dataController.getRuns = async (req, res, next) => {
         );
       }
     });
+
+    const processsedRecords = Date.now();
 
     // declare the resulting array which we will return
     const totalRuns = [];
@@ -169,9 +177,17 @@ dataController.getRuns = async (req, res, next) => {
       totalRuns.push(funcObject);
     }
 
+    const createdResults = Date.now();
+
     res.locals.runs = totalRuns;
 
-    // console.log('Finished getData, runs is: ', totalRuns);
+    console.log('Finished run, data is: ', {
+      fullRunInterval: createdResults - enterGetRun,
+      grabAllRowsInterval: grabbedAllRows - enterGetRun,
+      builtAggregatorInterval: builtAggregator - grabbedAllRows,
+      processedRecordsInterval: processsedRecords - builtAggregator,
+      createdResultsInterval: createdResults - processsedRecords,
+    });
 
     return next();
   } catch (err) {
