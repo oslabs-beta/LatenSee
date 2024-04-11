@@ -1,3 +1,8 @@
+/**
+ * This file is repsonsible for unit testing functiosn in the dataController.
+ * It relies upon mocking functions that this relies upon (i.e. csvFuncs).
+ */
+
 const dataController = require('../server/controllers/dataController');
 
 // We want to mock the csvFuncs controller
@@ -60,7 +65,6 @@ describe('Data Controller: getRuns Unit Tests', () => {
     jest.clearAllMocks();
   });
 
-
   it('Should set res.locals.all to the result of csvFuncs.getAllRows() and next() to be called once.', async () => {
     await dataController.getRuns(req, res, next);
     // Result is mocked in server/controllers/__mocks__/csvFuncs.js
@@ -81,9 +85,11 @@ describe('Data Controller: getRuns Unit Tests', () => {
 
     // Element has at least one of the three combos manually included but not any more
     const includesInput = (current) => {
-      return (current.id === '1' && current.name === 'MockFunc1') ||
+      return (
+        (current.id === '1' && current.name === 'MockFunc1') ||
         (current.id === '2' && current.name === 'MockFunc2') ||
-        (current.id === '3' && current.name === 'MockFunc3');
+        (current.id === '3' && current.name === 'MockFunc3')
+      );
     };
     expect(res.locals.runs.every(includesInput)).toBe(true);
   });
