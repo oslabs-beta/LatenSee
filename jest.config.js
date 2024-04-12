@@ -8,6 +8,8 @@ module.exports = {
   },
 
   transform: {
-    '^.+\\.[t|j]sx?$': 'babel-jest',
+    '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest'],
   },
+
+  testEnvironment: 'jsdom',
 };
