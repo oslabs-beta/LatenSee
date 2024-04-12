@@ -7,6 +7,7 @@
 
 const request = require('supertest');
 const app = require('../server/server');
+const server = require('../server/server');
 
 /**
  * Helper function that runs the actual fetch request.
@@ -38,6 +39,10 @@ const timeRuns = async () => {
 };
 
 describe('Test to time responses to dataController.getRuns()', () => {
+
+  afterAll(() => server.close());
+
+
   it('Should be able to run a request to api/data ', async () => {
     const result = await runTest();
     expect(Array.isArray(result)).toBe(true);
