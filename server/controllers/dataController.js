@@ -59,7 +59,6 @@ dataController.getRuns = async (req, res, next) => {
 
     // Set res.locals.all to the record of all rows in the csv
     const data = await csvFuncs.getAllRows(datafileName);
-
     // Sending only the last 25 records (a bit more than the front end needs, just in case, but less than the whole file).
     res.locals.all = data.slice(data.length - 25);
 
@@ -219,11 +218,12 @@ dataController.getPeriodData = async (req, res, next) => {
 
         dayData[row.funcName] = avLat / count ? avLat / count : 0;
         dayData['day'] = new Date(week[i]).toDateString().slice(3, 11);
+        // console.log('i am dayDaya: ', dayData);
       });
       weeklyLats.push(dayData);
     }
     res.locals.weeklyLats = weeklyLats;
-    // console.log(weeklyLats)
+    // console.log(weeklyLats);
 
     return next();
   } catch (err) {

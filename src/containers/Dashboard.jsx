@@ -6,27 +6,32 @@ import ExportButton from '../components/ExportButton';
 import LatestPingsTable from '../components/LatestPingsTable';
 
 function Dashboard() {
+  //FunctionPerformanceTable
   const [data, setData] = useState([]);
+  //LatestPingsTable
   const [pingData, setPingData] = useState([]);
+  //Chart
   const [periodicData, setPeriodicData] = useState([]);
+  //OverviewPanel
   const [comparisonData, setComparisonData] = useState([]);
+  //title for FunctionPerformanceTable
   const [dateRange, setDateRange] = useState('');
 
-  //for FunctionPerformanceTable and LatestPingsTable
+  //data fetched for FunctionPerformanceTable and LatestPingsTable
   useEffect(() => {
     fetch('/api/data')
       .then((data) => data.json())
       .then((data) => {
         setData(data[0]);
         setPingData(data[1]);
-        console.log('newly added data: ', data[1]);
+        // console.log('newly added data: ', data[1]);
       })
       .catch((error) => {
         console.log('Failed to load data', error);
       });
   }, []);
 
-  //for Chart
+  //data fetched for Chart and DailyPerformance
   useEffect(() => {
     fetch('/api/period')
       .then((data) => data.json())
@@ -38,7 +43,7 @@ function Dashboard() {
       });
   }, []);
 
-  //for OverviewPanel
+  //data fetched for OverviewPanel
   useEffect(() => {
     fetch('/api/comps')
       .then((response) => {
@@ -48,7 +53,7 @@ function Dashboard() {
         throw new Error('Network response was not ok.');
       })
       .then((data) => {
-        console.log('comparison data: ', data);
+        // console.log('comparison data: ', data);
         setComparisonData(data);
       })
       .catch((error) => {
@@ -56,7 +61,7 @@ function Dashboard() {
       });
   }, []);
 
-  //for title of FunctionPerformanceTable
+  //data fetched for title of FunctionPerformanceTable
   useEffect(() => {
     // Date range calculation
     const endDate = new Date();
@@ -122,7 +127,11 @@ function Dashboard() {
         <div className="overview-content">
           <h1 className="overview-title">Overview</h1>
           {data ? (
-            <OverviewPanel className="overview-panel" data={comparisonData} />
+            <OverviewPanel
+              className="overview-panel"
+              data={comparisonData}
+              periodicData={periodicData}
+            />
           ) : (
             <div>Loading overview...</div>
           )}
