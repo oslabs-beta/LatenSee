@@ -12,6 +12,7 @@ body {
 $background-grey: #dadada24;
 $button-blue:  #2196f3; 
 $button-hover: #50b9ffb7; 
+$light-blue: #a7c9e3; 
 $cancel-grey: #ccc; 
 
 /*container includes nav bar and main content*/
@@ -122,7 +123,6 @@ $cancel-grey: #ccc;
 .main-content {
   margin-left: 200px;
   margin-top: 0;
-  border: solid black; 
   width: 100%; 
   // background-color: red;
 }
@@ -286,8 +286,7 @@ $cancel-grey: #ccc;
 
 /*User page main content styling*/
 
-.user-page {
-  background-color: pink;
+.user-page {  
   padding: 0 50px;
   
 
@@ -298,27 +297,33 @@ $cancel-grey: #ccc;
   }
 
   .function-table-container {
-    border: solid black;
     width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
 
     .table-heading {
-      background-color: red;
-      padding: 5px;
+      background-color: white; 
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: solid thin $cancel-grey;
     }
 
     h3 {
       margin-top: 0;
+      margin-bottom: 0;
 
     }
   }
   select {
-    // padding: 8px;
     border-radius: 4px;
     border-color: white;
     outline: none;
     background-color: white;
-    border: 1px solid #e0e0e0;
-    height: 21px;
+    border: 1px solid #e0e0e0;  
+    padding: 5px;
+    width: 250px;
 
     &:focus {
       outline: 1px solid #1a73e8;
@@ -326,15 +331,16 @@ $cancel-grey: #ccc;
   }
 
   .app-selection {
-    margin-left: 120px;
-    margin-bottom: 20px;
-
     label {
-      margin-right: 10px;
+      margin-right: 10px; 
+      font-size: 1.1rem;
+      font-weight: bold;
     }
 
     select {
       cursor: pointer;
+      font-family: inherit;
+      font-size: 1rem;
     }
   }
 
@@ -342,14 +348,14 @@ $cancel-grey: #ccc;
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 20px;
     }
 
     th,
     td {
-      text-align: center;
+      text-align: left;
       padding: 12px 15px;
       border-bottom: 1px solid #e0e0e0;
+      background-color: white;
       &:not(:last-child) {
         border-right: 1px solid rgba(0, 0, 0, 0.057);
       }

@@ -9,7 +9,7 @@ const UserForm = () => {
   // state to hold the list of all functions
   const [data, setData] = useState([]);
   const [apps, setApps] = useState([]);
-  const [selectedApp, setSelectedApp] = useState('All');
+  const [selectedApp, setSelectedApp] = useState('Filter by Application');
 
   // fetch all functions from server on load
   useEffect(() => {
@@ -17,7 +17,7 @@ const UserForm = () => {
       .then((res) => res.json())
       .then((data) => {
         setData(data); // Set the state with the fetched data
-        const appNames = ['All', ...new Set(data.map((item) => item.appName))]; // Get all unique app names
+        const appNames = ['Filter by Application', ...new Set(data.map((item) => item.appName))]; // Get all unique app names
         setApps(appNames); // Set the state with the unique app names
       })
       .catch((error) => {
@@ -94,12 +94,11 @@ const UserForm = () => {
     <div className='function-table-container'>
       <div className='table-heading'>
       <h3>Tracked Functions</h3>
-      </div>
       <div className="app-selection">
-        <label htmlFor="appSelect">Select App: </label>
+        <label htmlFor="appSelect"></label>
         <select
           id="appSelect"
-          value= {selectedApp ? selectedApp : 'All'}
+          value= {selectedApp ? selectedApp : 'Filter by Application'}
           onChange={(e) => setSelectedApp(e.target.value)}
         >
           {apps.map((app) => (
@@ -109,29 +108,33 @@ const UserForm = () => {
           ))}
         </select>
       </div>
+      </div>
+      
       <div className="user-table">
         <table>
           <thead>
             <tr>
+              <th>Application</th>
               <th>Function name</th>
-              <th>Start/Stop</th>
-              <th>Status</th>
-              <th>Edit Frequency</th>
-              <th>Delete</th>
+              <th>Invocation Status</th>
+              <th className='user-cmds'>Start/Stop</th>
+              <th className='user-cmds'>Edit Frequency</th>
+              <th className='user-cmds'>Delete</th>
             </tr>
           </thead>
           <tbody>
             {data
-            .filter((item) => selectedApp !== 'All' ? item.appName === selectedApp : item.appName !== null)
+            .filter((item) => selectedApp !== 'Filter by Application' ? item.appName === selectedApp : item.appName !== null)
               .map((item) => (
                 <tr key={item.funcId}>
+                  <td>{item.appName}</td>
                   <td>{item.funcName}</td>
+                  <td>{item.warmerOn === 'Yes' ? 'Running' : 'Stopped'}</td>
                   <td>
                     <button onClick={() => updateStatus(item.funcID, item.warmerOn)}>
                       {item.warmerOn === 'Yes' ? SVGfiles.openEyeSVG : SVGfiles.closedEyeSVG}
                     </button>
                   </td>
-                  <td>{item.warmerOn === 'Yes' ? 'Running' : 'Stopped'}</td>
                   <td>
                     <select
                       name="funcFreq"

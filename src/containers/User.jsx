@@ -5,7 +5,7 @@ import SideNavBar from '../components/SideNavBar';
 const User = () => {
   return (
     <div className="user-page">
-      <h2>User Page</h2>
+      <h2></h2>
       <UserForm />
     </div>
   );
