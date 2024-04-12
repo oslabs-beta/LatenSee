@@ -1,12 +1,11 @@
 // Imports
 const csvFuncs = require('./controllers/csvFuncs');
 const schedule = require('node-schedule');
-require('dotenv').config({path:'./.env'});
+require('dotenv').config({ path: './.env' });
 const fs = require('fs');
 const path = require('path');
 const { stringify } = require('csv-stringify/sync');
 const { electron } = require('webpack');
-
 
 // NEED TO MOVE THIS INTO A CONTROLLER
 const userID = 'abc123';
@@ -19,6 +18,10 @@ const scheduling = {
   '1H': '0 0 */1 * * *',
   '2H': '0 0 */2 * * *',
   '3H': '0 0 */3 * * *',
+  '1D': '0 0 0 */1 * *',
+  '2D': '0 0 0 */2 * *',
+  '3D': '0 0 0 */3 * *',
+  '1W': '0 0 0 ? * SUN *',
 };
 
 /**
@@ -49,7 +52,6 @@ const callAndLog = async (endpoint, invokeTime) => {
     // parse the fetch results
     let result = await response.json();
     /*result = {cold: true/false} */
-    
 
     const params = [
       [
@@ -136,59 +138,60 @@ const getOnFuncs = async () => {
 
 // create once memoization for initializeJobs
 const initializeJobs = () => {
-  let calledOnce = false; 
-  let cache = []
+  let calledOnce = false;
+  let cache = [];
   const inner = async (...args) => {
     if (!calledOnce) {
-      const funcsList = await getOnFuncs()
-      funcsList.forEach(element =>{
+      const funcsList = await getOnFuncs();
+      funcsList.forEach((element) => {
         //specify endpoint information for all the functions in the list of warmerOn functions
         let endpoint = {
-          url: process.env[`${element.funcID}_URL`],
-          name: element.funcName, 
-          id:element.funcID, 
-        }
+          // url: process.env[`${element.funcID}_URL`],
+          url: element.funcUrl,
+          name: element.funcName,
+          id: element.funcID,
+        };
         /* Run the jobs */
-        let myJobs = schedule.scheduleJob(`${scheduling[element.funcFreq]}`, () =>
-        callAndLog(endpoint, Date.now()));
-        cache.push(myJobs); 
-      })
-      calledOnce = true; 
-      console.log('passed once', "cache", cache)
-    }
-    else {
-      console.log('ran again')
+        let myJobs = schedule.scheduleJob(
+          `${scheduling[element.funcFreq]}`,
+          () => callAndLog(endpoint, Date.now())
+        );
+        cache.push(myJobs);
+      });
+      calledOnce = true;
+      console.log('passed once', 'cache', cache);
+    } else {
+      console.log('ran again');
       /*cancel jobs*/
-      cache.forEach ((job) => {
-        job.cancel()
-        console.log('cancelled')
-      })
-      cache = []
-      console.log('showing', cache); 
-      const funcsList = await getOnFuncs()
-      console.log('func list', funcsList)
-      funcsList.forEach(element =>{
+      cache.forEach((job) => {
+        job.cancel();
+        console.log('cancelled');
+      });
+      cache = [];
+      console.log('showing', cache);
+      const funcsList = await getOnFuncs();
+      console.log('func list', funcsList);
+      funcsList.forEach((element) => {
         //specify endpoint information for all the functions in the list of warmerOn functions
         let endpoint = {
-          url: process.env[`${element.funcID}_URL`],
-          name: element.funcName, 
-          id:element.funcID, 
-        }
+          // url: process.env[`${element.funcID}_URL`],
+          url: element.funcUrl,
+          name: element.funcName,
+          id: element.funcID,
+        };
         /*Re-schedule the jobs*/
-        let myJobs = schedule.scheduleJob(`${scheduling[element.funcFreq]}`, () =>
-        callAndLog(endpoint, Date.now()));
-        cache.push(myJobs); 
-        
-      })
+        let myJobs = schedule.scheduleJob(
+          `${scheduling[element.funcFreq]}`,
+          () => callAndLog(endpoint, Date.now())
+        );
+        cache.push(myJobs);
+      });
     }
-  }
-  return inner; 
-} 
+  };
+  return inner;
+};
 
-const initializeJobsOnce = initializeJobs()
-
-
-
+const initializeJobsOnce = initializeJobs();
 
 // const initializeJobs = async () => {
 //   const funcsList = await getOnFuncs()
@@ -196,8 +199,8 @@ const initializeJobsOnce = initializeJobs()
 //     //specify endpoint information for all the functions in the list of warmerOn functions
 //     let endpoint = {
 //       url: process.env[`${element.funcID}_URL`],
-//       name: element.funcName, 
-//       id:element.funcID, 
+//       name: element.funcName,
+//       id:element.funcID,
 //     }
 //     /* Run the jobs */
 //     let myJobs = schedule.scheduleJob(`${scheduling[element.funcFreq]}`, () =>
