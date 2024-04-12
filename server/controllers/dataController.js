@@ -73,11 +73,11 @@ dataController.getRuns = async (req, res, next) => {
         this.coldTotalLatency = 0;
 
         // These are stats that will eventually need to be calculated
-        this.percentCold;
-        this.aveLatency;
-        this.coldLatency;
-        this.warmLatency;
-        this.coldToWarm;
+        this.percentCold = 0;
+        this.aveLatency = 0;
+        this.coldLatency = 0;
+        this.warmLatency = 0;
+        this.coldToWarm = 0;
       }
 
       /**
