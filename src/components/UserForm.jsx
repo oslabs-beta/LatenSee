@@ -91,7 +91,10 @@ const UserForm = () => {
   };
 
   return (
-    <div>
+    <div className='function-table-container'>
+      <div className='table-heading'>
+      <h3>Tracked Functions</h3>
+      </div>
       <div className="app-selection">
         <label htmlFor="appSelect">Select App: </label>
         <select

@@ -7,6 +7,4 @@ funcID,appName,funcName,funcFreq,userID,warmerOn
 6,Evans Lambdas,2H,5M,abc123,No
 7,Evans Lambdas,1H,10S,abc123,No
 8,Evans Lambdas,30M,10S,abc123,No
-9,TestApp1,TestFunc1,10S,abc123,No
-10,TestApp3,TestFunc1,5M,abc123,No
-11,TestApp1,TestFunc3,10S,abc123,No
+9,Reem's Application,TestFunc1,15M,abc123,No
