@@ -309,7 +309,7 @@ $cancel-grey: #ccc;
       align-items: center;
       justify-content: space-between;
       border-bottom: solid thin $cancel-grey;
-      
+      min-width: 770px;
     }
 
     h3 {

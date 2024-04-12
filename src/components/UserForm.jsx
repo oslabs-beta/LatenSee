@@ -91,7 +91,8 @@ const UserForm = () => {
   };
 
   return (
-    <div className='function-table-container'>
+    <div className='function-table-container'>      
+      <div className="user-table">
       <div className='table-heading'>
       <h3>Tracked Functions</h3>
       <div className="app-selection">
@@ -109,8 +110,6 @@ const UserForm = () => {
         </select>
       </div>
       </div>
-      
-      <div className="user-table">
         <table>
           <thead>
             <tr>
