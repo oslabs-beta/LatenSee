@@ -46,8 +46,6 @@ describe('Test the average time to read data.csv', () => {
     const timingArray = await timeRuns();
 
     const average = timingArray.reduce((a, b) => a + b) / timingArray.length;
-    console.log('Timing results of readingCSV is: ', timingArray);
-    console.log('Average time of  readingCSV is: ', average);
     expect(average).toBeLessThan(350);
   }, 100000)
 

@@ -44,7 +44,6 @@ dataController.getData = async (req, res, next) => {
  */
 dataController.getRuns = async (req, res, next) => {
   try {
-    const enterGetRun = Date.now();
     // get array of all the functions from previous middleware
     const { records } = res.locals;
 
@@ -60,8 +59,6 @@ dataController.getRuns = async (req, res, next) => {
 
     // Set res.locals.all to the record of all rows in the csv
     const data = await csvFuncs.getAllRows(datafileName);
-
-    const grabbedAllRows = Date.now();
 
     // Sending only the last 25 records (a bit more than the front end needs, just in case, but less than the whole file).
     res.locals.all = data.slice(data.length - 25);
@@ -139,8 +136,6 @@ dataController.getRuns = async (req, res, next) => {
       );
     });
 
-    const builtAggregator = Date.now();
-
     // Process each row of data
     data.forEach((row) => {
       // Check that row.invokeTime is within startDate and endDate & is a function we're looking for
@@ -155,8 +150,6 @@ dataController.getRuns = async (req, res, next) => {
         );
       }
     });
-
-    const processsedRecords = Date.now();
 
     // declare the resulting array which we will return
     const totalRuns = [];
@@ -179,18 +172,7 @@ dataController.getRuns = async (req, res, next) => {
       totalRuns.push(funcObject);
     }
 
-    const createdResults = Date.now();
-
     res.locals.runs = totalRuns;
-
-    // Uncomment to re-benchmark timing
-    console.log('Finished run, data is: ', {
-      fullRunInterval: createdResults - enterGetRun,
-      grabAllRowsInterval: grabbedAllRows - enterGetRun,
-      builtAggregatorInterval: builtAggregator - grabbedAllRows,
-      processedRecordsInterval: processsedRecords - builtAggregator,
-      createdResultsInterval: createdResults - processsedRecords,
-    });
 
     return next();
   } catch (err) {
