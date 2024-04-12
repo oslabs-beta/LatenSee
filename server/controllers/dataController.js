@@ -183,6 +183,7 @@ dataController.getRuns = async (req, res, next) => {
 
     res.locals.runs = totalRuns;
 
+    // Uncomment to re-benchmark timing
     console.log('Finished run, data is: ', {
       fullRunInterval: createdResults - enterGetRun,
       grabAllRowsInterval: grabbedAllRows - enterGetRun,

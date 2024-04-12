@@ -1,5 +1,6 @@
 /**
- * This file tests the timing of running a request to /api/data. Note that the server needs to be running, and there is a long-running test that can be skipped if desired.
+ * This file tests the timing of running a request to /api/data. Note that the server 
+ * needs to be running, and there is a long-running test that can be skipped if desired.
  * In order to run properly, this file needs to be ran while the server is live.
  *
  */
@@ -41,11 +42,11 @@ describe('Test to time responses to dataController.getRuns()', () => {
     expect(Array.isArray(result)).toBe(true);
   });
 
-  it('Should have an average timing less than 1,000ms', async () => {
+  it('Should have an average timing less than 500ms', async () => {
     const timingArray = await timeRuns();
     const average = timingArray.reduce((a, b) => a + b) / timingArray.length;
-    console.log('Timing results is: ', timingArray);
-    console.log('Average time is: ', average);
-    expect(average).toBeLessThan(1000);
+    console.log('Timing results of getRuns is: ', timingArray);
+    console.log('Average time of getRuns is: ', average);
+    expect(average).toBeLessThan(500);
   }, 100000);
 });
