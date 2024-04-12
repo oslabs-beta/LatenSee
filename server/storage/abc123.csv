@@ -1,10 +1,12 @@
-funcID,appName,funcName,funcFreq,userID,warmerOn
-1,Evans Lambdas,10S,10S,abc123,Yes
-2,Evans Lambdas,10M,1M,abc123,Yes
-3,Evans Lambdas,5M,5M,abc123,Yes
-4,Evans Lambdas,3H,10S,abc123,Yes
-5,Evans Lambdas,15M,1M,abc123,Yes
-6,Evans Lambdas,2H,5M,abc123,Yes
-7,Evans Lambdas,1H,10S,abc123,Yes
-8,Evans Lambdas,30M,10S,abc123,Yes
-9,Evans Lambdas,LatenSee Template Lambda,1M,abc123,Yes
+funcID,appName,funcName,funcFreq,userID,warmerOn,funcUrl
+1,Evans Lambdas,10S,10S,abc123,No,
+2,Evans Lambdas,10M,1M,abc123,No,
+3,Evans Lambdas,5M,5M,abc123,Yes,
+4,Evans Lambdas,3H,1M,abc123,No,
+5,Evans Lambdas,15M,1M,abc123,No,
+6,Evans Lambdas,2H,15M,abc123,No,
+7,Evans Lambdas,1H,10S,abc123,No,
+8,Evans Lambdas,30M,10S,abc123,Yes,
+9,Evans Lambdas,LatenSee Template Lambda,1M,abc123,Yes,
+10,TestApp1,TestFunc3,1M,abc123,Yes,https://4uze95sn78.execute-api.us-west-2.amazonaws.com/default/10S
+11,sdhsa,askhkasj,30M,abc123,No,asjhdbjh
