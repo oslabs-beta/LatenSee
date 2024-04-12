@@ -8,14 +8,21 @@ const Chart = ({ data, height, width = '100%' }) => {
     return <div>Loading chart data...</div>;
   }
 
-  // setup series (what's on y-axis)
+  //setup series (what's on y-axis)
   const series = [];
+  //get all keys from first object in data array
   let keys = Object.keys(data[0]);
+  //interate through keys array created above
   for (let i = 0; i < keys.length; i++) {
     if (keys[i] !== 'day') {
+      let pointData = [];
+      //run a nested for-loop on data array (7 objects) starting from the end
+      for (let j = data.length - 1; j >= 0; j--) {
+        pointData.push(data[j][keys[i]].toFixed(1));
+      }
       let point = {
         name: keys[i],
-        data: data.map((item) => item[keys[i]].toFixed(1)).reverse(),
+        data: pointData,
       };
       series.push(point);
     }

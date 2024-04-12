@@ -1,7 +1,7 @@
 import React from 'react';
 
 function FunctionPerformanceTable({ data, width, className }) {
-  console.log('props data', data);
+  // console.log('props data', data);
 
   const tableStyle = {
     width: width,
@@ -10,7 +10,7 @@ function FunctionPerformanceTable({ data, width, className }) {
 
   return (
     <div style={tableStyle}>
-      <table className={className}>
+      <table className={className} data-testid="performance-table">
         <thead>
           <tr>
             <th>Function</th>
