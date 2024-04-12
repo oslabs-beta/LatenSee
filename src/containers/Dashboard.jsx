@@ -132,7 +132,6 @@ function Dashboard() {
           </div>
             {data ? (
               <FunctionPerformanceTable
-                className="performance-table"
                 data={data}
                 // width="calc(100% - 350px)"
               />
@@ -141,18 +140,17 @@ function Dashboard() {
             )}
           </div>
           <div className="pings-table">
-          <div className='data-header'>
-          <h3 className="pings-table-title">Recent Invocations</h3>
-          </div>
-            {pingData ? (
-              <LatestPingsTable
-                className="pings-table"
-                data={pingData}
-                // width="calc(100% - 350px)"
-              />
-            ) : (
-              <div>Loading Ping Table...</div>
-            )}
+            <div className='data-header'>
+            <p >Recent Invocations</p>
+            </div>
+              {pingData ? (
+                <LatestPingsTable
+                  data={pingData}
+                  // width="calc(100% - 350px)"
+                />
+              ) : (
+                <div>Loading Ping Table...</div>
+              )}
           </div>
         </div>
         </div>

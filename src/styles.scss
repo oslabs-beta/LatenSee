@@ -14,6 +14,8 @@ $button-blue:  #2196f3;
 $button-hover: #50b9ffb7; 
 $light-blue: #a7c9e3; 
 $cancel-grey: #ccc; 
+$table-header-bckground: #f5f5f5;
+$table-header-font-color: #333;
 
 /*container includes nav bar and main content*/
 .container {
@@ -376,8 +378,8 @@ $cancel-grey: #ccc;
     }
 
     th {
-      background-color: #f5f5f5;
-      color: #333;
+      background-color: $table-header-bckground;
+      color: $table-header-font-color;
       font-weight: bold;
       // border-bottom: 1px solid rgba(0, 0, 0, 0.335);
     }
@@ -533,6 +535,9 @@ h3 {
   .period{
     padding: 0 5px;
   }
+  .table-inner-container {
+    padding: 20px;
+  }
 
 }
 
@@ -540,20 +545,43 @@ h3 {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   width: 100%;
   margin-top: 20px;
+  .data-header{
+    padding-bottom: 0px;
+    border: none;
+    p{
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 400;
+    }
+  }
+  .table-inner-container {
+    padding: 20px; 
+  }
 }
 
 
-// .chart,
-// .performance-table {
-//   width: 100%;
-//   margin-bottom: 30px;
-//   margin-left: 20px;
-// }
-// .pings-table {
-//   width: 100%;
-//   margin-bottom: 30px;
-//   margin-left: 10px;
-// }
+.performance-table th,
+.performance-table td,
+.pings-table th,
+.pings-table td {
+  text-align: left;
+  padding: 12px 15px;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: white;
+  &:not(:last-child) {
+    border-right: 1px solid rgba(0, 0, 0, 0.057);
+  }
+  
+}
+
+.performance-table th, 
+.pings-table th{
+  background-color: $table-header-bckground;
+  color: $table-header-font-color;
+  font-weight: bold;
+}
+
+
 
 // .chart-title,
 // .performance-table-title {
@@ -605,13 +633,7 @@ h3 {
 //   overflow-y: auto;
 // }
 
-// .performance-table th,
-// .performance-table td,
-// .pings-table th,
-// .pings-table td {
-//   text-align: center;
-//   padding: 10px;
-// }
+
 
 // .side-by-side {
 //   display: flex;

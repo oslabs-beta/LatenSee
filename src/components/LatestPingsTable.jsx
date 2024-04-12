@@ -10,7 +10,7 @@ function LatestPingsTable({ data, width, className }) {
   };
 
   return (
-    <div style={pingTableStyle} className="latest-pings-table">
+    <div style={pingTableStyle} className="table-inner-container">
       <table className={className}>
         <thead>
           <tr>
