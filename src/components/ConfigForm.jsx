@@ -65,10 +65,13 @@ const ConfigForm = () => {
 
   return (
     <div className="config-form">
+      <div className='data-header'>
+      <h3>Add New Function</h3>
+      </div>
+      <div className='form-body'>
       <form onSubmit={handleSubmit}>
         <div className="name-fields">
           <div>
-            <h3>Add New Function</h3>
             <label for="appName">App name: </label>
             <input
               placeholder='Enter app name (e.g. "MyApp")'
@@ -125,6 +128,7 @@ const ConfigForm = () => {
         <Link to="/user"><button id='btn-cancel'>Cancel</button> </Link>
         {successMessage && <span>{successMessage}</span>}
       </form>
+      </div>
     </div>
   );
 };

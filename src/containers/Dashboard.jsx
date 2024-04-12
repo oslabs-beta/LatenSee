@@ -63,13 +63,10 @@ function Dashboard() {
     const startDate = new Date();
     startDate.setDate(endDate.getDate() - 6);
 
-    const formatDate = (date) => {
-      return `${date.getMonth() + 1}/${date.getDate()}`;
-    };
-
-    const formattedDateRange = `${formatDate(startDate)} - ${formatDate(
-      endDate
-    )}`;
+     // used to display date in chart as US format mm/dd uniformly accross all instances
+    const formatDate = new Intl.DateTimeFormat('en-US', {day:'2-digit', month:'2-digit'})
+    const formattedDateRange = `${formatDate.format(startDate)} - ${formatDate.format(endDate)}`;
+    
     setDateRange(formattedDateRange);
   }, []);
 
@@ -77,23 +74,62 @@ function Dashboard() {
     <>
       <div className="dashboard-container">
         <div className="dashboard-content">
-          <h1 className="chart-title">
-            Average Latency Trends Across Functions
-          </h1>
-          <div className="export-button-wrapper">
-            <ExportButton className="export-button" />
+        <div className="summary-table">
+          <div className='data-header'>
+            <h3>
+              Account Metrics
+            </h3>
           </div>
-          <div className="chart">
+          <div className='all-metrics'>
+            <div className='summary-metric one'>
+              <p>Functions Tracked</p>
+              <h1>10</h1>
+            </div>
+            <div className='summary-metric'>
+              <p>Daily Invocations</p>
+              <h1>4500</h1>
+            </div>
+            <div className='summary-metric'>
+              <p>Functions Tracked</p>
+              <h1>10</h1>
+            </div>
+            <div className='summary-metric'>
+              <p>Functions Tracked</p>
+              <h1>10</h1>
+            </div>
+          </div>
+        </div>
+        <div className='function-metrics-container'>
+        <div className='data-header'>
+            <h3>
+              Function Metrics
+            </h3>
+          </div>
+        <div className='function-metrics'>
+        
+          <div className="chart-container">
+            <div className='data-header'>
+              <p className="chart-title">
+              Average Lantency
+            </p>
+            <div className="export-button-wrapper">
+              <ExportButton className="export-button" />
+            </div>
+            </div>
+          
             {data ? (
               <Chart data={periodicData} height={375} width="100%" />
             ) : (
               <div>Loading chart...</div>
             )}
           </div>
-          <h1 className="performance-table-title">
-            Performance Table ({dateRange})
-          </h1>
           <div className="performance-table">
+          <div className='data-header'>
+            <p className="performance-table-title">
+              Key Performance Metrics 
+            </p> 
+            <div className='period'><p>Period: {dateRange}</p></div>
+          </div>
             {data ? (
               <FunctionPerformanceTable
                 className="performance-table"
@@ -104,8 +140,10 @@ function Dashboard() {
               <div>Loading table...</div>
             )}
           </div>
-          <h1 className="pings-table-title">Most Recent Pings</h1>
           <div className="pings-table">
+          <div className='data-header'>
+          <h3 className="pings-table-title">Recent Invocations</h3>
+          </div>
             {pingData ? (
               <LatestPingsTable
                 className="pings-table"
@@ -117,17 +155,20 @@ function Dashboard() {
             )}
           </div>
         </div>
-      </div>
-      <div className="overview-panel">
-        <div className="overview-content">
-          <h1 className="overview-title">Overview</h1>
-          {data ? (
-            <OverviewPanel className="overview-panel" data={comparisonData} />
-          ) : (
-            <div>Loading overview...</div>
-          )}
         </div>
+        </div>
+        {/* <div className="overview-panel">
+          <div className="overview-content">
+            <h1 className="overview-title">Overview</h1>
+            {data ? (
+              <OverviewPanel className="overview-panel" data={comparisonData} />
+            ) : (
+              <div>Loading overview...</div>
+            )}
+          </div>
+        </div> */}
       </div>
+
     </>
   );
 }
