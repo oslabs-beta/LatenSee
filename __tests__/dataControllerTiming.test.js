@@ -5,15 +5,16 @@
  *
  */
 
+const request = require('supertest');
+const app = require('../server/server');
 
 /**
  * Helper function that runs the actual fetch request.
  * @returns data response object from fetching /api/data
  */
 const runTest = async () => {
-  const response = await fetch('http://localhost:3000/api/data');
-  const data = await response.json();
-  return data[0];
+  const response = await request(app).get('/api/data');
+  return response.body[0];
 };
 
 /**

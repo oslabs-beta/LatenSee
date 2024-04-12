@@ -50,4 +50,4 @@ app.listen(PORT, () => {
   console.log(`server listening on port ${PORT}: http://localhost:${PORT}/`);
 });
 
-module.export = app;
+module.exports = app;
