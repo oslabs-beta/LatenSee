@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 const UserForm = () => {
   const openEyeSVG = (
     <svg
-      width="30px"
-      height="30px"
+      width="29px"
+      height="29px"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -37,8 +37,8 @@ const UserForm = () => {
 
   const closedEyeSVG = (
     <svg
-      width="30px"
-      height="30px"
+      width="29px"
+      height="29px"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -127,10 +127,10 @@ const UserForm = () => {
 
   // On click of 'start/stop', update function's status
   const updateStatus = (funcID, warmerOn) => {
-    const newStatus = (warmerOn === 'Yes' ? 'No': 'Yes')
-      // data.find((item) => item.funcID === funcID).status === 'Yes'
-      //   ? 'No'
-      //   : 'Yes';
+    const newStatus = warmerOn === 'Yes' ? 'No' : 'Yes';
+    // data.find((item) => item.funcID === funcID).status === 'Yes'
+    //   ? 'No'
+    //   : 'Yes';
     const updatedData = data.map((item) => {
       // find the function that matches the id and update its status (for immediate UI feedback in status column)
       if (item.funcID === funcID) {
@@ -227,7 +227,9 @@ const UserForm = () => {
                 <tr key={item.funcId}>
                   <td>{item.funcName}</td>
                   <td>
-                    <button onClick={() => updateStatus(item.funcID, item.warmerOn)}>
+                    <button
+                      onClick={() => updateStatus(item.funcID, item.warmerOn)}
+                    >
                       {item.warmerOn === 'Yes' ? openEyeSVG : closedEyeSVG}
                     </button>
                   </td>
@@ -238,8 +240,10 @@ const UserForm = () => {
                       id="freq"
                       onChange={(e) =>
                         editFuncFreq(item.funcID, e.target.value)
-                      }>
-                      <option value={`${item.funcFreq}`} selected>{item.funcFreq}
+                      }
+                    >
+                      <option value={`${item.funcFreq}`} selected>
+                        {item.funcFreq}
                       </option>
                       <option value="10S">10S</option>
                       <option value="1M">1M</option>
@@ -249,6 +253,10 @@ const UserForm = () => {
                       <option value="1H">1H</option>
                       <option value="2H">2H</option>
                       <option value="3H">3H</option>
+                      <option value="1D">1D</option>
+                      <option value="2D">2D</option>
+                      <option value="3D">3D</option>
+                      <option value="1W">1W</option>
                     </select>
                   </td>
                   <td>

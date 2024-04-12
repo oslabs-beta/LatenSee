@@ -45,8 +45,6 @@ app.use((err, req, res, next) => {
 
 // initializeJobsOnce()
 
-
-
 // set up listener
 app.listen(PORT, () => {
   console.log(`server listening on port ${PORT}: http://localhost:${PORT}/`);
