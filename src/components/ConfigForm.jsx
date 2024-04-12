@@ -65,7 +65,7 @@ const ConfigForm = () => {
 
   return (
     <div className="config-form">
-      <div className='data-header'>
+      <div className='config-data-header'>
       <h3>Add New Function</h3>
       </div>
       <div className='form-body'>
