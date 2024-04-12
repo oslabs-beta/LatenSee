@@ -21,6 +21,7 @@ $cancel-grey: #ccc;
   display: flex;
   justify-content: baseline;
   min-height: 100vh;
+  overflow: scroll;
 }
 
 /* Side nav bar */
@@ -288,7 +289,7 @@ $cancel-grey: #ccc;
 
 .user-page {  
   padding: 0 50px;
-  
+  background-color: pink;
 
   h2 {
     margin-top: 30px;
@@ -302,12 +303,14 @@ $cancel-grey: #ccc;
 
 
     .table-heading {
+      
       background-color: white; 
       padding: 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: solid thin $cancel-grey;
+      
     }
 
     h3 {
