@@ -42,7 +42,19 @@ const Chart = ({ data, height, width = '100%' }) => {
   const options = {
     chart: {
       type: 'line',
-      toolbar: { show: false },
+      toolbar: {
+        offsetX: -15,
+        offsetY: -30,  
+        tools: {
+        download: true,
+        other: false,
+        selection: false,
+        zoom: false,
+        zoomin: false,
+        zoomout: false,
+        pan: false,
+        reset: false, 
+      } },
       fontFamily: 'Raleway, sans-serif'
     },
     series: series,

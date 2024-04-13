@@ -462,14 +462,14 @@ h3 {
     width: 33.3%;
     padding: 5px 15px;
     height: 5rem;
-
     p {
       margin:0;
       font-size: 1rem;
     }
     h1{
       margin: 0;
-      font-weight: 400;
+      font-weight: 400;   
+      font-size: 1.8rem; 
     }
   }
   .summary-metric.one{
@@ -501,14 +501,13 @@ h3 {
     }
     h1{
       margin: 0;
-      font-weight: 400;
+      font-weight: 400;   
+      font-size: 1.8rem; 
     }
   }
   .summary-metric.one{
     border-left: none;
   }
-
-
 
 }
 .function-metrics{
@@ -539,6 +538,11 @@ h3 {
     padding: 10px;
   }
 }
+
+.chart-container.two{
+  margin-top: 20px;
+}
+
 
 .performance-table{
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -584,6 +588,7 @@ h3 {
 .performance-table th,
 .performance-table td{
   text-align: left;
+  width: 10%;
   padding: 12px 15px;
   border-bottom: 1px solid #e0e0e0;
   background-color: white;
@@ -595,7 +600,7 @@ h3 {
 .pings-table th,
 .pings-table td {
   text-align: left;
-  width: 16%;
+  width: 25%;
   padding: 12px 15px;
   border-bottom: 1px solid #e0e0e0;
   background-color: white;

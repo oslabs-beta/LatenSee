@@ -119,10 +119,6 @@ function Dashboard() {
                   <h1><ColdStartPercentage
               data = {comparisonData}
             /></h1>
-            {/* <SpeedPerformance
-              dataThisWeek={dataThisWeek}
-              dataLastWeek={dataLastWeek}
-            /> */}
           </div>
           <div className='summary-metric'>
                   <p>Average Latency Weekly Change</p> 
@@ -136,20 +132,33 @@ function Dashboard() {
             </div> 
           </div>
           <div className='function-metrics'>
+
           <div className="chart-container">
             <div className='data-header'>
               <p className="chart-title">
-              Average Lantency
-            </p>
-            <div className="export-button-wrapper">
-              <ExportButton className="export-button" />
+              Average Lantency by Function
+              </p>
             </div>
-            </div>
-          
             {data ? (
               <Chart data={periodicData} height={375} width="100%" />
             ) : (
               <div className='data-loading'>Loading chart...</div>
+            )}
+          </div>
+
+          <div className="chart-container two">
+          <div className='data-header'>
+              <p className="chart-title">
+              Total Average Latency 
+            </p>
+          </div>
+            {data ? (
+              <OverviewPanel className="overview-panel" 
+              data={comparisonData}
+              periodicData={periodicData}
+              />
+            ) : (
+              <div className='data-loading'>Loading overview...</div>
             )}
           </div>
           <div className="performance-table">
@@ -162,7 +171,6 @@ function Dashboard() {
             {data ? (
               <FunctionPerformanceTable
                 data={data}
-                // width="calc(100% - 350px)"
               />
             ) : (
               <div className='data-loading'>Loading table...</div>
@@ -170,12 +178,14 @@ function Dashboard() {
           </div>
           <div className="pings-table">
             <div className='data-header'>
-            <p >Recent Invocations</p>
+            <p>Recent Invocations</p>
+            <div className="export-button-wrapper">
+                <ExportButton className="export-button" />
+              </div>
             </div>
               {pingData ? (
                 <LatestPingsTable
                   data={pingData}
-                  // width="calc(100% - 350px)"
                 />
               ) : (
                 <div className='data-loading'>Loading table...</div>

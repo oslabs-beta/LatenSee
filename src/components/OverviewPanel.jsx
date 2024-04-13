@@ -5,6 +5,10 @@ import DailyPerformance from './DailyPerformance';
 
 //accepting props (data) from Dashboard
 const OverviewPanel = ({ data, periodicData }) => {
+  if (!periodicData || periodicData.length === 0) {
+    return <div className='data-loading'>Loading chart data...</div>;
+  }
+  
   //destructuring and naming first object dataThisWeek, second object dataLastWeek
   const [dataThisWeek, dataLastWeek] = data;
 
