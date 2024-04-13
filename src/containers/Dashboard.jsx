@@ -125,7 +125,7 @@ function Dashboard() {
             {data ? (
               <Chart data={periodicData} height={375} width="100%" />
             ) : (
-              <div>Loading chart...</div>
+              <div className='data-loading'>Loading chart...</div>
             )}
           </div>
           <div className="performance-table">
@@ -141,7 +141,7 @@ function Dashboard() {
                 // width="calc(100% - 350px)"
               />
             ) : (
-              <div>Loading table...</div>
+              <div className='data-loading'>Loading table...</div>
             )}
           </div>
           <div className="pings-table">
@@ -154,7 +154,7 @@ function Dashboard() {
                   // width="calc(100% - 350px)"
                 />
               ) : (
-                <div>Loading Ping Table...</div>
+                <div className='data-loading'>Loading table...</div>
               )}
           </div>
         </div>
@@ -164,9 +164,12 @@ function Dashboard() {
           <div className="overview-content">
             <h1 className="overview-title">Overview</h1>
             {data ? (
-              <OverviewPanel className="overview-panel" data={comparisonData} />
+              <OverviewPanel className="overview-panel" 
+              data={comparisonData}
+              periodicData={periodicData}
+              />
             ) : (
-              <div>Loading overview...</div>
+              <div className='data-loading'>Loading overview...</div>
             )}
           </div>
         </div> */}
