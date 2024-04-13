@@ -45,11 +45,10 @@ app.use((err, req, res, next) => {
 
 initializeJobsOnce()
 
-
-
 // set up listener
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`server listening on port ${PORT}: http://localhost:${PORT}/`);
 });
 
-module.export = app;
+module.exports = app;
+module.exports = server;

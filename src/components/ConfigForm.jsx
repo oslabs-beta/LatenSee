@@ -110,6 +110,10 @@ const ConfigForm = () => {
             {freqOptions.map((frequency) => (
                     <option value={frequency}>{frequency}</option>))
                     }
+            <option value="1D">Once Daily</option>
+            <option value="2D">Every 2 Days</option>
+            <option value="3D">Every 3 Days</option>
+            <option value="1W">Once Weekly</option>
           </select>
 
           <label class="switch">

@@ -1,4 +1,5 @@
 // require needed modules
+// require needed modules
 const fs = require('fs');
 const parse = require('csv-parser');
 const path = require('path');
@@ -31,7 +32,16 @@ dataController.getData = async (req, res, next) => {
   }
 };
 
-// middleware that gets number of runs for each function using all data available
+/**
+ *
+ * middleware that gets number of runs for each function using all data available
+ * This middleware controlls a lot of the core calculations being used by the front-end.
+ *
+ * @param {*} req express request object
+ * @param {*} res express response object
+ * @param {*} next express next object
+ * @returns
+ */
 dataController.getRuns = async (req, res, next) => {
   try {
     // get array of all the functions from previous middleware
@@ -39,86 +49,130 @@ dataController.getRuns = async (req, res, next) => {
 
     /* NOTE HERE ------------- get period of calculation (day, week, all data) from queryparams HARDCODED FOR NOW - TO DISCUSS WITH STEPHEN
     if one day period = 1, if one week period = 7, if all data available, period = Date.now()/86400000 --------------------*/
+    // NOTE: GRABBING TWO WEEKS OF DATA SO I DONT FILTER OUT ALL RESULTS
     const period = 14;
     //change period to milliseconds
     const periodMS = period * 86400000;
     // calculate startDate as current date minus the period we are covering in milliseconds
     const startDate = Date.now() - new Date(periodMS);
-    // console.log("start date", startDate)
     const endDate = Date.now();
 
+    // Set res.locals.all to the record of all rows in the csv
     const data = await csvFuncs.getAllRows(datafileName);
-    const totalRuns = [];
-    // for each function in the user file, calculate the number of runs between two specified dates (end date is alws now, and start date can be 1 day ago, 7 days ago or 0 for all data available)
-    records.forEach((row) => {
-      // count tracks number of runs for each function in specified date
-      let count = csvFuncs.getTotalRuns(data, row.funcID, startDate, endDate);
-      // count cold tracks the number of runs for each function where 'cold' is true
-      let countCold = csvFuncs.getCold(
-        data,
-        row.funcID,
-        'true',
-        startDate,
-        endDate
-      );
+    // Sending only the last 25 records (a bit more than the front end needs, just in case, but less than the whole file).
+    res.locals.all = data.slice(data.length - 25);
 
-      // sumLat calculates the sum of the latency for each function
-      let sumLat = csvFuncs.getSum(
-        data,
-        row.funcID,
-        'serverDifference',
-        startDate,
-        endDate,
-        false
-      );
-      let avWarmLat =
-        csvFuncs.getSum(
-          data,
-          row.funcID,
-          'serverDifference',
-          startDate,
-          endDate,
-          false
-        ) /
-        (count - countCold);
-      let avColdLat =
-        csvFuncs.getSum(
-          data,
-          row.funcID,
-          'serverDifference',
-          startDate,
-          endDate,
-          'true'
-        ) / countCold;
+    // declare FuncStatsCreator that accepts a funcId and funcName, we'll us this to keep track of calculated stats
+    class FuncStatsCreator {
+      constructor(funcID, funcName) {
+        this.id = funcID;
+        this.name = funcName;
+        this.totalRuns = 0;
+        this.coldStarts = 0;
+        this.totalLatency = 0;
+        this.coldTotalLatency = 0;
 
-      // percCold is the average number of cold starts and avLat is the average latency
-      let percCold = 0;
-      let avLat = 0;
-
-      if (count !== 0) {
-        percCold = countCold / count;
-        avLat = sumLat / count;
+        // These are stats that will eventually need to be calculated
+        this.percentCold = 0;
+        this.aveLatency = 0;
+        this.coldLatency = 0;
+        this.warmLatency = 0;
+        this.coldToWarm = 0;
       }
 
-      // push all calculated values into the totalRuns array with additional infoprmation about the current function
-      totalRuns.push({
-        id: row.funcID,
-        name: row.funcName,
-        totalRuns: count,
-        coldStarts: countCold,
-        percentCold: percCold,
-        aveLatency: avLat,
-        coldLatency: avColdLat ? avColdLat : 0,
-        warmLatency: avWarmLat ? avWarmLat : 0,
-        coldToWarm: avColdLat / avWarmLat ? avColdLat / avWarmLat : 0,
-      }); // for funcid= 1 [{id: 1, name: testfuncforApp1, totalRuns=count=10, numberRun:xx, numWarm }]
+      /**
+       * Helper function that will adjust properties based on if the current row is cold, and the current row's serverDifference
+       */
+      addRecord(cold, serverDifference) {
+        // Add to the totals
+        this.totalRuns++;
+        this.totalLatency = this.totalLatency + serverDifference;
+        // If its cold, add to the cold properties, we'll calculate warm later
+        if (cold) {
+
+          this.coldStarts++;
+          this.coldTotalLatency = this.coldTotalLatency + serverDifference;
+        }
+      }
+
+      /**
+       * If the calculations are valid, will populate the eventual stats required
+       * @returns undefined, just used to break
+       */
+      calculateStats() {
+        // Avoid divide by zero
+        if (this.totalRuns < 1) return;
+
+        this.percentCold = this.coldStarts / this.totalRuns;
+        this.aveLatency = this.totalLatency / this.totalRuns;
+
+        // Ensure we have cold starts before calc
+        if (this.coldStarts > 0) {
+          this.coldLatency = this.coldTotalLatency / this.coldStarts;
+        }
+
+        // Ensure we have warm starts before calc
+        if (this.totalRuns - this.coldStarts > 0) {
+          this.warmLatency =
+            (this.totalLatency - this.coldTotalLatency) /
+            (this.totalRuns - this.coldStarts);
+        }
+
+        // Ensure we have both cold and warm latency before calc
+        if (this.coldLatency > 0 && this.warmLatency > 0) {
+          this.coldToWarm = this.coldLatency / this.warmLatency;
+        }
+      }
+    }
+
+    // Create an object that will let us aggregate stats on each function
+    // key is the current funcId, value is a new FuncStatsCreator(funcId, funcName)
+    const aggregator = {};
+    records.forEach((record) => {
+      aggregator[record.funcID] = new FuncStatsCreator(
+        record.funcID,
+        record.funcName
+      );
     });
 
-    // calculate totals and averages for all the functions in totalRuns
+    // Process each row of data
+    data.forEach((row) => {
+      // Check that row.invokeTime is within startDate and endDate & is a function we're looking for
+      if (
+        row.invokeTime >= startDate &&
+        row.invokeTime <= endDate &&
+        Object.hasOwn(aggregator, row.funcID)
+      ) {
+        aggregator[row.funcID].addRecord(
+          row.cold === 'true' ? true : false,
+          Number(row.serverDifference)
+        );
+      }
+    });
+
+    // declare the resulting array which we will return
+    const totalRuns = [];
+
+    // Tell all of the aggregator objects to calculate their stats, then push a new object to the totalRuns array
+    for (const funcStat in aggregator) {
+      aggregator[funcStat].calculateStats();
+
+      const funcObject = {};
+      funcObject.id = aggregator[funcStat].id;
+      funcObject.name = aggregator[funcStat].name;
+      funcObject.totalRuns = aggregator[funcStat].totalRuns;
+      funcObject.coldStarts = aggregator[funcStat].coldStarts;
+      funcObject.percentCold = aggregator[funcStat].percentCold;
+      funcObject.aveLatency = aggregator[funcStat].aveLatency;
+      funcObject.coldLatency = aggregator[funcStat].coldLatency;
+      funcObject.warmLatency = aggregator[funcStat].warmLatency;
+      funcObject.coldToWarm = aggregator[funcStat].coldToWarm;
+
+      totalRuns.push(funcObject);
+    }
 
     res.locals.runs = totalRuns;
-    res.locals.all = data;
-    // console.log(res.locals.runs);
+
     return next();
   } catch (err) {
     return next({
@@ -169,7 +223,7 @@ dataController.getPeriodData = async (req, res, next) => {
       weeklyLats.push(dayData);
     }
     res.locals.weeklyLats = weeklyLats;
-    // console.log(weeklyLats)
+    // console.log(weeklyLats);
 
     return next();
   } catch (err) {
