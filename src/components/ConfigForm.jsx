@@ -13,8 +13,11 @@ const useInput = (init) => {
 
 const ConfigForm = () => {
   // defining frequencies drop down options 
-  const freqOptions = ['Select', '10S', '1M', '5M', '15M', '30M', '1H', '2H', '3H']
-
+  const freqOptions = ['Select', '10S', '1M', '5M', '15M', '30M', '1H', '2H', '3H', 'Once Daily', 'Every 2 Days','Every 3 Days', 'Once Weekly' ]
+  // <option value="1D">Once Daily</option>
+  // <option value="2D">Every 2 Days</option>
+  // <option value="3D">Every 3 Days</option>
+  // <option value="1W">Once Weekly</option>
 
   const [appName, setAppName] = useInput('');
   const [funcName, setFuncName] = useInput('');
@@ -110,10 +113,6 @@ const ConfigForm = () => {
             {freqOptions.map((frequency) => (
                     <option value={frequency}>{frequency}</option>))
                     }
-            <option value="1D">Once Daily</option>
-            <option value="2D">Every 2 Days</option>
-            <option value="3D">Every 3 Days</option>
-            <option value="1W">Once Weekly</option>
           </select>
 
           <label class="switch">
