@@ -8,7 +8,7 @@ const initializeJobsOnce = require('../runJobs');
 const configController = {};
 let funcID;
 // keeping userID hardcoded for now until we work out authentication
-const userID = 'abc123';
+const defaultUserID = 'abc123';
 // setting up headers for the user file that lists all the functions for a single user
 const heading = [
   { key: 'funcID' },
@@ -25,7 +25,14 @@ configController.addNew = async (req, res, next) => {
   try {
     // deconstructing information from body
     // TEMPORARILY ADDING DEFAULT TO 'Yes' for waremerOn
-    const { appName, funcName, funcUrl, funcFreq, warmerOn = 'Yes' } = req.body;
+    const {
+      appName,
+      funcName,
+      funcUrl,
+      funcFreq,
+      warmerOn = 'Yes',
+      userID = defaultUserID,
+    } = req.body;
 
     // if user file does not exist create file and set up file headers
 
@@ -95,7 +102,10 @@ configController.editFunc = async (req, res, next) => {
   try {
     const { funcID, funcUrl, funcFreq, warmerOn } = req.body;
 
-    const userfileName = path.resolve(__dirname, `../storage/${userID}.csv`);
+    const userfileName = path.resolve(
+      __dirname,
+      `../storage/${defaultUserID}.csv`
+    );
 
     // get array of all functions in the users file
     const records = await csvFuncs.getAllRows(userfileName);
@@ -161,7 +171,10 @@ configController.deleteFunc = async (req, res, next) => {
     // TO CONFIRM IF QUERY OR PARAM WITH FRONT END
     const funcID = req.query.id;
     // get correct file, which is user file that contains all the functions user is tracking
-    const userfileName = path.resolve(__dirname, `../storage/${userID}.csv`);
+    const userfileName = path.resolve(
+      __dirname,
+      `../storage/${defaultUserID}.csv`
+    );
 
     // get array of all functions in the users file
     let records = await csvFuncs.getAllRows(userfileName);
