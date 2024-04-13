@@ -12,12 +12,11 @@ const useInput = (init) => {
 };
 
 const ConfigForm = () => {
-  // defining frequencies drop down options 
-  const freqOptions = ['Select', '10S', '1M', '5M', '15M', '30M', '1H', '2H', '3H', 'Once Daily', 'Every 2 Days','Every 3 Days', 'Once Weekly' ]
-  // <option value="1D">Once Daily</option>
-  // <option value="2D">Every 2 Days</option>
-  // <option value="3D">Every 3 Days</option>
-  // <option value="1W">Once Weekly</option>
+  // defining frequencies drop down options that are displayed 
+  const freqOptions = ['Select', '10 Seconds', '1 Minute', '5 Minutes', '15 Minutes', '30 Minutes', '1 Hour', '2 Hours', '3 Hours', 'Once Daily', 'Every 2 Days','Every 3 Days', 'Once Weekly']; 
+  // defining frequencies drop down options values that are sent to the backend 
+  const freqValues = ['Select', '10S', '1M', '5M', '15M', '30M', '1H', '2H', '3H', '1D', '2D', '3D', '1W']; 
+
 
   const [appName, setAppName] = useInput('');
   const [funcName, setFuncName] = useInput('');
@@ -30,7 +29,7 @@ const ConfigForm = () => {
   const handleSubmit = (e) => {
     console.log("rate", invRate)
     e.preventDefault();
-    if (!invRate || invRate === 'Select' || !appName || !funcName || !url || !warmerOn) {
+    if (!invRate || invRate === 'Select' || !appName || !funcName || !url) {
       setSuccessMessage('Please fill in all required feilds')
 
     }
@@ -110,8 +109,8 @@ const ConfigForm = () => {
             value={invRate}
             onChange={setInvRate}
           >
-            {freqOptions.map((frequency) => (
-                    <option value={frequency}>{frequency}</option>))
+            {freqOptions.map((frequency, index) => (
+                    <option value={freqValues[index]}>{frequency}</option>))
                     }
           </select>
 

@@ -95,11 +95,11 @@ function Dashboard() {
               <h1>4500</h1>
             </div>
             <div className='summary-metric'>
-              <p>Functions Tracked</p>
+              <p>Placeholder</p>
               <h1>10</h1>
             </div>
             <div className='summary-metric'>
-              <p>Functions Tracked</p>
+              <p>Placeholder</p>
               <h1>10</h1>
             </div>
           </div>
