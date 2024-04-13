@@ -27,26 +27,13 @@ const OverviewPanel = ({ data, periodicData }) => {
     return avLatEachDay;
   };
 
-  console.log('i am avLatEachDay: ', averageLatencyEachDay());
+  // console.log('i am avLatEachDay: ', averageLatencyEachDay());
 
   return (
-    <div className="general-overview">
-      <div className="side-by-side">
-        <ColdStartPercentage
-          dataThisWeek={dataThisWeek}
-          dataLastWeek={dataLastWeek}
-        />
-
-        <SpeedPerformance
-          dataThisWeek={dataThisWeek}
-          dataLastWeek={dataLastWeek}
-        />
-      </div>
-      <div className="separator-bar"></div>
+    <div>
       <div className="daily-performance">
         <DailyPerformance averageLatencyEachDay={averageLatencyEachDay()} />
       </div>
-      <div className="separator-bar"></div>
     </div>
   );
 };

@@ -66,6 +66,7 @@ $table-header-font-color: #333;
   left: 0; /* Aligns the sidebar to the left of the viewport */
   text-align: center;
   border-right: 1px solid rgba(128, 128, 128, 0.116);
+  z-index: 1;
 
   a {
     display: block;
@@ -416,25 +417,14 @@ $table-header-font-color: #333;
 /*Dashboard main content styling */
 
 .dashboard-container {
-  display: grid;
-  grid-template-columns: 900px 1fr 300px;
-  gap: -10px;
   // background-color: pink;
-  // border: solid black;
+  
 }
 
 .dashboard-content {
-  display: grid;
-  grid-template-columns: 1fr;
-  width: 50%;
   display: flex;
   flex-direction: column;
-  width: 100%;
   padding: 20px;
-  // width: 80vw;
-  // max-width: 1200px;
-  // margin-left: auto;
-  // margin-right: auto;
 }
 
 .data-loading {
@@ -453,12 +443,10 @@ h3 {
   align-items: center;
   justify-content: space-between;
   border-bottom: solid thin $cancel-grey;
-  min-width: 770px;
 }
 
 .summary-table{  
   // border: solid black;
-  width: 100%;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
   .all-metrics {
@@ -471,7 +459,7 @@ h3 {
   }
   .summary-metric{
     border-left: solid thin $cancel-grey;
-    width: 25%;
+    width: 33.3%;
     padding: 5px 15px;
     height: 5rem;
 
@@ -492,6 +480,36 @@ h3 {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   margin-top: 20px;
 
+  .all-metrics {
+    border-bottom: solid thin $cancel-grey; 
+    background-color: white;
+    padding: 5px 0px;
+    display: flex; 
+    align-items: center;
+    justify-content: space-between;
+    
+  }
+  .summary-metric{
+    border-left: solid thin $cancel-grey;
+    width: 33.3%;
+    padding: 5px 15px;
+    height: 5rem;
+
+    p {
+      margin:0;
+      font-size: 1rem;
+    }
+    h1{
+      margin: 0;
+      font-weight: 400;
+    }
+  }
+  .summary-metric.one{
+    border-left: none;
+  }
+
+
+
 }
 .function-metrics{
   background-color: white;
@@ -502,6 +520,7 @@ h3 {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; 
   background-color: white;
   width: 100%;
+
   .data-header{
     padding-bottom: 0px;
     border: none;
@@ -563,10 +582,20 @@ h3 {
 
 
 .performance-table th,
-.performance-table td,
+.performance-table td{
+  text-align: left;
+  padding: 12px 15px;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: white;
+  &:not(:last-child) {
+    border-right: 1px solid rgba(0, 0, 0, 0.057);
+  }
+}
+
 .pings-table th,
 .pings-table td {
   text-align: left;
+  width: 16%;
   padding: 12px 15px;
   border-bottom: 1px solid #e0e0e0;
   background-color: white;

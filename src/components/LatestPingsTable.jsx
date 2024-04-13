@@ -15,22 +15,20 @@ function LatestPingsTable({ data, width, className }) {
         <thead>
           <tr>
             <th>Function</th>
-            <th>Coldstart</th>
-            <th>Invoke Time</th>
-            <th>Server Start</th>
-            <th>Server End</th>
+            <th>Invocation Start</th>
+            <th>Invocation End</th>
             <th>Latency</th>
+            <th>Coldstart</th>
           </tr>
         </thead>
         <tbody>
           {lastFivePings.map((ping, index) => (
             <tr key={index}>
               <td>{ping.name}</td>
-              <td>{coldStartYN(ping.firstRun)}</td>
-              <td>{new Date(parseInt(ping.invokeTime)).toLocaleString()}</td>
               <td>{new Date(parseInt(ping.serverStart)).toLocaleString()}</td>
               <td>{new Date(parseInt(ping.serverEnd)).toLocaleString()}</td>
               <td>{ping.serverDifference}</td>
+              <td>{coldStartYN(ping.firstRun)}</td>
             </tr>
           ))}
         </tbody>
