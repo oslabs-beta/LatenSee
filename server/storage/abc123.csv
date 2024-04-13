@@ -11,3 +11,4 @@ funcID,appName,funcName,funcFreq,userID,warmerOn,funcUrl
 10,TestApp1,TestFunc3,1M,abc123,No,https://4uze95sn78.execute-api.us-west-2.amazonaws.com/default/10S
 11,sdhsa,askhkasj,30M,abc123,No,asjhdbjh
 12,TestApp1,TestFunc1,10S,abc123,No,https://4uze95sn78.execute-api.us-west-2.amazonaws.com/default/10S
+13,TestApp1,TestFunc2,10S,abc123,No,https://4uze95sn78.execute-api.us-west-2.amazonaws.com/default/10S
