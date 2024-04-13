@@ -7,6 +7,9 @@ import OverviewPanel from '../components/OverviewPanel';
 import ExportButton from '../components/ExportButton';
 import LatestPingsTable from '../components/LatestPingsTable';
 
+// formatting numbers with comma and decimal
+const numFormat = new Intl.NumberFormat('US-en')
+
 function Dashboard() {
   //FunctionPerformanceTable
   const [data, setData] = useState([]);
@@ -79,6 +82,9 @@ function Dashboard() {
     setDateRange(formattedDateRange);
   }, []);
 
+
+  console.log('comp data', comparisonData)
+
   return (
       <div className="dashboard-container">
         <div className="dashboard-content">
@@ -91,15 +97,15 @@ function Dashboard() {
             <div className='all-metrics'>
               <div className='summary-metric one'>
                 <p>Functions Tracked</p>
-                <h1>{acctData[0] ? acctData[0] : 0 }</h1>
+                <h1>{acctData[0] ? numFormat.format(acctData[0]) : 0 }</h1>
               </div>
               <div className='summary-metric'>
-                <p>Functions with Invocations</p>
-                <h1>{acctData[1] ? acctData[1] : 0}</h1>
+                <p>Active Function Invocations</p>
+                <h1>{acctData[1] ? numFormat.format(acctData[1]) : 0}</h1>
               </div>
               <div className='summary-metric'>
                 <p>Daily Invocations</p>
-                <h1>{periodicData[0] ? periodicData[0]['dayCount'] : 0}</h1>
+                <h1>{periodicData[0] ? numFormat.format(periodicData[0]['dayCount']) : 0}</h1>
               </div>
               {/* <div className='summary-metric'>
                 <p>Placeholder</p>
@@ -127,8 +133,9 @@ function Dashboard() {
             </h1>
             </div> 
             <div className='summary-metric'>
-                  <p>Placeholder</p>
-                  <h1>10</h1>
+                  <p>Max Average Latency</p>
+                  <h1>{comparisonData[0]? `${numFormat.format(comparisonData[0]['maxLatency'])} ms` : '-' }</h1>
+                  <p className='bottom-p'> {comparisonData[0]? `for function ${comparisonData[0]['maxLatFunc']}` : ''}</p>
             </div> 
           </div>
           <div className='function-metrics'>

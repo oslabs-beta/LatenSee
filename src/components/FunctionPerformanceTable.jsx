@@ -1,5 +1,8 @@
 import React from 'react';
 
+// formatting numbers with comma and decimal
+const numFormat = new Intl.NumberFormat('US-en', {minimumFractionDigits: 1})
+
 function FunctionPerformanceTable({ data, width, className }) {
 
   const tableStyle = {
@@ -29,9 +32,9 @@ function FunctionPerformanceTable({ data, width, className }) {
               <td>{item.totalRuns}</td>
               <td>{item.coldStarts}</td>
               <td>{(item.percentCold * 100).toFixed(1)}</td>
-              <td>{item.aveLatency? item.aveLatency.toFixed(1): 0}</td>
-              <td>{item.coldLatency? item.coldLatency.toFixed(1): 0}</td>
-              <td>{item.warmLatency? item.warmLatency.toFixed(1): 0 }</td>
+              <td>{item.aveLatency? numFormat.format(item.aveLatency): 0}</td>
+              <td>{item.coldLatency? numFormat.format(item.coldLatency): 0}</td>
+              <td>{item.warmLatency? numFormat.format(item.warmLatency.toFixed(1)): 0 }</td>
               <td>{item.coldToWarm? item.coldToWarm.toFixed(1): 0}</td>
             </tr>
           ))}

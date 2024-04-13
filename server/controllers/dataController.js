@@ -10,6 +10,9 @@ const userID = 'abc123';
 const datafileName = path.resolve(__dirname, `../storage/data.csv`);
 const userfileName = path.resolve(__dirname, `../storage/${userID}.csv`);
 
+// formatting numbers with comma and decimal
+const numFormat = new Intl.NumberFormat('US-en')
+
 const dataController = {};
 
 // middleware gets all the functions that the user has from the user file
@@ -171,8 +174,8 @@ dataController.getRuns = async (req, res, next) => {
       const funcObject = {};
       funcObject.id = aggregator[funcStat].id;
       funcObject.name = aggregator[funcStat].name;
-      funcObject.totalRuns = aggregator[funcStat].totalRuns;
-      funcObject.coldStarts = aggregator[funcStat].coldStarts;
+      funcObject.totalRuns = numFormat.format(aggregator[funcStat].totalRuns); // numFormat formats number to include comma for thousands
+      funcObject.coldStarts = numFormat.format(aggregator[funcStat].coldStarts);
       funcObject.percentCold = aggregator[funcStat].percentCold;
       funcObject.aveLatency = aggregator[funcStat].aveLatency;
       funcObject.coldLatency = aggregator[funcStat].coldLatency;
