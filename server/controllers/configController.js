@@ -77,8 +77,9 @@ configController.addNew = async (req, res, next) => {
         )
       );
     }
-    // append funcURL to .env file with unique name 'funcID-URL'
-    // fs.appendFileSync('.env', `${funcID}_URL='${funcUrl}'\n`);
+
+    // restart invocations to take into account the new function
+    initializeJobsOnce(); 
 
     return next();
   } catch (err) {
@@ -145,6 +146,7 @@ configController.editFunc = async (req, res, next) => {
         )
       );
     }
+    // restart invocations to take into account the edited item
     initializeJobsOnce();
     return next();
   } catch (err) {
