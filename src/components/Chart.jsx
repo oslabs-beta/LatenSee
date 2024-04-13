@@ -5,7 +5,7 @@ import ReactApexChart from 'react-apexcharts';
 const Chart = ({ data, height, width = '100%' }) => {
   // handle cases when response data has not come back yet, or reponse data array is empty
   if (!data || data.length === 0) {
-    return <div>Loading chart data...</div>;
+    return <div className='data-loading'>Loading chart data...</div>;
   }
 
   //setup series (what's on y-axis)
@@ -39,21 +39,31 @@ const Chart = ({ data, height, width = '100%' }) => {
     chart: {
       type: 'line',
       toolbar: { show: false },
+      fontFamily: 'Raleway, sans-serif'
     },
     series: series,
+    stroke: {curve: 'smooth' }, // makes the lines smooth instead of straight
+    markers: {size: 0,}, // adds circles to mark each data point, currently tuned off = 0
     xaxis: {
       categories: categories,
+      
     },
     yaxis: {
+      //formatting labels
+      labels: {
+        formatter: function(value){
+          return new Intl.NumberFormat('US-en').format(value); 
+        }
+      },
       // adding title to y-axis
       title: {
-        text: 'Average Latency (Milliseconds)',
+        text: 'Milliseconds',
         //rotate the text
-        rotate: -90,
+        // rotate: -90,
         style: {
-          fontSize: '12px',
-          fontFamily: 'Helvetica, Arial, sans-serif',
-          fontWeight: 600,
+          fontSize: '0.8rem',
+          fontFamily: 'inherit',
+          fontWeight: 400,
         },
       },
     },

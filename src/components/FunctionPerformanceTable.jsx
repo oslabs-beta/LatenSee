@@ -9,8 +9,8 @@ function FunctionPerformanceTable({ data, width, className }) {
   };
 
   return (
-    <div style={tableStyle}>
-      <table className={className}>
+    <div className='table-inner-container'style={tableStyle}>
+      <table className={className} data-testid="performance-table">
         <thead>
           <tr>
             <th>Function</th>
