@@ -217,8 +217,8 @@ dataController.getPeriodData = async (req, res, next) => {
         );
 
         dayData[row.funcName] = avLat / count ? avLat / count : 0;
-        dayData['day'] = new Date(week[i]).toDateString().slice(3, 11);
-        // console.log('i am dayDaya: ', dayData);
+        // used to display date in chart as US format mm/dd
+        dayData['day'] = new Intl.DateTimeFormat('en-US', {day:'2-digit', month:'2-digit'}).format(week[i])
       });
       weeklyLats.push(dayData);
     }
