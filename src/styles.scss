@@ -29,22 +29,26 @@ $table-header-font-color: #333;
 /* Side nav bar */
 .logo-container {
   display: flex;
+  align-items: center;
 
   h2 {
     font-family: 'Bruno Ace', sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
+    margin: 0; 
   }
 }
 
 .logo {
-  margin-left: -11px;
+  // margin-left: -11px;
   margin-bottom: 20px;
 
   img {
-    width: 80px;
-    margin-right: -20px;
+    width: 70px;
+    margin-right: -15px;
+    margin-left: 10px;
+    padding: 0;
   }
 
   a {
