@@ -26,7 +26,7 @@ function MainDashboard() {
         const compResponse = await fetch('/api/comps');
         const compData = await compResponse.json();
         setComparisonData(compData);
-        // get range of date (begins with 7 days ago)
+        // get range of date (begins from 7 days ago)
         const endDate = new Date();
         const startDate = new Date();
         startDate.setDate(endDate.getDate() - 6);

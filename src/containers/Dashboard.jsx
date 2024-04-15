@@ -7,6 +7,7 @@ import LatestPingsTable from '../components/LatestPingsTable';
 import { AllData } from './MainDashboard';
 
 function Dashboard() {
+  //destructure from Context
   const { data, pingData, periodicData, comparisonData, dateRange } =
     useContext(AllData);
   // //FunctionPerformanceTable
@@ -106,7 +107,6 @@ function Dashboard() {
               <FunctionPerformanceTable
                 className="performance-table"
                 data={data}
-                // width="calc(100% - 350px)"
               />
             ) : (
               <div>Loading table...</div>
@@ -115,11 +115,7 @@ function Dashboard() {
           <h1 className="pings-table-title">Most Recent Pings</h1>
           <div className="pings-table">
             {pingData ? (
-              <LatestPingsTable
-                className="pings-table"
-                data={pingData}
-                // width="calc(100% - 350px)"
-              />
+              <LatestPingsTable className="pings-table" data={pingData} />
             ) : (
               <div>Loading Ping Table...</div>
             )}

@@ -7,14 +7,13 @@ import '@testing-library/jest-dom';
 jest.mock('react-apexcharts', () => {
   //define MockChart, passing props to MockChart just like how the actaul Chart component behaves
   return function MockChart(props) {
-    return <div data-testid="mocked-chart">{JSON.stringify(props)}</div>;
+    return <div data-testid="mock-chart">{JSON.stringify(props)}</div>;
   };
 });
 
 test('displays message when data array is empty', () => {
   //render Chart component and store in fakeChart variable as object (intercepted by the MockChart)
   const fakeChart = render(<Chart data={[]} height={400} />);
-  //call getByText method to look for the string
   const message = fakeChart.getByText('Loading chart data...');
   expect(message).toBeInTheDocument();
 });
@@ -26,7 +25,7 @@ test('renders chart correctly with data', () => {
   ];
 
   render(<Chart data={mockData} height={400} />);
-  const chart = screen.getByTestId('mocked-chart');
+  const chart = screen.getByTestId('mock-chart');
 
   // converting data in chart back to normal javascript
   const props = JSON.parse(chart.textContent);
