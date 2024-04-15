@@ -54,18 +54,16 @@ const App = () => {
 
   const value = { data, pingData, periodicData, comparisonData, dateRange };
 
-
-
   return (
     <div className="container">
       <SideNavBar />
       <div className="main-content">
-      <AllData.Provider value={value}>
-        <Routes>
-          <Route path="config" element={<Configure />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="user" element={<User />} />
-        </Routes>
+        <AllData.Provider value={value}>
+          <Routes>
+            <Route path="config" element={<Configure />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="user" element={<User />} />
+          </Routes>
         </AllData.Provider>
       </div>
     </div>
