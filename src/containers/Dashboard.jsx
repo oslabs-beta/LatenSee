@@ -4,7 +4,7 @@ import Chart from '../components/Chart';
 import OverviewPanel from '../components/OverviewPanel';
 import ExportButton from '../components/ExportButton';
 import LatestPingsTable from '../components/LatestPingsTable';
-import { AllData } from './MainDashboard';
+import { AllData } from '../App.jsx';
 
 function Dashboard() {
   //destructure from Context
