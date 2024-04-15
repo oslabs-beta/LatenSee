@@ -29,7 +29,6 @@ test('renders chart correctly with data', () => {
 
   // converting data in chart back to normal javascript
   const props = JSON.parse(chart.textContent);
-  console.log('i am props: ', props);
   expect(props.series).toEqual([{ name: 'latency', data: ['40.0', '30.0'] }]);
   expect(props.options.xaxis.categories).toEqual(['Tuesday', 'Monday']);
 });

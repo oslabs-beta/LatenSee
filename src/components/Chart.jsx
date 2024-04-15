@@ -84,8 +84,6 @@ const Chart = ({ data, height, width = '100%' }) => {
       },
     },
   };
-  console.log('i am options: ', options);
-  console.log('i am series: ', series);
   return (
     <div id="chart">
       <ReactApexChart
