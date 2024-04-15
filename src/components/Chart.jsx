@@ -84,7 +84,6 @@ const Chart = ({ data, height, width = '100%' }) => {
       },
     },
   };
-
   return (
     <div id="chart">
       <ReactApexChart

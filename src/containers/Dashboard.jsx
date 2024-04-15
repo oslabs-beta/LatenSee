@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import FunctionPerformanceTable from '../components/FunctionPerformanceTable';
 import Chart from '../components/Chart';
 import ColdStartPercentage from '../components/ColdStartPercentage';
@@ -9,82 +9,13 @@ import LatestPingsTable from '../components/LatestPingsTable';
 
 // formatting numbers with comma and decimal
 const numFormat = new Intl.NumberFormat('US-en')
+import { AllData } from '../App.jsx';
 
 function Dashboard() {
-  //FunctionPerformanceTable
-  const [data, setData] = useState([]);
-  //LatestPingsTable
-  const [pingData, setPingData] = useState([]);
-  //Chart
-  const [periodicData, setPeriodicData] = useState([]);
-  //OverviewPanel
-  const [comparisonData, setComparisonData] = useState([]);
-  //title for FunctionPerformanceTable
-  const [dateRange, setDateRange] = useState('');
-  // data on overall account (number of funcs tracked, number thats is turned on)
-  const [acctData, setAcctData] = useState('');
-
-  //data fetched for FunctionPerformanceTable and LatestPingsTable
-  useEffect(() => {
-    fetch('/api/data')
-      .then((data) => data.json())
-      .then((data) => {
-        setData(data[0]);
-        setPingData(data[1]);
-        setAcctData(data[2])
-      })
-      .catch((error) => {
-        console.log('Failed to load data', error);
-      });
-  }, []);
-
-  //data fetched for Chart and DailyPerformance
-  useEffect(() => {
-    fetch('/api/period')
-      .then((data) => data.json())
-      .then((data) => {
-        setPeriodicData(data);
-      })
-      .catch((error) => {
-        console.log('Failed to load data', error);
-      });
-  }, []);
-
-  //data fetched for OverviewPanel
-  useEffect(() => {
-    fetch('/api/comps')
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error('Network response was not ok.');
-      })
-      .then((data) => {
-        // console.log('comparison data: ', data);
-        setComparisonData(data);
-      })
-      .catch((error) => {
-        console.log('Failed to load data', error);
-      });
-  }, []);
-
-  //data fetched for title of FunctionPerformanceTable
-  useEffect(() => {
-    // Date range calculation
-    const endDate = new Date();
-    const startDate = new Date();
-    startDate.setDate(endDate.getDate() - 6);
-
-     // used to display date in chart as US format mm/dd uniformly accross all instances
-    const formatDate = new Intl.DateTimeFormat('en-US', {day:'2-digit', month:'2-digit'})
-    const formattedDateRange = `${formatDate.format(startDate)} - ${formatDate.format(endDate)}`;
-    
-    setDateRange(formattedDateRange);
-  }, []);
-
-
-  console.log('comp data', periodicData)
-
+  //destructure from Context
+  const { data, pingData, periodicData, comparisonData, dateRange, acctData } =
+    useContext(AllData);
+  console.log('Dashboard mounted');
   return (
       <div className="dashboard-container">
         <div className="dashboard-content">
@@ -201,19 +132,6 @@ function Dashboard() {
         </div>
         </div>
         </div>
-        {/* <div className="overview-panel">
-          <div className="overview-content">
-            <h1 className="overview-title">Overview</h1>
-            {data ? (
-              <OverviewPanel className="overview-panel" 
-              data={comparisonData}
-              periodicData={periodicData}
-              />
-            ) : (
-              <div className='data-loading'>Loading overview...</div>
-            )}
-          </div>
-        </div> */}
       </div>
   );
 }
