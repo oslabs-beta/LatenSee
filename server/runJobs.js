@@ -6,6 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const { stringify } = require('csv-stringify/sync');
 const { electron } = require('webpack');
+const fetch = require('node-fetch');
 
 // NEED TO MOVE THIS INTO A CONTROLLER
 const userID = 'abc123';
