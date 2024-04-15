@@ -49,7 +49,7 @@ const archiveData = async () => {
     // otherwise start archive process 
 
     // define period of archive for (for example, 2 weeks of data is equal to today - 14 days day converted to millisecs)
-    const archivePeriod = 1 // in days 
+    const archivePeriod = 7 // in days 
     const archivePeriodMS = archivePeriod * DAYStoMS 
     // set the cut off date before which all data will be archived 
     const targetArchDate = now - archivePeriodMS; 
