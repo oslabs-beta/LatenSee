@@ -14,6 +14,7 @@ const App = () => {
   const [periodicData, setPeriodicData] = useState([]);
   const [comparisonData, setComparisonData] = useState([]);
   const [dateRange, setDateRange] = useState('');
+  const [acctData, setAcctData] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,6 +24,7 @@ const App = () => {
         const newData = await response.json();
         setData(newData[0]);
         setPingData(newData[1]);
+        setAcctData(newData[2]);
         //api/period provides data for Chart
         const periodResponse = await fetch('/api/period');
         const periodData = await periodResponse.json();
@@ -35,10 +37,10 @@ const App = () => {
         const endDate = new Date();
         const startDate = new Date();
         startDate.setDate(endDate.getDate() - 6);
-        const formatDate = (date) => `${date.getMonth() + 1}/${date.getDate()}`;
-        const formattedDateRange = `${formatDate(startDate)} - ${formatDate(
-          endDate
-        )}`;
+     // used to display date in chart as US format mm/dd uniformly accross all instances
+        const formatDate = new Intl.DateTimeFormat('en-US', {day:'2-digit', month:'2-digit'})
+        const formattedDateRange = `${formatDate.format(startDate)} - ${formatDate.format(endDate)}`;
+     
         setDateRange(formattedDateRange);
       } catch (error) {
         console.log('Failed to load data', error);
@@ -52,7 +54,7 @@ const App = () => {
 
   console.log('Dashboard dismounted');
 
-  const value = { data, pingData, periodicData, comparisonData, dateRange };
+  const value = { data, pingData, periodicData, comparisonData, dateRange, acctData };
 
   return (
     <div className="container">
