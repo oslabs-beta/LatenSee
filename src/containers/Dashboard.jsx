@@ -83,7 +83,7 @@ function Dashboard() {
   }, []);
 
 
-  console.log('comp data', comparisonData)
+  console.log('comp data', periodicData)
 
   return (
       <div className="dashboard-container">

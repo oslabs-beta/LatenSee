@@ -20,7 +20,7 @@ const SpeedPerformance = ({ data }) => {
 
   return (
     <div>
-       {percentageChange.toFixed(2)}x
+       {percentageChange.toFixed(1)}x
     </div>
   );
 };
