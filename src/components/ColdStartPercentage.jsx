@@ -56,7 +56,7 @@ const ColdStartPercentage = ({data}) => {
   const increaseDecreaseText = percentageChange >= 0 ? 'increase' : 'decrease';
 
   return (
-    <div className="coldStart-percentage-change">
+    <div>
         {percentageChange.toFixed(2)}x
     </div>
   );

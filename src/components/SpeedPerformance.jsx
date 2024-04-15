@@ -19,8 +19,8 @@ const SpeedPerformance = ({ data }) => {
   const increaseDecreaseText = percentageChange >= 0 ? 'increase' : 'decrease';
 
   return (
-    <div className="latency-percentage-change">
-        {percentageChange.toFixed(2)}x
+    <div>
+       {percentageChange.toFixed(2)}x
     </div>
   );
 };

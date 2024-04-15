@@ -1,7 +1,7 @@
 import React from 'react';
 
 // formatting numbers with comma and decimal
-const numFormat = new Intl.NumberFormat('US-en', {minimumFractionDigits: 1})
+const numFormat = new Intl.NumberFormat('US-en', {maximumFractionDigits: 1})
 
 function FunctionPerformanceTable({ data, width, className }) {
 

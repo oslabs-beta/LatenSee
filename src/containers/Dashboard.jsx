@@ -135,7 +135,7 @@ function Dashboard() {
             <div className='summary-metric'>
                   <p>Max Average Latency</p>
                   <h1>{comparisonData[0]? `${numFormat.format(comparisonData[0]['maxLatency'])} ms` : '-' }</h1>
-                  <p className='bottom-p'> {comparisonData[0]? `for function ${comparisonData[0]['maxLatFunc']}` : ''}</p>
+                  <p className='bottom-p'> {comparisonData[0]? `for function '${comparisonData[0]['maxLatFunc']}'` : ''}</p>
             </div> 
           </div>
           <div className='function-metrics'>
