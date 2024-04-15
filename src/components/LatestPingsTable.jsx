@@ -1,5 +1,10 @@
 import React from 'react';
 
+// formatting numbers with comma and decimal
+const numFormat = new Intl.NumberFormat('US-en', {minimumFractionDigits: 1})
+// formatting date 
+const dateFormat = new Intl.DateTimeFormat('US-en', {dateStyle: 'short', timeStyle: 'medium'})
+
 function LatestPingsTable({ data, width, className }) {
   // Reverse to start with the last element and slice to get the last 5 items
   const lastFivePings = [...data].reverse().slice(0, 5);
@@ -10,27 +15,25 @@ function LatestPingsTable({ data, width, className }) {
   };
 
   return (
-    <div style={pingTableStyle} className="latest-pings-table">
+    <div style={pingTableStyle} className="table-inner-container">
       <table className={className}>
         <thead>
           <tr>
             <th>Function</th>
-            <th>Coldstart</th>
-            <th>Invoke Time</th>
-            <th>Server Start</th>
-            <th>Server End</th>
+            <th>Invocation Start</th>
+            <th>Invocation End</th>
             <th>Latency</th>
+            <th>Coldstart</th>
           </tr>
         </thead>
         <tbody>
           {lastFivePings.map((ping, index) => (
             <tr key={index}>
               <td>{ping.name}</td>
+              <td>{dateFormat.format(ping.serverStart)}</td>
+              <td>{dateFormat.format(ping.serverEnd)}</td>
+              <td>{numFormat.format(ping.serverDifference)}</td>
               <td>{coldStartYN(ping.firstRun)}</td>
-              <td>{new Date(parseInt(ping.invokeTime)).toLocaleString()}</td>
-              <td>{new Date(parseInt(ping.serverStart)).toLocaleString()}</td>
-              <td>{new Date(parseInt(ping.serverEnd)).toLocaleString()}</td>
-              <td>{ping.serverDifference}</td>
             </tr>
           ))}
         </tbody>
