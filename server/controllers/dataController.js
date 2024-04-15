@@ -10,6 +10,9 @@ const userID = 'abc123';
 const datafileName = path.resolve(__dirname, `../storage/data.csv`);
 const userfileName = path.resolve(__dirname, `../storage/${userID}.csv`);
 
+// formatting numbers with comma and decimal
+const numFormat = new Intl.NumberFormat('US-en')
+
 const dataController = {};
 
 // middleware gets all the functions that the user has from the user file
@@ -47,10 +50,21 @@ dataController.getRuns = async (req, res, next) => {
     // get array of all the functions from previous middleware
     const { records } = res.locals;
 
+    // getting number of functions tracked and number that is on 
+    res.locals.funcsTracked = records.length;
+    let onCount = 0; 
+    records.forEach(row => {
+      if (row.warmerOn === "Yes") {
+        onCount ++
+      }
+      return onCount; 
+    })
+    res.locals.funcsOn = onCount; 
+
     /* NOTE HERE ------------- get period of calculation (day, week, all data) from queryparams HARDCODED FOR NOW - TO DISCUSS WITH STEPHEN
     if one day period = 1, if one week period = 7, if all data available, period = Date.now()/86400000 --------------------*/
     // NOTE: GRABBING TWO WEEKS OF DATA SO I DONT FILTER OUT ALL RESULTS
-    const period = 14;
+    const period = 7;
     //change period to milliseconds
     const periodMS = period * 86400000;
     // calculate startDate as current date minus the period we are covering in milliseconds
@@ -160,8 +174,8 @@ dataController.getRuns = async (req, res, next) => {
       const funcObject = {};
       funcObject.id = aggregator[funcStat].id;
       funcObject.name = aggregator[funcStat].name;
-      funcObject.totalRuns = aggregator[funcStat].totalRuns;
-      funcObject.coldStarts = aggregator[funcStat].coldStarts;
+      funcObject.totalRuns = numFormat.format(aggregator[funcStat].totalRuns); // numFormat formats number to include comma for thousands
+      funcObject.coldStarts = numFormat.format(aggregator[funcStat].coldStarts);
       funcObject.percentCold = aggregator[funcStat].percentCold;
       funcObject.aveLatency = aggregator[funcStat].aveLatency;
       funcObject.coldLatency = aggregator[funcStat].coldLatency;
@@ -200,7 +214,9 @@ dataController.getPeriodData = async (req, res, next) => {
 
     for (let i = 0; i < 7; i++) {
       let dayData = {};
+       
       records.forEach((row) => {
+        let totalDayCount = 0;
         let count = csvFuncs.getTotalRuns(
           data,
           row.funcID,
@@ -219,7 +235,10 @@ dataController.getPeriodData = async (req, res, next) => {
         dayData[row.funcName] = avLat / count ? avLat / count : 0;
         // used to display date in chart as US format mm/dd
         dayData['day'] = new Intl.DateTimeFormat('en-US', {day:'2-digit', month:'2-digit'}).format(week[i])
+        totalDayCount = totalDayCount + count;
+        dayData['dayCount'] = totalDayCount; 
       });
+      
       weeklyLats.push(dayData);
     }
     res.locals.weeklyLats = weeklyLats;

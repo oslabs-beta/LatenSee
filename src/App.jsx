@@ -9,9 +9,7 @@ import '../src/styles.scss';
 const App = () => {
   return (
     <div className="container">
-      <div>
       <SideNavBar />
-      </div>
       <div className="main-content">
         <Routes>
           <Route path="config" element={<Configure />} />

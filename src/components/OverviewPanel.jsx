@@ -5,6 +5,10 @@ import DailyPerformance from './DailyPerformance';
 
 //accepting props (data) from Dashboard
 const OverviewPanel = ({ data, periodicData }) => {
+  if (!periodicData || periodicData.length === 0) {
+    return <div className='data-loading'>Loading chart data...</div>;
+  }
+  
   //destructuring and naming first object dataThisWeek, second object dataLastWeek
   const [dataThisWeek, dataLastWeek] = data;
 
@@ -27,26 +31,13 @@ const OverviewPanel = ({ data, periodicData }) => {
     return avLatEachDay;
   };
 
-  console.log('i am avLatEachDay: ', averageLatencyEachDay());
+  // console.log('i am avLatEachDay: ', averageLatencyEachDay());
 
   return (
-    <div className="general-overview">
-      <div className="side-by-side">
-        <ColdStartPercentage
-          dataThisWeek={dataThisWeek}
-          dataLastWeek={dataLastWeek}
-        />
-
-        <SpeedPerformance
-          dataThisWeek={dataThisWeek}
-          dataLastWeek={dataLastWeek}
-        />
-      </div>
-      <div className="separator-bar"></div>
+    <div>
       <div className="daily-performance">
         <DailyPerformance averageLatencyEachDay={averageLatencyEachDay()} />
       </div>
-      <div className="separator-bar"></div>
     </div>
   );
 };

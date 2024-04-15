@@ -6,7 +6,7 @@ import React from 'react';
  */
 const ExportButton = () => {
   return (
-    <a href="/api/dataExport">Export Data</a>
+    <a href="/api/dataExport">Export All Invocations</a>
   )
 };
 
