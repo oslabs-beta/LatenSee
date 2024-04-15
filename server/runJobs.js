@@ -193,19 +193,4 @@ const initializeJobs = () => {
 
 const initializeJobsOnce = initializeJobs();
 
-// const initializeJobs = async () => {
-//   const funcsList = await getOnFuncs()
-//   funcsList.forEach(element =>{
-//     //specify endpoint information for all the functions in the list of warmerOn functions
-//     let endpoint = {
-//       url: process.env[`${element.funcID}_URL`],
-//       name: element.funcName,
-//       id:element.funcID,
-//     }
-//     /* Run the jobs */
-//     let myJobs = schedule.scheduleJob(`${scheduling[element.funcFreq]}`, () =>
-//     callAndLog(endpoint, Date.now()));
-//   })
-// };
-
 module.exports = initializeJobsOnce;
