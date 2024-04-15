@@ -9,78 +9,7 @@ import { AllData } from '../App.jsx';
 function Dashboard() {
   //destructure from Context
   const { data, pingData, periodicData, comparisonData, dateRange } =
-    useContext(AllData);
-  // //FunctionPerformanceTable
-  // const [data, setData] = useState([]);
-  // //LatestPingsTable
-  // const [pingData, setPingData] = useState([]);
-  // //Chart
-  // const [periodicData, setPeriodicData] = useState([]);
-  // //OverviewPanel
-  // const [comparisonData, setComparisonData] = useState([]);
-  // //title for FunctionPerformanceTable
-  // const [dateRange, setDateRange] = useState('');
-
-  // //data fetched for FunctionPerformanceTable and LatestPingsTable
-  // useEffect(() => {
-  //   fetch('/api/data')
-  //     .then((data) => data.json())
-  //     .then((data) => {
-  //       setData(data[0]);
-  //       setPingData(data[1]);
-  //       // console.log('newly added data: ', data[1]);
-  //     })
-  //     .catch((error) => {
-  //       console.log('Failed to load data', error);
-  //     });
-  // }, []);
-
-  // //data fetched for Chart and DailyPerformance
-  // useEffect(() => {
-  //   fetch('/api/period')
-  //     .then((data) => data.json())
-  //     .then((data) => {
-  //       setPeriodicData(data);
-  //     })
-  //     .catch((error) => {
-  //       console.log('Failed to load data', error);
-  //     });
-  // }, []);
-
-  // //data fetched for OverviewPanel
-  // useEffect(() => {
-  //   fetch('/api/comps')
-  //     .then((response) => {
-  //       if (response.ok) {
-  //         return response.json();
-  //       }
-  //       throw new Error('Network response was not ok.');
-  //     })
-  //     .then((data) => {
-  //       // console.log('comparison data: ', data);
-  //       setComparisonData(data);
-  //     })
-  //     .catch((error) => {
-  //       console.log('Failed to load data', error);
-  //     });
-  // }, []);
-
-  // //data fetched for title of FunctionPerformanceTable
-  // useEffect(() => {
-  //   // Date range calculation
-  //   const endDate = new Date();
-  //   const startDate = new Date();
-  //   startDate.setDate(endDate.getDate() - 6);
-
-  //   const formatDate = (date) => {
-  //     return `${date.getMonth() + 1}/${date.getDate()}`;
-  //   };
-
-  //   const formattedDateRange = `${formatDate(startDate)} - ${formatDate(
-  //     endDate
-  //   )}`;
-  //   setDateRange(formattedDateRange);
-  // }, []);
+  useContext(AllData);
   console.log('Dashboard mounted');
   return (
     <>
