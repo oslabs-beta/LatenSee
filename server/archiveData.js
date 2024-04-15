@@ -49,31 +49,35 @@ const archiveData = async () => {
     // otherwise start archive process 
 
     // define period of archive for (for example, 2 weeks of data is equal to today - 14 days day converted to millisecs)
-    const archivePeriod = 14 // in days 
-    const archivePeriodMS = archivePeriod * DAYStoMS 
+    const archivePeriod = 7 // in days 
+    const archivePeriodMS = (archivePeriod + 1) * DAYStoMS // added 1 day so it is period inclusive of 1st day 
     // set the cut off date before which all data will be archived 
     const targetArchDate = now - archivePeriodMS; 
 
     console.log('target date', targetArchDate, new Date(targetArchDate))
-    console.log('first date', new Date(1711498120019))
+    // console.log('last date on archive', new Date(1712609100061))
+    console.log('last date on datafile', new Date(1713139270039))
+
     // get data from csv file 
     let records = await csvFuncs.getAllRows(datafileName)
     const addArchive = []
+    let newRecords = []
     records.forEach((row, index) => {
         if (parseInt(row['invokeTime'])< targetArchDate){
             // add to archive array 
             addArchive.push(row)
-
             // delete from records array 
-            records = records.slice(0, index).concat(records.slice(index + 1))
+            newRecords = records.slice(index+1)
         }
     });
+    console.log(newRecords)
     // when done iterating through the file 
-    // rewrite the data file with the updated records array 
+    if (addArchive.length > 0) {
+        // rewrite the data file with the updated records array 
     fs.writeFileSync(
         datafileName,
         stringify(
-          records,
+          newRecords,
           { header: true, columns: heading },
           function (err, str) {
             if (err) {
@@ -117,7 +121,15 @@ const archiveData = async () => {
           );
 
     }
+    // check records sum up to the correct ammount 
+    console.log("data was correctly archived: ", (newRecords.length + addArchive.length) === records.length)
+    }
+    else {
+        console.log("no data to archive"); 
+    }
+    
 
+    
 }
 
 archiveData(); 
