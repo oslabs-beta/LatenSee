@@ -15,16 +15,20 @@ const Chart = ({ data, height, width = '100%' }) => {
   //interate through keys array created above
   for (let i = 0; i < keys.length; i++) {
     if (keys[i] !== 'day') {
-      let pointData = [];
-      //run a nested for-loop on data array (7 objects) starting from the end
-      for (let j = data.length - 1; j >= 0; j--) {
-        pointData.push(data[j][keys[i]].toFixed(1));
+      if (keys[i] !== 'dayCount') {
+        let pointData = [];
+        //run a nested for-loop on data array (7 objects) starting from the end
+        for (let j = data.length - 1; j >= 0; j--) {
+          pointData.push(data[j][keys[i]].toFixed(1));
+        }
+        let point = {
+          name: keys[i],
+          data: pointData,
+        };
+        series.push(point);
+
       }
-      let point = {
-        name: keys[i],
-        data: pointData,
-      };
-      series.push(point);
+
     }
   }
 
@@ -38,7 +42,19 @@ const Chart = ({ data, height, width = '100%' }) => {
   const options = {
     chart: {
       type: 'line',
-      toolbar: { show: false },
+      toolbar: {
+        offsetX: -15,
+        offsetY: -30,  
+        tools: {
+        download: true,
+        other: false,
+        selection: false,
+        zoom: false,
+        zoomin: false,
+        zoomout: false,
+        pan: false,
+        reset: false, 
+      } },
       fontFamily: 'Raleway, sans-serif'
     },
     series: series,
