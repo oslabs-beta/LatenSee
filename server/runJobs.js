@@ -159,7 +159,7 @@ const initializeJobs = () => {
         cache.push(myJobs);
       });
       calledOnce = true;
-      console.log('passed once', 'cache', cache);
+
     } else {
       console.log('ran again');
       /*cancel jobs*/
@@ -168,9 +168,7 @@ const initializeJobs = () => {
         console.log('cancelled');
       });
       cache = [];
-      console.log('showing', cache);
       const funcsList = await getOnFuncs();
-      console.log('func list', funcsList);
       funcsList.forEach((element) => {
         //specify endpoint information for all the functions in the list of warmerOn functions
         let endpoint = {
