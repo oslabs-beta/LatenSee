@@ -131,7 +131,7 @@ const UserForm = () => {
             <tr>
               <th>Application</th>
               <th>Function name</th>
-              <th>Invocation Status</th>
+              <th>Warmer Status</th>
               <th className='user-cmds'>Start/Stop</th>
               <th className='user-cmds'>Edit Frequency</th>
               <th className='user-cmds'>Delete</th>
