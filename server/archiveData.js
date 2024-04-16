@@ -7,9 +7,16 @@ const { stringify } = require('csv-stringify/sync');
 
 
 // define constants 
-const DAYStoMS = 86400000;
-const datafileName = path.resolve(__dirname, `./storage/data.csv`)
 const archiveFileName = path.resolve(__dirname, `./storage/archive.csv`)
+const ARCHIVE_PERIOD = 14; // IN DAYS - note that the formula below adds + 1 to archive period to make sure it is inclusive of the day 
+const ARCHIVING_TIMES = [
+  {hour: 5, minute:59, second:1},
+  {hour: 11, minute:59, second:1},
+  {hour: 17, minute:59, second:1}, 
+  {hour: 23, minute:59, second:1},
+] // set to every 6 hours
+const datafileName = path.resolve(__dirname, `./storage/data.csv`)
+const DAYStoMS = 86400000;
 const heading = [
   { key: 'funcID' },
   { key: 'name' },
@@ -26,39 +33,24 @@ const heading = [
 /**
  *
  * Function schedules automatic archiving of data from the data.csv file 
- * Every day at 11:59 pm this function checks the CSV file for data that is dated today minus ARCHIVE PERIOD 
- * This function adds this data to the archive.csv and deletes the data from the data.csv file 
+ * Every day at 5:59 am, 11:59pm, 5:59 pm and 11:59 am this function checks the CSV file for data that is dated today minus ARCHIVE PERIOD 
+ * This function adds this data to the archive.csv and re-writes the data file to delete this data from the data.csv file 
+ * archivePeriod is set to 2 weeks, inclusive. For example if to day is Monday, we can see data for today up to past 2 Mondays 
  * 
- * @param {*} req express request object
- * @param {*} res express response object
- * @param {*} next express next object
- * @returns
  * 
  */
 
 const archiveData = async () => {
-    // define archive time as 23:59 
-    const archHour = 23; 
-    const archMin = 59; 
-
     // get current time in hours and minutes 
     const now = new Date();
-    const currHour = now.getHours(); 
-    const currMin = now.getMinutes(); 
-    
-    // if current time is not equal to 11:59 pm then return 
-    // if (currHour !== archHour || currMin !== archMin) return 
-    // otherwise start archive process 
-
     // define period of archive for (for example, 2 weeks of data is equal to today - 14 days day converted to millisecs)
-    const archivePeriod = 0 // in days 
+    const archivePeriod = ARCHIVE_PERIOD // in days 
     const archivePeriodMS = (archivePeriod + 1) * DAYStoMS // added 1 day so it is period inclusive of 1st day 
     // set the cut off date before which all data will be archived 
     const targetArchDate = now - archivePeriodMS; 
 
-    console.log('target date', targetArchDate, new Date(targetArchDate))
-    // console.log('last date on archive', new Date(1712609100061))
-    console.log('last date on datafile', new Date(1713230110004))
+    console.log('target archive date', new Date(targetArchDate).toString())
+    
 
     // get data from csv file 
     let records = await csvFuncs.getAllRows(datafileName)
@@ -122,10 +114,11 @@ const archiveData = async () => {
           );
 
     }
-    // check records sum up to the correct ammount 
-    console.log("data was correctly archived: ", (newRecords.length + addArchive.length) === records.length)
+    // check records sum up to the correct ammount and log a message
+    console.log("data was correctly archived: ", (newRecords.length + addArchive.length) === records.length, "archived at:", now.toString(), "archiving process took:", Date.now()-now, "seconds")
     }
     else {
+       // if no records to add to arcgive, display message
         console.log("no data to archive"); 
     }
     
@@ -135,9 +128,10 @@ const archiveData = async () => {
 
 // schedule archiving 
 const startArchive = () => {
-    schedule.scheduleJob({hour:13, minute:58}, ()=> archiveData()); 
-    schedule.scheduleJob({hour:14, minute:30}, ()=> archiveData());
+  ARCHIVING_TIMES.forEach(time => {
+    schedule.scheduleJob({hour:time.hour, minute:time.minute, second:time.second}, ()=> archiveData()); 
+  })
+    
 }
 
-// archiveData()
 module.exports = startArchive; 

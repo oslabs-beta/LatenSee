@@ -214,9 +214,8 @@ dataController.getPeriodData = async (req, res, next) => {
 
     for (let i = 0; i < 7; i++) {
       let dayData = {};
-       
+      let totalDayCount = 0;
       records.forEach((row) => {
-        let totalDayCount = 0;
         let count = csvFuncs.getTotalRuns(
           data,
           row.funcID,
@@ -236,8 +235,8 @@ dataController.getPeriodData = async (req, res, next) => {
         // used to display date in chart as US format mm/dd
         dayData['day'] = new Intl.DateTimeFormat('en-US', {day:'2-digit', month:'2-digit'}).format(week[i])
         totalDayCount = totalDayCount + count;
-        dayData['dayCount'] = totalDayCount; 
       });
+      dayData['dayCount'] = totalDayCount; 
       
       weeklyLats.push(dayData);
     }
