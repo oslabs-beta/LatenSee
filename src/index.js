@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { BrowserRouter, HashRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
+import { TourProvider } from './components/TourContext';
 
 // import styles from './stylesheets/style.css';
 
 ReactDOM.render(
-  <HashRouter>
-    <App />
-  </HashRouter>,
+  <TourProvider>
+    <HashRouter>
+      <App />
+    </HashRouter>
+  </TourProvider>,
   document.getElementById('root')
 );
