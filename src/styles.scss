@@ -10,10 +10,10 @@ body {
 }
 
 $background-grey: #dadada24;
-$button-blue:  #2196f3; 
-$button-hover: #50b9ffb7; 
-$light-blue: #a7c9e3; 
-$cancel-grey: #ccc; 
+$button-blue: #2196f3;
+$button-hover: #50b9ffb7;
+$light-blue: #a7c9e3;
+$cancel-grey: #ccc;
 $table-header-bckground: #f5f5f5;
 $table-header-font-color: #333;
 
@@ -26,7 +26,73 @@ $table-header-font-color: #333;
   overflow: scroll;
 }
 
-/* Side nav bar */
+/* Home Page */
+
+.home-page {
+  background-image: url('https://t4.ftcdn.net/jpg/05/01/44/65/360_F_501446535_8fCZoakb5DRbpTykhc8omm1538gBCJJQ.jpg');
+  // background-image: url('https://removal.ai/wp-content/uploads/2021/05/image14-1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers children horizontally */
+  height: 100vh;
+  text-align: center;
+  position: relative;
+  overflow: hidden; /* Prevents scrolling on the entire page */
+
+  // Welcome text
+  h1 {
+    color: white;
+    margin-top: 80px;
+    z-index: 1; /* Ensures text sits behind button */
+    font-family: 'Raleway', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 350;
+    font-style: normal;
+  }
+
+  // For the floating logo animation
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  // Logo image
+  img {
+    margin-top: -100px;
+    padding: 0px;
+    width: 700px;
+    max-width: 100%;
+    z-index: 1; /* Ensures logo sits behind button */
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .start-tour-button {
+    z-index: 100; /* Ensures it's clickable & not hiding behind any elements */
+    position: relative; /* So z-index works */
+    padding: 8px 14px;
+    background-color: #004691d9;
+    color: #ffffff;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-family: 'Raleway', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 350;
+    font-style: normal;
+  }
+}
+
+/* In side nav bar */
 .logo-container {
   display: flex;
   align-items: center;
@@ -36,7 +102,7 @@ $table-header-font-color: #333;
     font-weight: 400;
     font-style: normal;
     font-size: 1.1rem;
-    margin: 0; 
+    margin: 0;
   }
 }
 
@@ -83,7 +149,7 @@ $table-header-font-color: #333;
       color: white;
     }
 
-    .dashboard-link {
+    #dashboard-link {
       display: flex;
       align-items: center; /* Vertically center the contents */
 
@@ -97,7 +163,7 @@ $table-header-font-color: #333;
       }
     }
 
-    .config-link {
+    #config-link {
       display: flex;
       align-items: center; /* Vertically center the contents */
 
@@ -111,7 +177,7 @@ $table-header-font-color: #333;
       }
     }
 
-    .user-link {
+    #user-link {
       display: flex;
       align-items: center; /* Vertically center the contents */
 
@@ -131,8 +197,7 @@ $table-header-font-color: #333;
 .main-content {
   margin-left: 200px;
   margin-top: 0;
-  width: 100%; 
-  // background-color: red;
+  width: 100%;
 }
 
 /*Configure page main content */
@@ -145,7 +210,7 @@ $table-header-font-color: #333;
     margin-top: 0px;
     margin-left: 50px;
     font-size: 1.2rem;
-    font-weight: 400; 
+    font-weight: 400;
   }
 
   .config-form {
@@ -154,42 +219,39 @@ $table-header-font-color: #333;
     display: flex;
     flex-direction: column;
     background-color: transparent;
-  // border: solid thin grey;
+    // border: solid thin grey;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
-    .config-data-header{
-      background-color: transparent; 
+    .config-data-header {
+      background-color: transparent;
       padding: 20px;
       border-bottom: solid thin $cancel-grey;
     }
 
-    .form-body{
+    .form-body {
       padding: 20px;
       padding-right: 30px;
       background-color: white;
     }
-    
-    h3{
+
+    h3 {
       margin-top: 0;
       margin-bottom: 0;
     }
 
     .name-fields {
-
-      select{
-        display: block; 
-        width: 101%; 
+      select {
+        display: block;
+        width: 101%;
         max-width: 1210px;
         font-family: inherit;
-        font-size: 0.8rem; 
+        font-size: 0.8rem;
         color: gray;
         margin-top: 3px;
         margin-right: 0;
         height: 27px;
         border: solid thin rgb(175, 175, 175);
         border-radius: 5px;
-
-        
       }
     }
 
@@ -282,7 +344,7 @@ $table-header-font-color: #333;
       margin-top: 20px;
       padding: 5px 15px;
       background-color: transparent;
-      color: darken($cancel-grey, 20%); 
+      color: darken($cancel-grey, 20%);
       border: none;
       cursor: pointer;
       border-radius: 5px;
@@ -291,7 +353,7 @@ $table-header-font-color: #333;
       font-family: inherit;
 
       &:hover {
-        font-size: bold; 
+        font-size: bold;
       }
     }
 
@@ -303,25 +365,23 @@ $table-header-font-color: #333;
   }
 }
 
-
 /*User page main content styling*/
 
-.user-page {  
+.user-page {
   padding: 0 20px;
 
   h2 {
     margin-top: 0px;
     font-size: 1.2rem;
-    font-weight: 400; 
+    font-weight: 400;
   }
 
   .function-table-container {
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
-
     .table-heading {
-      background-color: transparent; 
+      background-color: transparent;
       padding: 20px;
       display: flex;
       align-items: center;
@@ -333,7 +393,6 @@ $table-header-font-color: #333;
     h3 {
       margin-top: 0;
       margin-bottom: 0;
-
     }
   }
   #appSelect {
@@ -341,7 +400,7 @@ $table-header-font-color: #333;
     border-color: white;
     outline: none;
     background-color: white;
-    border: 1px solid #e0e0e0;  
+    border: 1px solid #e0e0e0;
     padding: 5px;
     width: 250px;
 
@@ -352,7 +411,7 @@ $table-header-font-color: #333;
 
   .app-selection {
     label {
-      margin-right: 10px; 
+      margin-right: 10px;
       font-size: 1.1rem;
       font-weight: bold;
     }
@@ -403,26 +462,21 @@ $table-header-font-color: #333;
       cursor: pointer;
     }
 
-    select{
+    select {
       border-radius: 4px;
       border-color: white;
       outline: none;
       background-color: white;
-      border: 1px solid #e0e0e0;  
+      border: 1px solid #e0e0e0;
       padding: 5px;
-
     }
   }
 }
-
-
-
 
 /*Dashboard main content styling */
 
 .dashboard-container {
   // background-color: pink;
-  
 }
 
 .dashboard-content {
@@ -440,8 +494,8 @@ h3 {
   margin-bottom: 0;
 }
 
-.data-header{
-  background-color: transparent; 
+.data-header {
+  background-color: transparent;
   padding: 20px;
   display: flex;
   align-items: center;
@@ -449,85 +503,83 @@ h3 {
   border-bottom: solid thin $cancel-grey;
 }
 
-.summary-table{  
+.summary-table {
   // border: solid black;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
   .all-metrics {
-    // border: solid thin $cancel-grey; 
+    // border: solid thin $cancel-grey;
     background-color: white;
     padding: 5px 0px;
-    display: flex; 
+    display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  .summary-metric{
+  .summary-metric {
     border-left: solid thin $cancel-grey;
     width: 33.3%;
     padding: 5px 15px;
     height: 5rem;
     p {
-      margin:0;
+      margin: 0;
       font-size: 1rem;
     }
-    h1{
+    h1 {
       margin: 0;
-      font-weight: 400;   
-      font-size: 1.8rem; 
+      font-weight: 400;
+      font-size: 1.8rem;
     }
   }
-  .summary-metric.one{
+  .summary-metric.one {
     border-left: none;
   }
 }
-.function-metrics-container{
+.function-metrics-container {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   margin-top: 20px;
 
   .all-metrics {
-    border-bottom: solid thin $cancel-grey; 
+    border-bottom: solid thin $cancel-grey;
     background-color: white;
     padding: 5px 0px;
-    display: flex; 
+    display: flex;
     align-items: center;
     justify-content: space-between;
-    
   }
-  .summary-metric{
+  .summary-metric {
     border-left: solid thin $cancel-grey;
     width: 33.3%;
     padding: 5px 15px;
     height: 5rem;
 
     p {
-      margin:0;
+      margin: 0;
       font-size: 1rem;
     }
-    h1{
+    h1 {
       margin: 0;
-      font-weight: 400;   
-      font-size: 1.8rem; 
+      font-weight: 400;
+      font-size: 1.8rem;
     }
   }
-  .summary-metric.one{
+  .summary-metric.one {
     border-left: none;
   }
-
 }
-.function-metrics{
+.function-metrics {
   background-color: white;
   padding: 20px;
 }
 
-.chart-container { 
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; 
+.chart-container {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   background-color: white;
   width: 100%;
 
-  .data-header{
+  .data-header {
     padding-bottom: 0px;
     border: none;
-    p{
+    p {
       margin: 0;
       font-size: 1rem;
       font-weight: 400;
@@ -538,59 +590,56 @@ h3 {
     padding-left: 50px;
     align-self: start;
   }
-  #chart{
+  #chart {
     padding: 10px;
   }
 }
 
-.chart-container.two{
+.chart-container.two {
   margin-top: 20px;
 }
 
-
-.performance-table{
+.performance-table {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   width: 100%;
   margin-top: 20px;
-  .data-header{
+  .data-header {
     padding-bottom: 0px;
     border: none;
-    p{
+    p {
       margin: 0;
       font-size: 1rem;
       font-weight: 400;
     }
   }
-  .period{
+  .period {
     padding: 0 5px;
   }
   .table-inner-container {
     padding: 20px;
   }
-
 }
 
-.pings-table{ 
+.pings-table {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   width: 100%;
   margin-top: 20px;
-  .data-header{
+  .data-header {
     padding-bottom: 0px;
     border: none;
-    p{
+    p {
       margin: 0;
       font-size: 1rem;
       font-weight: 400;
     }
   }
   .table-inner-container {
-    padding: 20px; 
+    padding: 20px;
   }
 }
 
-
 .performance-table th,
-.performance-table td{
+.performance-table td {
   text-align: left;
   width: 10%;
   padding: 12px 15px;
@@ -611,17 +660,14 @@ h3 {
   &:not(:last-child) {
     border-right: 1px solid rgba(0, 0, 0, 0.057);
   }
-  
 }
 
-.performance-table th, 
-.pings-table th{
+.performance-table th,
+.pings-table th {
   background-color: $table-header-bckground;
   color: $table-header-font-color;
   font-weight: bold;
 }
-
-
 
 // .chart-title,
 // .performance-table-title {
@@ -673,8 +719,6 @@ h3 {
 //   overflow-y: auto;
 // }
 
-
-
 // .side-by-side {
 //   display: flex;
 //   justify-content: space-between;
@@ -688,4 +732,3 @@ h3 {
 //   background-color: rgba(128, 128, 128, 0.166);
 //   margin: 20px 0;
 // }
-
