@@ -3,8 +3,21 @@ import { useState, useEffect } from 'react';
 import SVGfiles from './SVGfiles';
 
 const UserForm = () => {
-  // defining frequencies drop down options 
-  const freqOptions = ['10S', '1M', '5M', '15M', '30M', '1H', '2H', '3H', '1D', '2D', '3D', '1W']
+  // defining frequencies drop down options
+  const freqOptions = [
+    '10S',
+    '1M',
+    '5M',
+    '15M',
+    '30M',
+    '1H',
+    '2H',
+    '3H',
+    '1D',
+    '2D',
+    '3D',
+    '1W',
+  ];
 
   // state to hold the list of all functions
   const [data, setData] = useState([]);
@@ -17,7 +30,10 @@ const UserForm = () => {
       .then((res) => res.json())
       .then((data) => {
         setData(data); // Set the state with the fetched data
-        const appNames = ['Filter by Application', ...new Set(data.map((item) => item.appName))]; // Get all unique app names
+        const appNames = [
+          'Filter by Application',
+          ...new Set(data.map((item) => item.appName)),
+        ]; // Get all unique app names
         setApps(appNames); // Set the state with the unique app names
       })
       .catch((error) => {
@@ -27,7 +43,7 @@ const UserForm = () => {
 
   // On click of 'start/stop', update function's status
   const updateStatus = (funcID, warmerOn) => {
-    const newStatus = (warmerOn === 'Yes' ? 'No': 'Yes')
+    const newStatus = warmerOn === 'Yes' ? 'No' : 'Yes';
     const updatedData = data.map((item) => {
       // find the function that matches the id and update its status (for immediate UI feedback in status column)
       if (item.funcID === funcID) {
@@ -91,31 +107,31 @@ const UserForm = () => {
   };
 
   return (
-    <div className='function-table-container'>      
-      <div className="user-table">
-      <div className='table-heading'>
-      <h3>Tracked Functions</h3>
-      <div className="app-selection">
-        <label htmlFor="appSelect"></label>
-        <select
-          id="appSelect"
-          value= {selectedApp ? selectedApp : 'Filter by Application'}
-          onChange={(e) => setSelectedApp(e.target.value)}
-        >
-          {apps.map((app) => (
-            <option key={app} value={app}>
-              {app}
-            </option>
-          ))}
-        </select>
-      </div>
-      </div>
+    <div className='function-table-container'>
+      <div className='user-table'>
+        <div className='table-heading'>
+          <h3>Tracked Functions</h3>
+          <div className='app-selection'>
+            <label htmlFor='appSelect'></label>
+            <select
+              id='appSelect'
+              value={selectedApp ? selectedApp : 'Filter by Application'}
+              onChange={(e) => setSelectedApp(e.target.value)}
+            >
+              {apps.map((app) => (
+                <option key={app} value={app}>
+                  {app}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
         <table>
           <thead>
             <tr>
               <th>Application</th>
               <th>Function name</th>
-              <th>Invocation Status</th>
+              <th>Warmer Status</th>
               <th className='user-cmds'>Start/Stop</th>
               <th className='user-cmds'>Edit Frequency</th>
               <th className='user-cmds'>Delete</th>
@@ -123,28 +139,41 @@ const UserForm = () => {
           </thead>
           <tbody>
             {data
-            .filter((item) => selectedApp !== 'Filter by Application' ? item.appName === selectedApp : item.appName !== null)
+              .filter((item) =>
+                selectedApp !== 'Filter by Application'
+                  ? item.appName === selectedApp
+                  : item.appName !== null
+              )
               .map((item) => (
                 <tr key={item.funcId}>
                   <td>{item.appName}</td>
                   <td>{item.funcName}</td>
                   <td>{item.warmerOn === 'Yes' ? 'Running' : 'Stopped'}</td>
                   <td>
-                    <button onClick={() => updateStatus(item.funcID, item.warmerOn)}>
-                      {item.warmerOn === 'Yes' ? SVGfiles.openEyeSVG : SVGfiles.closedEyeSVG}
+                    <button
+                      onClick={() => updateStatus(item.funcID, item.warmerOn)}
+                    >
+                      {item.warmerOn === 'Yes'
+                        ? SVGfiles.openEyeSVG
+                        : SVGfiles.closedEyeSVG}
                     </button>
                   </td>
                   <td>
                     <select
-                      name="funcFreq"
-                      id="freq"
+                      name='funcFreq'
+                      id='freq'
                       onChange={(e) =>
                         editFuncFreq(item.funcID, e.target.value)
-                      }>
-                      <option value={`${item.funcFreq}`}>{item.funcFreq}</option>
-                      {freqOptions.map((frequency) => (
-                        frequency !== item.funcFreq ? <option value={frequency}>{frequency}</option> : null))
-                    }
+                      }
+                    >
+                      <option value={`${item.funcFreq}`}>
+                        {item.funcFreq}
+                      </option>
+                      {freqOptions.map((frequency) =>
+                        frequency !== item.funcFreq ? (
+                          <option value={frequency}>{frequency}</option>
+                        ) : null
+                      )}
                     </select>
                   </td>
                   <td>
