@@ -1,5 +1,5 @@
 /**
- * This file tests the timing of running a request to /api/data. Note that the server 
+ * This file tests the timing of running a request to /api/data. Note that the server
  * needs to be running, and there is a long-running test that can be skipped if desired.
  * In order to run properly, this file needs to be ran while the server is live.
  *
@@ -9,11 +9,11 @@
  * @jest-environment jsdom
  */
 
-process.env.TEST_NO_INTITALIZE='jest_test';
+process.env.TEST_NO_INTITALIZE = 'jest_test';
 
-const request = require('supertest');
-const app = require('../server/server');
-const server = require('../server/server');
+let request;
+let app;
+let server;
 
 /**
  * Helper function that runs the actual fetch request.
@@ -25,7 +25,7 @@ const runTest = async () => {
 };
 
 /**
- * 
+ *
  * @returns an array of recorded times for completing the runTest function
  */
 const timeRuns = async () => {
@@ -45,9 +45,19 @@ const timeRuns = async () => {
 };
 
 describe('Test to time responses to dataController.getRuns()', () => {
+  // Re-doing imports to ensure everything is torn down after each set of tests
+  beforeEach(() => {
+    request = require('supertest');
+    app = require('../server/server');
+    server = require('../server/server');
+  });
 
-  afterEach(() => server.close());
-
+  afterEach(() => {
+    server.close();
+    request = null;
+    app = null;
+    server = null;
+  });
 
   it('Should be able to run a request to api/data ', async () => {
     const result = await runTest();

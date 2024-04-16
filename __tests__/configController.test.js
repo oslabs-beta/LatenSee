@@ -2,7 +2,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const app = require('../server/server.js');
 
 const configController = require('../server/controllers/configController');
 const csvFuncs = require('../server/controllers/csvFuncs');

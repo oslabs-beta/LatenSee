@@ -48,11 +48,15 @@ if (process.env.TEST_NO_INTITALIZE !== 'jest_test') {
   initializeJobsOnce();
 }
 
+// If we're in a test environment, set the port to 0, which will use the first available port
+// Jest tests run async all trying to use the same port, so this will avoid port collisions
+let actualPort = process.env.TEST_NO_INTITALIZE !== 'jest_test' ? PORT : 0;
+
 
 // set up listener
-const server = app.listen(PORT, () => {
+const server = app.listen(actualPort, () => {
   if (process.env.TEST_NO_INTITALIZE !== 'jest_test') {
-    console.log(`server listening on port ${PORT}: http://localhost:${PORT}/`);
+    console.log(`server listening on port ${actualPort}: http://localhost:${actualPort}/`);
   }
   
 });
