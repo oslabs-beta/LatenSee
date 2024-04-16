@@ -3,12 +3,10 @@ import myImage from '../components/LatenSeeLogoHD.png';
 import 'animate.css';
 import { driver } from 'driver.js';
 import 'driver.js/dist/driver.css';
-import { useTour } from '../components/TourContext';
+// import { useTour } from '../components/TourContext';
 
 const Home = () => {
-  const { initializeTour, startTour } = useTour();
-  const [isTourReady, setIsTourReady] = useState(false);
-  const [driverObj, setDriverObj] = useState(null);
+  const [driverObj, setDriverObj] = useState(null); // State to hold the driver object for tour
 
   useEffect(() => {
     const newDriverObj = driver({
@@ -42,22 +40,17 @@ const Home = () => {
     });
 
     setDriverObj(newDriverObj);
-    initializeTour(newDriverObj);
 
     // Check local storage to decide if the tour should start automatically
-    if (localStorage.getItem('hasVisited') !== 'true') {
-      startTour(); // Start the tour automatically only on first visit
+    if (!localStorage.getItem('hasVisited')) {
+      newDriverObj.drive();
       localStorage.setItem('hasVisited', 'true'); // Set 'hasVisited' in local storage
     }
-
-    setIsTourReady(true);
   }, []);
 
   const handleStartTour = () => {
-    if (isTourReady && driverObj) {
-      startTour();
-    } else {
-      console.log('Tour is not ready.');
+    if (driverObj) {
+      driverObj.drive();
     }
   };
 
