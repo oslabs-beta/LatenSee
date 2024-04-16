@@ -20,7 +20,7 @@ const scheduling = runJobsModule.scheduling;
 const defaultLookback = 1; // a single day, or 24hrs
 const defaultColdPercentMax = 0.05; // If cold start % above this, make more frequent
 const defaultColdPercentMin = 0.005; // If cold start % below this, make less frequent
-const defaultChecckFrequency = '0 0 */1 * * *'; // CRON frequency string, every hour top of the hour
+const defaultCheckFrequency = '0 0 */1 * * *'; // CRON frequency string, every hour top of the hour
 const defaultUserId = 'abc123'; // Placeholder while we don't yet look at userId
 
 /**
@@ -98,40 +98,49 @@ const updateFunctions = async (funcsToUpdate) => {
   funcsToUpdate.forEach(async (func) => {
     
     // funcIndex = where the current func is in the freqArray
+    let funcIndex = freqArray.findIndex((element) => element === func.invocation);
 
-    // if func.percentCold > defaultColdPercentMax
-      // truthy: initialFuncIndex -- // make it more frequent
-        // if goes below 0, then console log, and make it zero
-      // falsey: initialFuncIndex++ // make it less frequent
-        // if goes ti freqArray.length, make it freqArray.length -1 and log
+    // if func is cold more often than the max
+    if(func.percentCold > defaultColdPercentMax) {
+      if(funcIndex === 0 ) {
+        console.log('Already at most frequent!');
+      } else {
+        initialFuncIndex--; // make it more frequent
+      }
+    } else {
+      if (funcIndex === freqArray.length - 1) {
+        console.log('Already at the least frequent!');
+      } else {
+        funcIndex++; // make it less frequent
+      }
+    }
 
-    // const newFreq = freqArray[funcIndex]
+    const newFreq = freqArray[funcIndex];
 
-    // spoofreq = obj has a body with funcID, funcFreq
+    // spoofreq: obj has a body with funcID, funcFreq
+    const spoofReq = {body: {funcID: func.id, funcFreq: newFreq}};
 
-    // spoofRes = empty object
+    // spoofRes: empty object
+    const spoofRes = {};
 
-    // spoofNext = empty next
+    // next: Simple function just to have something to pass in
+    const spoofNext = () => null;
 
     // call async configController.editFunc(spoofReq, spoofRes, spoofNext);
+    await configController.editFunc(spoofReq, spoofRes, spoofNext);
 
+  });
+};
+
+/**
+ * set up a scheduled check every hour that pulls all functions and runs through checking for updates
+ */
+const startSchedule = () => {
+  const autoSchedule = schedule.scheduleJob(defaultCheckFrequency, () => {
+    const updateFuncs = getAutoFunctions(autoSchedule);
+    const funcStats = getAutoFuncStats(updateFuncs);
+    updateFunctions(funcStats);
   })
-    
-
 }
 
-  
-  
-
-// processUpdate():
-  // const updateFuncs = getAutoFunctions
-  // const funcStats = getAutoFuncStats(updateFuncs);
-  // call updateFunctions(funcStats);
-
-// StartSchedule: Set up a scheduled check every hour to pull all functions, and run them through the stat update checker
-  // set up node schedule to run every hour with the function:
-    // interval: cronJob check frequency
-    // function: processUpdate();
-
-// export function startSchedule
-
+module.exports = startSchedule;
