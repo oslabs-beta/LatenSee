@@ -71,7 +71,7 @@ SVGfiles.deleteSVG = (
     fill='#7a7a7a'
     stroke='#7a7a7a'
   >
-    <g id='SVGRepo_bgCarrier' stroke-width='0' />
+    <g id='SVGRepo_bgCarrier' strokeWidth='0' />
 
     <g
       id='SVGRepo_tracerCarrier'
@@ -85,7 +85,7 @@ SVGfiles.deleteSVG = (
       <g
         id='🔍-Product-Icons'
         stroke='none'
-        stroke-width='1'
+        strokeWidth='1'
         fill='none'
         fill-rule='evenodd'
       >

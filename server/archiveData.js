@@ -51,7 +51,7 @@ const archiveData = async () => {
     // otherwise start archive process 
 
     // define period of archive for (for example, 2 weeks of data is equal to today - 14 days day converted to millisecs)
-    const archivePeriod = 14 // in days 
+    const archivePeriod = 0 // in days 
     const archivePeriodMS = (archivePeriod + 1) * DAYStoMS // added 1 day so it is period inclusive of 1st day 
     // set the cut off date before which all data will be archived 
     const targetArchDate = now - archivePeriodMS; 
@@ -135,7 +135,8 @@ const archiveData = async () => {
 
 // schedule archiving 
 const startArchive = () => {
-    schedule.scheduleJob({hour:22, minute:15, second:11}, ()=> archiveData()); 
+    schedule.scheduleJob({hour:13, minute:58}, ()=> archiveData()); 
+    schedule.scheduleJob({hour:14, minute:30}, ()=> archiveData());
 }
 
 // archiveData()
