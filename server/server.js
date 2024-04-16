@@ -48,13 +48,11 @@ if (process.env.TEST_NO_INTITALIZE !== 'jest_test') {
   initializeJobsOnce();
 }
 
-
 // set up listener
 const server = app.listen(PORT, () => {
   if (process.env.TEST_NO_INTITALIZE !== 'jest_test') {
     console.log(`server listening on port ${PORT}: http://localhost:${PORT}/`);
   }
-  
 });
 
 module.exports = app;
