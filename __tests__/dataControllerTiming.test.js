@@ -48,8 +48,9 @@ describe('Test to time responses to dataController.getRuns()', () => {
   // Re-doing imports to ensure everything is torn down after each set of tests
   beforeEach(() => {
     request = require('supertest');
-    app = require('../server/server');
-    server = require('../server/server');
+    const tempExport = require('../server/server');
+    app = tempExport.app;
+    server = tempExport.server;
   });
 
   afterEach(() => {

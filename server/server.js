@@ -1,6 +1,6 @@
 const path = require('path');
 const express = require('express');
-const initializeJobsOnce = require('./runJobs');
+const { initializeJobsOnce } = require('./runJobs');
 const dataRouter = require(path.join(__dirname, './routes/dataRouter.js'));
 const configRouter = require(path.join(__dirname, './routes/configRouter.js'));
 
@@ -61,5 +61,4 @@ const server = app.listen(actualPort, () => {
   
 });
 
-module.exports = app;
-module.exports = server;
+module.exports = { app, server };

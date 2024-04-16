@@ -206,4 +206,4 @@ const initializeJobsOnce = initializeJobs();
 //   })
 // };
 
-module.exports = initializeJobsOnce;
+module.exports = { initializeJobsOnce, scheduling };

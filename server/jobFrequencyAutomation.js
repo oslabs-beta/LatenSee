@@ -8,6 +8,7 @@ const schedule = require('node-schedule');
 
 const csvFuncs = require('./controllers/csvFuncs');
 const dataController = require('./controllers/dataController');
+const configureController = require('./controllers/configController');
 
 // declare constants
 /**
@@ -82,16 +83,20 @@ const getAutoFuncStats = async (updateFuncs) => {
   return result;
 };
 
-
-// updateFunctions(funcData): For every function outside of threshold, call editFunc to increase/decrease
-  // outOfBoundsFuncs = funcData.filter cold% above cold%Target
-
+/**
+ * Updates the invocation rate of every function passed in to increase/decrease accordingly
+ * @param {funcObc[]} funcsToUpdate - Array of objects representing functions that need to be updated. Objects have an ID, invocation, and percentCold
+ */
+const updateFunctions = (funcsToUpdate) => {
   // for each of the outOfBounds funcs:
     // if cold% is above target
       // call to edit frequency to more frequent
     // else
       // call to edit frequency to less frequent
 
+}
+
+  
   
 
 // processUpdate():
