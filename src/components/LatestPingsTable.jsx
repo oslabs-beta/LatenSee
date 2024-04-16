@@ -27,7 +27,7 @@ function LatestPingsTable({ data, width, className }) {
 
   return (
     <div style={pingTableStyle} className="table-inner-container">
-      <table className={className}>
+      <table className={className} data-testid="pings-table">
         <thead>
           <tr>
             <th>Function</th>
