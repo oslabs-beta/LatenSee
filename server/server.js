@@ -3,6 +3,7 @@ const express = require('express');
 const initializeJobsOnce = require('./runJobs');
 const dataRouter = require(path.join(__dirname, './routes/dataRouter.js'));
 const configRouter = require(path.join(__dirname, './routes/configRouter.js'));
+const startArchive = require('./archiveData')
 
 // set up server configuration
 const app = express();
@@ -44,6 +45,7 @@ app.use((err, req, res, next) => {
 });
 
 initializeJobsOnce()
+startArchive()
 
 // set up listener
 const server = app.listen(PORT, () => {
