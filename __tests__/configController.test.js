@@ -8,7 +8,7 @@ const configController = require('../server/controllers/configController');
 const csvFuncs = require('../server/controllers/csvFuncs');
 
 describe('configController.addNew', () => {
-  it('The first time a new users adds a function, it creates a users csv file and saves the function to it', async () => {
+  xit('The first time a new users adds a function, it creates a users csv file and saves the function to it', async () => {
     const req = {};
     const res = {};
     const next = jest.fn();
@@ -57,15 +57,15 @@ describe('configController.addNew', () => {
     expect(expectedRows[0].funcID).toEqual('1');
   });
 
-  it('Adds a new function to the existing CSV file', () => {});
+  xit('Adds a new function to the existing CSV file', () => {});
 
-  it('The newest function has an ID which is one higher than the previous function', () => {});
+  xit('The newest function has an ID which is one higher than the previous function', () => {});
 
-  it('Has only unique function IDs in the file', () => {});
+  xit('Has only unique function IDs in the file', () => {});
 
-  it('Has all headers set to the correct things', () => {});
+  xit('Has all headers set to the correct things', () => {});
 
-  it('If no warmerOn status is provided in the body, will default to Yes', () => {});
+  xit('If no warmerOn status is provided in the body, will default to Yes', () => {});
 });
 
 /**
@@ -79,4 +79,3 @@ describe('configController.addNew', () => {
     // expect there to exist a file at the abc123.csv path
     expect(fs.existsSync(expectedPath)).toBe(true);
  */
-

@@ -3,6 +3,10 @@
  * It relies upon mocking functions that this relies upon (i.e. csvFuncs).
  */
 
+/**
+ * @jest-environment jsdom
+ */
+
 const dataController = require('../server/controllers/dataController');
 
 // We want to mock the csvFuncs controller

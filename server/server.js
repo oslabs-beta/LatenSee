@@ -43,11 +43,18 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message);
 });
 
-initializeJobsOnce()
+// Flag to not run if we're inside jest unit tests that we don't wnat ot influence data.csv
+if (process.env.TEST_NO_INTITALIZE !== 'jest_test') {
+  initializeJobsOnce();
+}
+
 
 // set up listener
 const server = app.listen(PORT, () => {
-  console.log(`server listening on port ${PORT}: http://localhost:${PORT}/`);
+  if (process.env.TEST_NO_INTITALIZE !== 'jest_test') {
+    console.log(`server listening on port ${PORT}: http://localhost:${PORT}/`);
+  }
+  
 });
 
 module.exports = app;

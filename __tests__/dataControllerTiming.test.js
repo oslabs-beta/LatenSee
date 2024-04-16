@@ -5,6 +5,12 @@
  *
  */
 
+/**
+ * @jest-environment jsdom
+ */
+
+process.env.TEST_NO_INTITALIZE='jest_test';
+
 const request = require('supertest');
 const app = require('../server/server');
 const server = require('../server/server');
@@ -40,7 +46,7 @@ const timeRuns = async () => {
 
 describe('Test to time responses to dataController.getRuns()', () => {
 
-  afterAll(() => server.close());
+  afterEach(() => server.close());
 
 
   it('Should be able to run a request to api/data ', async () => {
