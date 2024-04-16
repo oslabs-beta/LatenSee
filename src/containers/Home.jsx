@@ -51,7 +51,7 @@ const Home = () => {
     }
 
     setIsTourReady(true);
-  }, [initializeTour, startTour]);
+  }, []);
 
   const handleStartTour = () => {
     if (isTourReady && driverObj) {
