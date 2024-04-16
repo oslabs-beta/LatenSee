@@ -74,7 +74,7 @@ const ConfigForm = () => {
       <form onSubmit={handleSubmit}>
         <div className="name-fields">
           <div>
-            <label for="appName">App name: </label>
+            <label htmlFor="appName">App name: </label>
             <input
               placeholder='Enter app name (e.g. "MyApp")'
               type="text"
@@ -92,7 +92,7 @@ const ConfigForm = () => {
               value={funcName}
               onChange={setFuncName}
             />
-             <label for="url">Function URL: </label> <br></br>
+             <label htmlFor="url">Function URL: </label> <br></br>
           <input
             placeholder="Enter function URL"
             type="text"
@@ -114,14 +114,14 @@ const ConfigForm = () => {
                     }
           </select>
 
-          <label class="switch">
+          <label className="switch">
               Warmer:
               <input
                 type="checkbox"
                 checked={warmerOn}
                 onChange={(e) => setWarmerOn(e.target.checked)}
               />
-              <span class="slider round"></span>
+              <span className="slider round"></span>
             </label>
           </div>
         </div>
