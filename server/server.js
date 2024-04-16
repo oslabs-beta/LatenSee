@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const { initializeJobsOnce } = require('./runJobs');
+const { startSchedule }= require('./jobFrequencyAutomation');
 const dataRouter = require(path.join(__dirname, './routes/dataRouter.js'));
 const configRouter = require(path.join(__dirname, './routes/configRouter.js'));
 
@@ -46,6 +47,7 @@ app.use((err, req, res, next) => {
 // Flag to not run if we're inside jest unit tests that we don't wnat ot influence data.csv
 if (process.env.TEST_NO_INTITALIZE !== 'jest_test') {
   initializeJobsOnce();
+  startSchedule();
 }
 
 // If we're in a test environment, set the port to 0, which will use the first available port
