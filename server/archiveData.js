@@ -60,83 +60,83 @@ const archiveData = async () => {
     // console.log('last date on archive', new Date(1712609100061))
     console.log('last date on datafile', new Date(1713230110004))
 
-    // // get data from csv file 
-    // let records = await csvFuncs.getAllRows(datafileName)
-    // const addArchive = []
-    // let newRecords = []
-    // records.forEach((row, index) => {
-    //     if (parseInt(row['invokeTime'])< targetArchDate){
-    //         // add to archive array 
-    //         addArchive.push(row)
-    //         // delete from records array 
-    //         newRecords = records.slice(index+1)
-    //     }
-    // });
-    // // when done iterating through the file 
-    // if (addArchive.length > 0) {
-    //     // rewrite the data file with the updated records array 
-    // fs.writeFileSync(
-    //     datafileName,
-    //     stringify(
-    //       newRecords,
-    //       { header: true, columns: heading },
-    //       function (err, str) {
-    //         if (err) {
-    //           console.log(err);
-    //         } else {
-    //           console.log('archived data removed from data file');
-    //         }
-    //       }
-    //     )
-    //   );
-    // // append addArchive data to the archive file 
-    // if (!fs.existsSync(archiveFileName)){
-    //     fs.appendFileSync(
-    //         archiveFileName,
-    //         stringify(
-    //             addArchive, 
-    //             {header: true, columns: heading, }
-    //         ),
-    //         'utf-8',
-    //         (err) => {
-    //           if (err) console.log(err);
-    //           else {
-    //             console.log('new archive file saved');
-    //           }
-    //         }
-    //       );
-    // } else {
-    //     fs.appendFileSync(
-    //         archiveFileName,
-    //         stringify(
-    //             addArchive, 
-    //             {header: false, columns: heading, }
-    //         ),
-    //         'utf-8',
-    //         (err) => {
-    //           if (err) console.log(err);
-    //           else {
-    //             console.log('new archive file saved');
-    //           }
-    //         }
-    //       );
+    // get data from csv file 
+    let records = await csvFuncs.getAllRows(datafileName)
+    const addArchive = []
+    let newRecords = []
+    records.forEach((row, index) => {
+        if (parseInt(row['invokeTime'])< targetArchDate){
+            // add to archive array 
+            addArchive.push(row)
+            // delete from records array 
+            newRecords = records.slice(index+1)
+        }
+    });
+    // when done iterating through the file 
+    if (addArchive.length > 0) {
+        // rewrite the data file with the updated records array 
+    fs.writeFileSync(
+        datafileName,
+        stringify(
+          newRecords,
+          { header: true, columns: heading },
+          function (err, str) {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log('archived data removed from data file');
+            }
+          }
+        )
+      );
+    // append addArchive data to the archive file 
+    if (!fs.existsSync(archiveFileName)){
+        fs.appendFileSync(
+            archiveFileName,
+            stringify(
+                addArchive, 
+                {header: true, columns: heading, }
+            ),
+            'utf-8',
+            (err) => {
+              if (err) console.log(err);
+              else {
+                console.log('new archive file saved');
+              }
+            }
+          );
+    } else {
+        fs.appendFileSync(
+            archiveFileName,
+            stringify(
+                addArchive, 
+                {header: false, columns: heading, }
+            ),
+            'utf-8',
+            (err) => {
+              if (err) console.log(err);
+              else {
+                console.log('new archive file saved');
+              }
+            }
+          );
 
-    // }
-    // // check records sum up to the correct ammount 
-    // console.log("data was correctly archived: ", (newRecords.length + addArchive.length) === records.length)
-    // }
-    // else {
-    //     console.log("no data to archive"); 
-    // }
+    }
+    // check records sum up to the correct ammount 
+    console.log("data was correctly archived: ", (newRecords.length + addArchive.length) === records.length)
+    }
+    else {
+        console.log("no data to archive"); 
+    }
     
 
     
 }
 
-// // schedule archiving 
-// const startArchive = () => {
-//     schedule.scheduleJob({hour:22, minute:15, second:11}, ()=> archiveData()); 
-// }
+// schedule archiving 
+const startArchive = () => {
+    schedule.scheduleJob({hour:22, minute:15, second:11}, ()=> archiveData()); 
+}
 
-archiveData()
-// module.exports = startArchive; 
+// archiveData()
+module.exports = startArchive; 
