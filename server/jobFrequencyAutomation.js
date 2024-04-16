@@ -9,6 +9,9 @@ const schedule = require('node-schedule');
 const csvFuncs = require('./controllers/csvFuncs');
 const dataController = require('./controllers/dataController');
 const configureController = require('./controllers/configController');
+const runJobsModule = require('./runJobs');
+
+const scheduling = runJobsModule.scheduling;
 
 // declare constants
 /**
@@ -87,12 +90,33 @@ const getAutoFuncStats = async (updateFuncs) => {
  * Updates the invocation rate of every function passed in to increase/decrease accordingly
  * @param {funcObc[]} funcsToUpdate - Array of objects representing functions that need to be updated. Objects have an ID, invocation, and percentCold
  */
-const updateFunctions = (funcsToUpdate) => {
-  // for each of the outOfBounds funcs:
-    // if cold% is above target
-      // call to edit frequency to more frequent
-    // else
-      // call to edit frequency to less frequent
+const updateFunctions = async (funcsToUpdate) => {
+
+  // array of valid frequencies:
+  const freqArray = Object.keys(scheduling);
+
+  funcsToUpdate.forEach(async (func) => {
+    
+    // funcIndex = where the current func is in the freqArray
+
+    // if func.percentCold > defaultColdPercentMax
+      // truthy: initialFuncIndex -- // make it more frequent
+        // if goes below 0, then console log, and make it zero
+      // falsey: initialFuncIndex++ // make it less frequent
+        // if goes ti freqArray.length, make it freqArray.length -1 and log
+
+    // const newFreq = freqArray[funcIndex]
+
+    // spoofreq = obj has a body with funcID, funcFreq
+
+    // spoofRes = empty object
+
+    // spoofNext = empty next
+
+    // call async configController.editFunc(spoofReq, spoofRes, spoofNext);
+
+  })
+    
 
 }
 
