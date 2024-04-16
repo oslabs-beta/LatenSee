@@ -1,13 +1,24 @@
 import React from 'react';
 
 // formatting numbers with comma and decimal
-const numFormat = new Intl.NumberFormat('US-en', {minimumFractionDigits: 1})
-// formatting date 
-const dateFormat = new Intl.DateTimeFormat('US-en', {dateStyle: 'short', timeStyle: 'medium'})
+const numFormat = new Intl.NumberFormat('US-en', { minimumFractionDigits: 1 });
+// formatting date
+const dateFormat = new Intl.DateTimeFormat('US-en', {
+  dateStyle: 'short',
+  timeStyle: 'medium',
+});
 
 function LatestPingsTable({ data, width, className }) {
-  // Reverse to start with the last element and slice to get the last 5 items
-  const lastFivePings = [...data].reverse().slice(0, 5);
+  //function to get only the last five pings data
+  const getLastFivePings = (data) => {
+    const result = [];
+    for (let i = data.length - 1; i >= 0 && result.length < 5; i--) {
+      result.push(data[i]);
+    }
+    return result;
+  };
+
+  const lastFivePings = getLastFivePings(data);
   const coldStartYN = (value) => (value == 'true' ? 'Yes' : 'No');
   const pingTableStyle = {
     width: width,
