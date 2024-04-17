@@ -68,7 +68,7 @@ Next we need to provide instructions for what kind of container should be spun u
 
 **Name Task Definition & Set Infrastructure Requirements**
 
-To begin with, pick a descriptive task definition family, and indicate that you'd like to use `AWS Fargate`. Pick the `Linux/X86_64` Operating System. LatenSee is designed to run with a small footprint, so you can pick the minimum CPU task size (0.25 vCPU / 0.5 GB memory). Set the Task role and Task execution role both to `ecsTaskExecutionRole` in the next dropdowns.
+To begin with, pick a descriptive task definition family, and indicate that you'd like to use `AWS Fargate`. Pick the `Linux/X86_64` Operating System. LatenSee is designed to run with a small footprint, so you can pick the minimum CPU task size (0.25 vCPU / 0.5 GB memory). If this is the first time you are configuring ECS, you may need to create a task role and task execution role. You can follow this [AWS ECS Developer Guide doc](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html). Set the Task role and Task execution role both to `ecsTaskExecutionRole` in the next dropdowns.
 
 ![Task Definition Infrastructure](/public/taskDefinitionInfra.png)
 
