@@ -3,7 +3,7 @@ const path = require('path');
 const csvFuncs = require(path.resolve(__dirname, './csvFuncs.js'));
 const parse = require('csv-parser');
 const { stringify } = require('csv-stringify/sync');
-const initializeJobsOnce = require('../runJobs');
+const { initializeJobsOnce } = require('../runJobs');
 
 const configController = {};
 let funcID;

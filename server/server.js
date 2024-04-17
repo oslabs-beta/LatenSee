@@ -1,7 +1,9 @@
 const path = require('path');
 const express = require('express');
-const { initializeJobsOnce } = require('./runJobs');
-const { startSchedule }= require('./jobFrequencyAutomation');
+const runJobsModule = require('./runJobs');
+const initializeJobsOnce = runJobsModule.initializeJobsOnce;
+const startSchedule = require('./jobFrequencyAutomation');
+
 const dataRouter = require(path.join(__dirname, './routes/dataRouter.js'));
 const configRouter = require(path.join(__dirname, './routes/configRouter.js'));
 
