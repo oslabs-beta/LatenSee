@@ -1,10 +1,16 @@
 # LatenSee
 
-Improve first-run latency and visualize the latency of server-less function invocations
+![LatenSee Logo](./src/components/LatenSeeLogoHD.png=250x250)
 
-### How to edit your lambda function
+Improve first-run latency and visualize the latency of server-less function invocations.
 
-In your Lambda function, add these two lines surrounding function's declaration:
+
+
+### How to use LatenSee
+
+#### Update your Lambda functions to recognize LatenSee's pings:
+
+In your Lambda functions, add these two lines surrounding function's declaration:
 
 ```diff
 + let cold=true;
@@ -43,6 +49,33 @@ export const handler = async (event) => {
   return { statusCode: 200, body: JSON.stringify('Lambda complete') };
 };
 ```
+#### Build LatenSee locally and then create a docker image
 
+```Bash
+npm run build
+docker build -t latensee-image .
+```
 
+#### Deploy your docker image alongside your production lambdas
 
+For a sample guide, you can follow our high-level proof of concept walkthrough [here](/DeployOnECS.md).
+
+### Contributors
+
+If you found this interesting or helpful, feel free to drop a star on this project!
+
+You can contribute by:
+- Raising issues you find in [GitHub Issues](https://github.com/oslabs-beta/LatenSee/issues)
+- Fixing issues by opening pull requests
+- Improving documentation
+
+In order to run the test suite, you can use the following:
+
+```bash
+npm install
+npm run test
+```
+
+### License
+
+LatenSee is distributed under the MIT License.
