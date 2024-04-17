@@ -8,7 +8,7 @@ const OverviewPanel = ({ data, periodicData }) => {
   if (!periodicData || periodicData.length === 0) {
     return <div className='data-loading'>Loading chart data...</div>;
   }
-  
+
   //destructuring and naming first object dataThisWeek, second object dataLastWeek
   const [dataThisWeek, dataLastWeek] = data;
 
@@ -35,7 +35,7 @@ const OverviewPanel = ({ data, periodicData }) => {
 
   return (
     <div>
-      <div className="daily-performance">
+      <div className='daily-performance'>
         <DailyPerformance averageLatencyEachDay={averageLatencyEachDay()} />
       </div>
     </div>

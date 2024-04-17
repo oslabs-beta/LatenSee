@@ -3,7 +3,6 @@ import myImage from '../components/LatenSeeLogoHD.png';
 import 'animate.css';
 import { driver } from 'driver.js';
 import 'driver.js/dist/driver.css';
-// import { useTour } from '../components/TourContext';
 
 const Home = () => {
   const [driverObj, setDriverObj] = useState(null); // State to hold the driver object for tour
@@ -31,7 +30,7 @@ const Home = () => {
         {
           element: '#user-link',
           popover: {
-            title: 'User',
+            title: 'User Control',
             description:
               "Manage your functions' settings here. Edit the warming frequency, start or stop warming, and delete functions as needed.",
           },
@@ -56,14 +55,17 @@ const Home = () => {
 
   return (
     <div className='home-page'>
-      <div className='animate__animated animate__backInRight'>
+      <div className='animate__animated animate__backInDown'>
         <h1>
           Welcome to <br />
           LatenSee!
         </h1>
       </div>
 
-      <button onClick={handleStartTour} className='start-tour-button'>
+      <button
+        onClick={handleStartTour}
+        className='animate__animated animate__backInDown'
+      >
         New here?
       </button>
 
