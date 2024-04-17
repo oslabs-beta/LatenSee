@@ -9,6 +9,25 @@ body {
   margin: 0;
 }
 
+.darkmode--activated nav {
+  background-color: black;
+  a {
+    color: white;
+  }
+}
+
+.darkmode--activated .home-page {
+  h1 {
+    color: white;
+  }
+  background-image: url('https://4kwallpapers.com/images/walls/thumbs_2t/9237.png');
+  // background-image: url('https://images.unsplash.com/photo-1620121692029-d088224ddc74?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGFic3RyYWN0JTIwYmx1ZXxlbnwwfHwwfHx8MA%3D%3D');
+}
+
+.darkmode-toggle {
+  z-index: 500;
+}
+
 $background-grey: #dadada24;
 $button-blue: #2196f3;
 $button-hover: #50b9ffb7;
@@ -29,8 +48,9 @@ $table-header-font-color: #333;
 /* Home Page */
 
 .home-page {
-  background-image: url('https://t4.ftcdn.net/jpg/05/01/44/65/360_F_501446535_8fCZoakb5DRbpTykhc8omm1538gBCJJQ.jpg');
-  // background-image: url('https://removal.ai/wp-content/uploads/2021/05/image14-1.png');
+  // background-image: url('https://t4.ftcdn.net/jpg/05/01/44/65/360_F_501446535_8fCZoakb5DRbpTykhc8omm1538gBCJJQ.jpg');
+  background-image: url('https://i.pinimg.com/736x/b4/5a/3d/b45a3d0c49d82ce118983fe561b931ca.jpg');
+  // background-image: url('https://static.vecteezy.com/system/resources/previews/007/934/082/original/abstract-yellow-and-green-gradient-waves-background-glowing-lines-on-green-background-vector.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -44,7 +64,7 @@ $table-header-font-color: #333;
 
   // Welcome text
   h1 {
-    color: white;
+    color: rgb(59, 59, 59);
     margin-top: 80px;
     z-index: 1; /* Ensures text sits behind button */
     font-family: 'Raleway', sans-serif;
@@ -78,7 +98,7 @@ $table-header-font-color: #333;
     z-index: 100; /* Ensures it's clickable & not hiding behind any elements */
     position: relative; /* So z-index works */
     padding: 7px 11px;
-    background-color: #005fc5;
+    background-color: #3988dc;
     color: #ffffff;
     font-size: 14px;
     border: none;
