@@ -86,7 +86,9 @@ configController.addNew = async (req, res, next) => {
     }
 
     // restart invocations to take into account the new function
+    if (process.env.TEST_NO_INTITALIZE !== 'jest_test') {
     initializeJobsOnce(); 
+    }
 
     return next();
   } catch (err) {
