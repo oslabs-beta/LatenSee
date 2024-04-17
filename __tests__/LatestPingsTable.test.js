@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import LatestPingsTable from '../src/components/LatestPingsTable';
 
+//create mock data for testing
 const mockData = [
   {
     name: 'Function 1',
@@ -20,12 +21,13 @@ const mockData = [
 ];
 
 test('renders LatestPingsTable with data', () => {
-  render(
-    <LatestPingsTable data={mockData} width="100%" className="pings-table" />
-  );
-
+  //render LatestPingsTable passing mockData
+  render(<LatestPingsTable data={mockData} />);
+  //get table by testid (added to component as an attribure)
   const table = screen.getByTestId('pings-table');
-  const header = table.querySelector('thead tr');
+  //from table, get header cells (all) by tags
+  const headerCells = table.querySelectorAll('thead tr th');
+  //an array of strings expected to show up in header
   const expectedHeaders = [
     'Function',
     'Invocation Start',
@@ -33,13 +35,14 @@ test('renders LatestPingsTable with data', () => {
     'Latency',
     'Coldstart',
   ];
-  expectedHeaders.forEach((text, index) => {
-    expect(header.children[index].textContent).toBe(text);
+  //iterate over headerCells, check to see if each cell's text is aligned with expectedHeaders
+  headerCells.forEach((cell, index) => {
+    expect(cell.textContent).toBe(expectedHeaders[index]);
   });
-
-  const bodyFirstRow = table.querySelector('tbody tr');
-  const bodyFirstRowCells = bodyFirstRow.querySelectorAll('td');
-  const latestData = mockData[mockData.length - 1];
+  //from table, get all cells across all rows in body by tags
+  const bodyCells = table.querySelectorAll('tbody tr td');
+  //for this test we use the second object in mockData
+  const latestData = mockData[1];
 
   const expectedValues = [
     latestData.name,
@@ -66,8 +69,8 @@ test('renders LatestPingsTable with data', () => {
     `${latestData.serverDifference.toFixed(1)}`,
     latestData.firstRun === 'true' ? 'Yes' : 'No',
   ];
-
+  //iterate over expectedValues array, check to see if each body cell's content is aligned with expectedValues
   expectedValues.forEach((value, index) => {
-    expect(bodyFirstRowCells[index].textContent).toBe(value);
+    expect(bodyCells[index].textContent).toBe(value);
   });
 });

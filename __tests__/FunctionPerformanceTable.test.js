@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import FunctionPerformanceTable from '../src/components/FunctionPerformanceTable';
 
-// fake data for rendering the table
+// create mock data for testing
 const mockData = [
   {
     name: 'Function 1',
@@ -28,20 +28,14 @@ const mockData = [
 
 test('renders FunctionPerformanceTable with data', () => {
   //simulate the mounting of component in jsdom. once it is rendered successfully, we are able to run further testing
-  render(
-    <FunctionPerformanceTable
-      data={mockData}
-      width="100%"
-      className="performance-table"
-    />
-  );
+  render(<FunctionPerformanceTable data={mockData} />);
 
   //divide table into 2 parts for testing: header and body. (header is usually static, body is dynamic)
-  //get whole table element by testid (which is an attribute added to FunctionPerformnaceTable <table>)
+  //get table element by testid (an attribute added to FunctionPerformnaceTable)
   const table = screen.getByTestId('performance-table');
   //within table element, get first row of header by tags (we only have one row of header)
-  const header = table.querySelector('thead tr');
-  //what we expect header content to be
+  const headerCells = table.querySelectorAll('thead tr th');
+  //an array of string expected to show up in header cells
   const expectedHeaders = [
     'Function',
     'Number of Pings',
@@ -52,15 +46,15 @@ test('renders FunctionPerformanceTable with data', () => {
     'Warm Start Latency',
     'Cold vs Warm Latency',
   ];
-  //testing each header cell (header.children)'s content to see if they are same as current element in expectedHeaders
-  expectedHeaders.forEach((text, index) => {
-    expect(header.children[index].textContent).toBe(text);
+  //testing each header cell's content to see if they aligned with expectedHeaders
+  headerCells.forEach((cell, index) => {
+    expect(cell.textContent).toBe(expectedHeaders[index]);
   });
 
   //wihtin table element, get first row of table body by tags
-  const bodyFirstRow = table.querySelector('tbody tr');
+  const bodyCells = table.querySelectorAll('tbody tr td');
   //within first row of table body, get all table body cells by tag
-  const bodyFirstRowCells = bodyFirstRow.querySelectorAll('td');
+  // const bodyFirstRowCells = bodyFirstRow.querySelectorAll('td');
   // what we expect table body cell to be
   const expectedValues = [
     mockData[0].name,
@@ -74,6 +68,6 @@ test('renders FunctionPerformanceTable with data', () => {
   ];
   //testing each table body cell's content to see if they are same as current element in expectedValues
   expectedValues.forEach((value, index) => {
-    expect(bodyFirstRowCells[index].textContent).toBe(value);
+    expect(bodyCells[index].textContent).toBe(value);
   });
 });
