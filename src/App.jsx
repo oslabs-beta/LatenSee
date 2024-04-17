@@ -20,12 +20,6 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // api/data provides data for performance table and pings table
-        const response = await fetch('/api/data');
-        const newData = await response.json();
-        setData(newData[0]);
-        setPingData(newData[1]);
-        setAcctData(newData[2]);
         //api/period provides data for Chart
         const periodResponse = await fetch('/api/period');
         const periodData = await periodResponse.json();
@@ -56,9 +50,25 @@ const App = () => {
     fetchData();
   }, []);
 
-  // conditionally set which component should be displayed
+  useEffect(() => {
+    const fetchDataEvery10S = async () => {
+      try {
+        // api/data provides data for performance table and pings table
+        const response = await fetch('/api/data');
+        const newData = await response.json();
+        setData(newData[0]);
+        setPingData(newData[1]);
+        setAcctData(newData[2]);
+      } catch (error) {
+        console.log('Failed to load data', error);
+      }
+    };
+    //declare variable intervalId for clearing. Use setInterval to periodically invoke
+    const intervalId = setInterval(fetchDataEvery10S, 10000);
+    return () => clearInterval(intervalId);
+  }, []);
 
-  console.log('Dashboard dismounted');
+  // console.log('Dashboard dismounted');
 
   const value = {
     data,
