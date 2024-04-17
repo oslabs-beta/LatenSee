@@ -8,14 +8,14 @@ const mockData = [
     name: 'Function 1',
     serverStart: new Date('2024-04-17T04:17:40'),
     serverEnd: new Date('2024-04-17T04:17:45'),
-    serverDifference: 555.0,
+    serverDifference: 555,
     firstRun: 'true',
   },
   {
     name: 'Function 2',
     serverStart: new Date('2024-04-16T03:15:30'),
     serverEnd: new Date('2024-04-16T03:15:35'),
-    serverDifference: 450.0,
+    serverDifference: 450,
     firstRun: 'no',
   },
 ];
