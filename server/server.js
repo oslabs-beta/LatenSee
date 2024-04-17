@@ -3,7 +3,7 @@ const express = require('express');
 const initializeJobsOnce = require('./runJobs');
 const dataRouter = require(path.join(__dirname, './routes/dataRouter.js'));
 const configRouter = require(path.join(__dirname, './routes/configRouter.js'));
-const startArchive = require('./archiveData')
+const startArchive = require('./archiveData');
 
 // set up server configuration
 const app = express();
@@ -47,17 +47,14 @@ app.use((err, req, res, next) => {
 // Flag to not run if we're inside jest unit tests that we don't wnat ot influence data.csv
 if (process.env.TEST_NO_INTITALIZE !== 'jest_test') {
   initializeJobsOnce();
-  startArchive()
+  startArchive();
 }
-
-
 
 // set up listener
 const server = app.listen(PORT, () => {
   if (process.env.TEST_NO_INTITALIZE !== 'jest_test') {
     console.log(`server listening on port ${PORT}: http://localhost:${PORT}/`);
   }
-  
 });
 
 module.exports = app;
