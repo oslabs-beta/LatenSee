@@ -119,7 +119,7 @@ const UserForm = () => {
               onChange={(e) => setSelectedApp(e.target.value)}
             >
               {apps.map((app) => (
-                <option key={app} value={app}>
+                <option value={app}>
                   {app}
                 </option>
               ))}
@@ -171,7 +171,7 @@ const UserForm = () => {
                       </option>
                       {freqOptions.map((frequency) =>
                         frequency !== item.funcFreq ? (
-                          <option value={frequency}>{frequency}</option>
+                          <option key={frequency} value={frequency}>{frequency}</option>
                         ) : null
                       )}
                     </select>

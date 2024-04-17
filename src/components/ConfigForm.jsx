@@ -110,7 +110,7 @@ const ConfigForm = () => {
             onChange={setInvRate}
           >
             {freqOptions.map((frequency, index) => (
-                    <option value={freqValues[index]}>{frequency}</option>))
+                    <option key={Math.random()*index} value={freqValues[index]}>{frequency}</option>))
                     }
           </select>
 
