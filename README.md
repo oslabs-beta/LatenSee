@@ -1,11 +1,25 @@
 # LatenSee
 
-![LatenSee Logo](./src/components/LatenSeeLogoHD.png=250x250)
+<p align="center">
+  <img width="250px" src="./src/components/LatenSeeLogoHD.png" />
+</p>
 
-Improve first-run latency and visualize the latency of server-less function invocations.
+<p align="center">
+  Improve first-run latency and visualize the latency of server-less function invocations.
+</p>
+![GitHub Repo stars](https://img.shields.io/github/stars/oslabs-beta/LatenSee?style=social&label=LatenSee%20Github%20Stars)
+<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/oslabs-beta/LatenSee?style=social&label=LatenSee%20Github%20Stars">
 
 
+---
+### Table of Contents
 
+
+---
+### Features
+
+
+---
 ### How to use LatenSee
 
 #### Update your Lambda functions to recognize LatenSee's pings:
@@ -60,7 +74,10 @@ docker build -t latensee-image .
 
 For a sample guide, you can follow our high-level proof of concept walkthrough [here](/DeployOnECS.md).
 
+---
 ### Contributors
+
+
 
 If you found this interesting or helpful, feel free to drop a star on this project!
 
@@ -75,7 +92,7 @@ In order to run the test suite, you can use the following:
 npm install
 npm run test
 ```
-
+---
 ### License
 
 LatenSee is distributed under the MIT License.
