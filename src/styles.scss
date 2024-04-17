@@ -73,12 +73,12 @@ $table-header-font-color: #333;
 
   // Welcome text
   h1 {
-    color: rgb(59, 59, 59);
+    color: rgb(75, 75, 75);
     margin-top: 80px;
     z-index: 1; /* Ensures text sits behind tour button */
     font-family: 'Raleway', sans-serif;
     font-optical-sizing: auto;
-    font-weight: 350;
+    font-weight: 330;
     font-style: normal;
   }
 
@@ -106,12 +106,12 @@ $table-header-font-color: #333;
   button {
     z-index: 100; /* Ensures it's clickable & not hiding behind any elements */
     position: relative; /* So z-index works */
-    padding: 7px 11px;
-    background-color: #3988dc;
+    padding: 10px 13px;
+    background-color: #3073bae5;
     color: #ffffff;
     font-size: 14px;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
     font-family: 'Raleway', sans-serif;
