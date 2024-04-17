@@ -23,6 +23,7 @@ const ConfigForm = () => {
   const [url, setUrl] = useInput('');
   const [invRate, setInvRate] = useInput('');
   const [warmerOn, setWarmerOn] = useState(false);
+  const [auto, setAuto] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
   //on submit, send form data to server
@@ -41,6 +42,7 @@ const ConfigForm = () => {
       funcUrl: url,
       funcFreq: invRate,
       warmerOn: warmerOn ? 'Yes' : 'No',
+      auto: auto ? 'Yes' : 'No',
       //stretch: add userId field for auth
     };
 
@@ -120,6 +122,16 @@ const ConfigForm = () => {
                 type="checkbox"
                 checked={warmerOn}
                 onChange={(e) => setWarmerOn(e.target.checked)}
+              />
+              <span class="slider round"></span>
+            </label>
+
+            <label class="switch">
+              Smart Invocations:
+              <input
+                type="checkbox"
+                checked={auto}
+                onChange={(e) => setAuto(e.target.checked)}
               />
               <span class="slider round"></span>
             </label>
