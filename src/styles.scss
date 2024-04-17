@@ -74,21 +74,28 @@ $table-header-font-color: #333;
     animation: float 4s ease-in-out infinite;
   }
 
-  .start-tour-button {
+  button {
     z-index: 100; /* Ensures it's clickable & not hiding behind any elements */
     position: relative; /* So z-index works */
-    padding: 8px 14px;
-    background-color: #004691d9;
+    padding: 7px 11px;
+    background-color: #005fc5;
     color: #ffffff;
     font-size: 14px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
     font-family: 'Raleway', sans-serif;
     font-optical-sizing: auto;
-    font-weight: 350;
+    font-weight: 400;
     font-style: normal;
+
+    &:hover,
+    &:focus {
+      background-color: #002e77; /* Darker green */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
   }
 }
 
@@ -475,10 +482,6 @@ $table-header-font-color: #333;
 
 /*Dashboard main content styling */
 
-.dashboard-container {
-  // background-color: pink;
-}
-
 .dashboard-content {
   display: flex;
   flex-direction: column;
@@ -641,7 +644,7 @@ h3 {
 .performance-table th,
 .performance-table td {
   text-align: left;
-  width: 10%;
+  width: 12.5%;
   padding: 12px 15px;
   border-bottom: 1px solid #e0e0e0;
   background-color: white;
@@ -668,67 +671,3 @@ h3 {
   color: $table-header-font-color;
   font-weight: bold;
 }
-
-// .chart-title,
-// .performance-table-title {
-//   font-family: 'Montserrat', sans-serif;
-//   font-size: 24px;
-//   font-weight: 700;
-//   color: rgb(66, 66, 66);
-//   text-align: center;
-//   margin-bottom: 10px;
-//   text-decoration: underline;
-// }
-
-// .pings-table-title {
-//   font-family: 'Montserrat', sans-serif;
-//   font-size: 24px;
-//   font-weight: 700;
-//   color: rgb(66, 66, 66);
-//   text-align: center;
-//   margin-bottom: 5px;
-//   text-decoration: underline;
-// }
-
-// .overview-title {
-//   font-family: 'Montserrat', sans-serif;
-//   font-size: 26px;
-//   font-weight: 700;
-//   color: rgb(66, 66, 66);
-//   text-align: center;
-//   margin-top: -5px;
-//   margin-bottom: 20px;
-//   margin-left: 10px;
-//   text-decoration: underline;
-// }
-
-// $sidebar-width: 250px;
-// $background-color: #a7c9e3;
-
-// .overview-panel {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: flex-start;
-//   width: $sidebar-width;
-//   position: fixed;
-//   right: 0;
-//   top: 0;
-//   bottom: 0;
-//   background-color: $background-color;
-//   padding: 20px;
-//   overflow-y: auto;
-// }
-
-// .side-by-side {
-//   display: flex;
-//   justify-content: space-between;
-//   > div {
-//     flex-basis: 48%;
-//   }
-// }
-
-// .separator-bar {
-//   height: 1.5px;
-//   background-color: rgba(128, 128, 128, 0.166);
-//   margin: 20px 0;
-// }

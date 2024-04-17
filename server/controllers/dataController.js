@@ -64,7 +64,7 @@ dataController.getRuns = async (req, res, next) => {
     /* NOTE HERE ------------- get period of calculation (day, week, all data) from queryparams HARDCODED FOR NOW - TO DISCUSS WITH STEPHEN
     if one day period = 1, if one week period = 7, if all data available, period = Date.now()/86400000 --------------------*/
     // NOTE: GRABBING TWO WEEKS OF DATA SO I DONT FILTER OUT ALL RESULTS
-    const period = 7;
+    const period = 14;
     //change period to milliseconds
     const periodMS = period * 86400000;
     // calculate startDate as current date minus the period we are covering in milliseconds
@@ -214,9 +214,8 @@ dataController.getPeriodData = async (req, res, next) => {
 
     for (let i = 0; i < 7; i++) {
       let dayData = {};
-       
+      let totalDayCount = 0;
       records.forEach((row) => {
-        let totalDayCount = 0;
         let count = csvFuncs.getTotalRuns(
           data,
           row.funcID,
@@ -236,8 +235,8 @@ dataController.getPeriodData = async (req, res, next) => {
         // used to display date in chart as US format mm/dd
         dayData['day'] = new Intl.DateTimeFormat('en-US', {day:'2-digit', month:'2-digit'}).format(week[i])
         totalDayCount = totalDayCount + count;
-        dayData['dayCount'] = totalDayCount; 
       });
+      dayData['dayCount'] = totalDayCount; 
       
       weeklyLats.push(dayData);
     }
