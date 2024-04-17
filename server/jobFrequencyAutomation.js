@@ -27,7 +27,7 @@ const defaultUserId = 'abc123'; // Placeholder while we don't yet look at userId
  * Grabs all functions from the user that are managed automatically
  * @returns {row[]} An array of objects representing functions that are marked as being managed automatically
  */
-const getAutoFunctions = async () => {
+const getAutoFunctions = async (userId = defaultUserId) => {
   const allFuncs = await csvFuncs.getAllRows(path.resolve(__dirname, `../storage/${userId}.csv`));
   // reduce to only those who have 'automatic' as true
   const autoFuncs = allFuncs.filter((currFunc) => currFunc[auto] === 'Yes');
@@ -137,7 +137,7 @@ const updateFunctions = async (funcsToUpdate) => {
  */
 const startSchedule = () => {
   const autoSchedule = schedule.scheduleJob(defaultCheckFrequency, () => {
-    const updateFuncs = getAutoFunctions(autoSchedule);
+    const updateFuncs = getAutoFunctions();
     const funcStats = getAutoFuncStats(updateFuncs);
     updateFunctions(funcStats);
   })

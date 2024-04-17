@@ -7,6 +7,7 @@ const { getTotalRuns, getAllRows } = require('./csvFuncs');
 const csvFuncs = require(path.resolve(__dirname, './csvFuncs.js'));
 
 const userID = 'abc123';
+const defaultPeriod = 7;
 const datafileName = path.resolve(__dirname, `../storage/data.csv`);
 const userfileName = path.resolve(__dirname, `../storage/${userID}.csv`);
 
@@ -64,7 +65,8 @@ dataController.getRuns = async (req, res, next) => {
     /* NOTE HERE ------------- get period of calculation (day, week, all data) from queryparams HARDCODED FOR NOW - TO DISCUSS WITH STEPHEN
     if one day period = 1, if one week period = 7, if all data available, period = Date.now()/86400000 --------------------*/
     // NOTE: GRABBING TWO WEEKS OF DATA SO I DONT FILTER OUT ALL RESULTS
-    const period = 7;
+
+    const period = (!req.params.lookback) ? defaultPeriod : req.params.lookback;
     //change period to milliseconds
     const periodMS = period * 86400000;
     // calculate startDate as current date minus the period we are covering in milliseconds
