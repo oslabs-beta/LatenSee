@@ -24,15 +24,16 @@ const heading = [
 configController.addNew = async (req, res, next) => {
   try {
     // deconstructing information from body
-    // TEMPORARILY ADDING DEFAULT TO 'Yes' for waremerOn
+    console.log(req.body)
     const {
       appName,
       funcName,
       funcUrl,
       funcFreq,
-      warmerOn = 'Yes',
+      warmerOn,
       userID = defaultUserID,
     } = req.body;
+    
 
     // if user file does not exist create file and set up file headers
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import '@testing-library/jest-dom'
 
 //to take in user input & set values on change
 const useInput = (init) => {
