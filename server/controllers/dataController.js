@@ -62,10 +62,9 @@ dataController.getRuns = async (req, res, next) => {
     })
     res.locals.funcsOn = onCount; 
 
-    /* NOTE HERE ------------- get period of calculation (day, week, all data) from queryparams HARDCODED FOR NOW - TO DISCUSS WITH STEPHEN
-    if one day period = 1, if one week period = 7, if all data available, period = Date.now()/86400000 --------------------*/
-    // NOTE: GRABBING TWO WEEKS OF DATA SO I DONT FILTER OUT ALL RESULTS
-
+    /**
+     * Period determined the overall lookback, here set to default, but if something else is defined, that interger in days is used instead
+     */
     const period = (!req.params.lookback) ? defaultPeriod : req.params.lookback;
     //change period to milliseconds
     const periodMS = period * 86400000;

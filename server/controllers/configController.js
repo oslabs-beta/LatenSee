@@ -32,6 +32,7 @@ configController.addNew = async (req, res, next) => {
       funcFreq,
       warmerOn = 'Yes',
       userID = defaultUserID,
+      auto = 'Yes',
     } = req.body;
 
     // if user file does not exist create file and set up file headers
@@ -44,7 +45,7 @@ configController.addNew = async (req, res, next) => {
       fs.appendFileSync(
         fileName,
         stringify(
-          [{ funcID, appName, funcName, funcFreq, userID, warmerOn, funcUrl }],
+          [{ funcID, appName, funcName, funcFreq, userID, warmerOn, funcUrl, auto }],
           {
             header: true,
             columns: heading,
@@ -72,7 +73,7 @@ configController.addNew = async (req, res, next) => {
       fs.appendFileSync(
         fileName,
         stringify(
-          [{ funcID, appName, funcName, funcFreq, userID, warmerOn, funcUrl }],
+          [{ funcID, appName, funcName, funcFreq, userID, warmerOn, funcUrl, auto }],
           { header: false },
           function (err, str) {
             if (err) {
@@ -101,7 +102,7 @@ configController.addNew = async (req, res, next) => {
 // If the user wants to edit the frequency the function is pinged,
 configController.editFunc = async (req, res, next) => {
   try {
-    const { funcID, funcUrl, funcFreq, warmerOn } = req.body;
+    const { funcID, funcUrl, funcFreq, warmerOn, auto } = req.body;
 
     const userfileName = path.resolve(
       __dirname,
@@ -156,6 +157,27 @@ configController.editFunc = async (req, res, next) => {
         )
       );
     }
+
+    // If the function is going to be automatically managed, edit that
+    if (auto) {
+      records[selectedIndex].auto = auto;
+      fs.writeFileSync(
+        userfileName,
+        stringify(
+          records,
+          { header: true, columns: heading },
+          function (err, str) {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log('updated record');
+            }
+          }
+        )
+      );
+    }
+
+
     // restart invocations to take into account the edited item
     initializeJobsOnce();
     return next();

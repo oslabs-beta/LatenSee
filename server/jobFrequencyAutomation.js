@@ -43,8 +43,8 @@ const getAutoFunctions = async (userId = defaultUserId) => {
 const getAutoFuncStats = async (updateFuncs) => {
   // Need to spoof the middleware for express, so will create our own version of req/res/next objects to pass in
 
-  // Req object holds the time period we're looking for in its body
-  const spoofReq = {body: {lookback: defaultLookback}};
+  // Req object holds the time period we're looking for in its params
+  const spoofReq = {params: {lookback: defaultLookback}};
   
   // Create a temp object with functionIds mapped to their funcFreq for fast lookup later
   const frequencyLookup = {};
