@@ -64,24 +64,17 @@ const DailyPerformance = ({ averageLatencyEachDay }) => {
     },
   };
 
-  // if (!options || !series || averageLatencyEachDay.length === 0) {
-  //   return <div className='data-loading'>No data to display...</div>;
-  // }
-  // else {
-    return (
-      <div id="chart">
-        <ReactApexChart
-          options={options}
-          series={series}
-          type="bar"
-          height={350}
-        />
-      </div>
-    );
+  return (
+    <div id="chart">
+      <ReactApexChart
+        options={options}
+        series={series}
+        type="bar"
+        height={350}
+      />
+    </div>
+  );
 
-
-
-  
 };
 
 export default DailyPerformance;
