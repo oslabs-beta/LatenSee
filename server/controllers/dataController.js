@@ -206,7 +206,7 @@ dataController.getPeriodData = async (req, res, next) => {
     //[{0:today}, {1: today -1}, {2: today -2}, {3: today -3},  etc.}]
     const today = Date.now();
     let week = [];
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 8; i++) {
       week.push(today - i * 86400000);
     }
 

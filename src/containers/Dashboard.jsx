@@ -26,18 +26,18 @@ function Dashboard() {
           <div className="all-metrics">
             <div className="summary-metric one">
               <p>Functions Tracked</p>
-              <h1>{acctData[0] ? numFormat.format(acctData[0]) : 0}</h1>
+              <h1>{acctData[0] ? numFormat.format(acctData[0]) : '-'}</h1>
             </div>
             <div className="summary-metric">
               <p>Active Function Invocations</p>
-              <h1>{acctData[1] ? numFormat.format(acctData[1]) : 0}</h1>
+              <h1>{acctData[1] ? numFormat.format(acctData[1]) : '-'}</h1>
             </div>
             <div className="summary-metric">
               <p>Daily Invocations</p>
               <h1>
                 {periodicData[0]
                   ? numFormat.format(periodicData[0]['dayCount'])
-                  : 0}
+                  : '-'}
               </h1>
             </div>
             {/* <div className='summary-metric'>

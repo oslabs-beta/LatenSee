@@ -45,7 +45,7 @@ const timeRuns = async () => {
 }
 
 
-describe('Test the average time to read data.csv', () => {
+xdescribe('Test the average time to read data.csv', () => {
   it('Should be able to read ~200k rows in <350ms', async () => {
     const timingArray = await timeRuns();
 

@@ -1,3 +1,4 @@
 funcID,appName,funcName,funcFreq,userID,warmerOn,funcUrl
-1,TestApp1,TestFunc3,10S,abc123,No,https://4uze95sn78.execute-api.us-west-2.amazonaws.com/default/10S
-2,sdhsa,askhkasj,1M,abc123,No,https://4uze95sn78.execute-api.us-west-2.amazonaws.com/default/10S
+1,Shopping App,Backup Database,10S,abc123,Yes,https://4uze95sn78.execute-api.us-west-2.amazonaws.com/default/10S
+2,Shopping App,User Sign Up,1M,abc123,Yes,https://c74aqg48s2.execute-api.us-west-2.amazonaws.com/default/5M
+3,Shopping App,Create Invoices,10S,abc123,Yes,https://lbg4c1fym5.execute-api.us-west-2.amazonaws.com/default/1M

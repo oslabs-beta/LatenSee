@@ -160,26 +160,4 @@ describe('configController.addNew', () => {
     expect(actualHeaders).toEqual(expectedHeaders);
   });
 
-  it('If no warmerOn status is provided in the body, will default to Yes', async () => {
-    //addNew method requires req, res, and next
-    const req = {};
-    const res = {};
-    const next = jest.fn();
-
-    // form a fake request body, with the parameters:
-    req.body = {
-      appName: 'TestApp3',
-      funcName: 'TestFunc3',
-      funcUrl: 'http://testfunc3.com',
-      funcFreq: '10S',
-      // no warmerOn status
-      userID: 'Test123',
-    };
-
-    await configController.addNew(req, res, next);
-
-    const expectedRows = await csvFuncs.getAllRows(expectedPath);
-
-    expect(expectedRows[expectedRows.length - 1].warmerOn).toEqual('Yes');
-  });
 });

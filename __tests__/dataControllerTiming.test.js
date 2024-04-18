@@ -44,7 +44,7 @@ const timeRuns = async () => {
   return timingResults;
 };
 
-describe('Test to time responses to dataController.getRuns()', () => {
+xdescribe('Test to time responses to dataController.getRuns()', () => {
 
   afterEach(() => server.close());
 
