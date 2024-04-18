@@ -7,17 +7,27 @@
 <p align="center">
   Improve first-run latency and visualize the latency of server-less function invocations.
 </p>
-![GitHub Repo stars](https://img.shields.io/github/stars/oslabs-beta/LatenSee?style=social&label=LatenSee%20Github%20Stars)
-<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/oslabs-beta/LatenSee?style=social&label=LatenSee%20Github%20Stars">
 
 
----
-### Table of Contents
-
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB) 
+![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white) ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white) ![Jest](https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white)
 
 ---
 ### Features
 
+LatenSee is a light application which will consistently ping your Lambda functions keeping them warm, and thus providing a faster client experience for your end-users. Point LatenSee to your functions, select an invocation rate and LatenSee will take care of the rest!
+
+**Performance at a glance**
+
+See all your function's latency from recent invocations and stats about your app's Lambdas
+
+**Warm any lambdas**
+
+Easily add new endpoints to LatenSee and instantly start keeping them warm
+
+**Granular Control**
+
+Organize Lambdas into different apps and control invocations uniquely for each function.
 
 ---
 ### How to use LatenSee
@@ -77,6 +87,21 @@ For a sample guide, you can follow our high-level proof of concept walkthrough [
 ---
 ### Contributors
 
+**Stephen Chow**
+
+[<img src="https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white">](https://www.linkedin.com/in/stephen-chow-75b2a325/) [<img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white">](https://github.com/stc415)
+
+**Reem Abi Ammar**
+
+[<img src="https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white">](https://www.linkedin.com/in/reem-abi-ammar-09305b62/) [<img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white">](https://github.com/RGA29)
+
+**Emma Ijiogbe**
+
+[<img src="https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white">](http://linkedin.com/in/eijiogbe) [<img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white">](https://github.com/emmagawd)
+
+**Evan Griffith**
+
+[<img src="https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white">](https://www.linkedin.com/in/evancgriffith/) [<img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white">](https://github.com/EvanCG)
 
 
 If you found this interesting or helpful, feel free to drop a star on this project!
