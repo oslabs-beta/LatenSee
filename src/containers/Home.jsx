@@ -7,6 +7,7 @@ import 'driver.js/dist/driver.css';
 const Home = () => {
   const [driverObj, setDriverObj] = useState(null); // State to hold the driver object for tour
 
+  // Set up steps for tour
   useEffect(() => {
     const newDriverObj = driver({
       showProgress: true,
@@ -47,6 +48,7 @@ const Home = () => {
     }
   }, []);
 
+  // For start tour button functionality
   const handleStartTour = () => {
     if (driverObj) {
       driverObj.drive();
