@@ -16,7 +16,7 @@ function FunctionPerformanceTable({ data, width, className }) {
         <thead>
           <tr>
             <th>Function</th>
-            <th>Number of Pings</th>
+            <th>Number of Invocations</th>
             <th>Number of Cold Starts</th>
             <th>Cold Start %</th>
             <th>Average Latency</th>
