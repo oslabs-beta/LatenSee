@@ -24,7 +24,7 @@ const OverviewPanel = ({ data, periodicData }) => {
       const average = sum / keys.length;
       //push object into avLatEachDay array
       avLatEachDay.push({
-        day: periodicData[i].day,
+        day: periodicData[i].day ? periodicData[i].day : 0,
         average,
       });
     }
