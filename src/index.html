@@ -3,11 +3,50 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <title>LatenSee</title>
   </head>
   <body>
     <div id="root"></div>
-    <h1>This is LatenSee</h1>
+    <div class="switch">
+      Dark mode
+      <input type="checkbox" id="darkModeToggle" />
+      <label for="darkModeToggle" class="slider"></label>
+    </div>
     <script src="dist/bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+    <script>
+      function addDarkmodeWidget() {
+        const options = {
+          bottom: '32px',
+          right: '32px',
+          left: 'unset',
+          time: '0.3s',
+          mixColor: '#fff',
+          backgroundColor: '#fff',
+          buttonColorDark: '#100f2c',
+          buttonColorLight: '#fff',
+          saveInCookies: true,
+          label: '',
+          autoMatchOsTheme: true
+        };
+        const darkmode = new Darkmode(options);
+        const toggle = document.getElementById('darkModeToggle');
+        toggle.addEventListener('change', function() {
+          darkmode.toggle();
+        });
+
+        // Initialize dark mode based on the previous state
+        if (localStorage.getItem('darkmode') === 'true') {
+          darkmode.toggle();
+        }
+      }
+      window.addEventListener('load', addDarkmodeWidget);
+    </script>
   </body>
 </html>
