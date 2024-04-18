@@ -38,7 +38,7 @@ test('renders FunctionPerformanceTable with data', () => {
   //an array of string expected to show up in header cells
   const expectedHeaders = [
     'Function',
-    'Number of Pings',
+    'Number of Invocations',
     'Number of Cold Starts',
     'Cold Start %',
     'Average Latency',
