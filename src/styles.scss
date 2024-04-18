@@ -5,12 +5,17 @@ body {
   font-optical-sizing: auto;
   font-weight: 250;
   font-style: normal;
-  //raleway, quicksand, montserrat, poppins, figtree?
   margin: 0;
 }
 
+/* For Dark Mode Styling */
+
 .darkmode--activated {
-  // change side nav colors when DMA
+  .switch {
+    color: white;
+  }
+
+  /* change side nav colors when DMA */
   nav {
     background-color: black;
     a {
@@ -18,7 +23,7 @@ body {
     }
   }
 
-  // change homepage background & welcome text when DMA
+  /* change homepage background & welcome text when DMA */
   .home-page {
     background-image: url('https://4kwallpapers.com/images/walls/thumbs_2t/9237.png');
     h1 {
@@ -26,15 +31,65 @@ body {
     }
   }
 
-  // makes background color of pages slightly less black when DMA
+  /* makes background color of pages slightly less black when DMA */
   .container {
     background-color: rgb(245, 245, 245);
   }
 }
 
-// dark mode button
-.darkmode-toggle {
-  z-index: 500; // ensures button is always visible
+$button-blue: #ff8800;
+$cancel-grey: #cccccc;
+
+.switch {
+  position: fixed; // Ensure it's positioned relative to the viewport
+  bottom: 10px; // Place it at the bottom of the viewport
+  left: 35px; // Place it on the right side of the viewport
+  z-index: 1000; // High z-index to ensure visibility
+  margin-top: 20px;
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: relative;
+    cursor: pointer;
+    background-color: $cancel-grey; // Grey background when off
+    transition: 0.4s;
+    height: 20px;
+    width: 37px;
+    margin-left: 0px;
+    border-radius: 34px; // Rounded borders for the slider
+
+    &:before {
+      content: '';
+      position: absolute;
+      height: 16px;
+      width: 16px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%; // Rounded circle inside the slider
+    }
+  }
+
+  input:checked + .slider {
+    background-color: $button-blue; // Blue background when on
+
+    &:before {
+      transform: translateX(16px); // Move the circle to the right
+    }
+  }
+
+  input:focus + .slider {
+    box-shadow: 0 0 1px $button-blue; // Focus shadow
+  }
 }
 
 $background-grey: #dadada24;
@@ -58,7 +113,6 @@ $table-header-font-color: #333;
 
 .home-page {
   background-image: url('https://t4.ftcdn.net/jpg/05/01/44/65/360_F_501446535_8fCZoakb5DRbpTykhc8omm1538gBCJJQ.jpg');
-  // background-image: url('https://i.pinimg.com/736x/b4/5a/3d/b45a3d0c49d82ce118983fe561b931ca.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -70,7 +124,7 @@ $table-header-font-color: #333;
   position: relative;
   overflow: hidden; /* Prevents scrolling on the entire page */
 
-  // Welcome text
+  /* Welcome text */
   h1 {
     color: white;
     margin-top: 80px;
@@ -81,7 +135,7 @@ $table-header-font-color: #333;
     font-style: normal;
   }
 
-  // For the floating logo animation
+  /* For the floating logo animation */
   @keyframes float {
     0%,
     100% {
@@ -92,7 +146,7 @@ $table-header-font-color: #333;
     }
   }
 
-  // Logo image
+  /* Logo image */
   img {
     margin-top: -100px;
     padding: 0px;
@@ -142,7 +196,6 @@ $table-header-font-color: #333;
 }
 
 .logo {
-  // margin-left: -11px;
   margin-bottom: 20px;
 
   img {
@@ -254,7 +307,6 @@ $table-header-font-color: #333;
     display: flex;
     flex-direction: column;
     background-color: transparent;
-    // border: solid thin grey;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
     .config-data-header {
@@ -306,54 +358,51 @@ $table-header-font-color: #333;
       border: 1.4px solid #42424268;
     }
 
-    .switch {
+    .warmer-switch {
       margin-top: 20px;
       display: inline-flex;
       align-items: center;
       height: 36px;
-    }
 
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .switch input:checked + .slider {
-      background-color: $button-blue;
-
-      &:before {
-        transform: translateX(16px);
-      }
-    }
-
-    .switch input:focus + .slider {
-      box-shadow: 0 0 1px $button-blue;
-    }
-
-    .slider {
-      cursor: pointer;
-      background-color: $cancel-grey;
-      transition: 0.4s;
-      height: 20px;
-      width: 37px;
-      margin-left: 0px;
-
-      &:before {
-        content: '';
-        height: 16px;
-        width: 16px;
-        background-color: white;
-        transition: 0.4s;
-        display: inline-block;
-        margin: 2px;
+      input {
+        opacity: 0;
+        width: 0;
+        height: 0;
       }
 
-      &.round {
-        border-radius: 34px;
+      input:checked + .slider {
+        background-color: $button-blue;
 
         &:before {
+          transform: translateX(16px);
+        }
+      }
+
+      input:focus + .slider {
+        box-shadow: 0 0 1px $button-blue;
+      }
+
+      .slider {
+        cursor: pointer;
+        background-color: $cancel-grey;
+        transition: 0.4s;
+        height: 20px;
+        width: 37px;
+        margin-left: 0px;
+
+        &:before {
+          content: '';
+          height: 16px;
+          width: 16px;
+          background-color: white;
+          transition: 0.4s;
+          display: inline-block;
+          margin: 2px;
           border-radius: 50%;
+        }
+
+        &.round {
+          border-radius: 34px;
         }
       }
     }
