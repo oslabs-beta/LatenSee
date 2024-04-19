@@ -31,21 +31,29 @@
           backgroundColor: '#fff',
           buttonColorDark: '#100f2c',
           buttonColorLight: '#fff',
-          saveInCookies: true,
-          label: '',
-          autoMatchOsTheme: true
+          saveInCookies: false,
+          label: '🌓'
         };
+
         const darkmode = new Darkmode(options);
         const toggle = document.getElementById('darkModeToggle');
-        toggle.addEventListener('change', function() {
-          darkmode.toggle();
-        });
 
-        // Initialize dark mode based on the previous state
-        if (localStorage.getItem('darkmode') === 'true') {
-          darkmode.toggle();
+        // Initialize dark mode based on the previous state from localStorage
+        const isDarkmodeActive = localStorage.getItem('darkmode') === 'true';
+        toggle.checked = isDarkmodeActive; // Set the checkbox based on stored value
+
+        // Correctly initialize the dark mode state when loading the widget
+        if (isDarkmodeActive) {
+          darkmode.toggle(); // This activates dark mode if it should be active
         }
+
+        // Setup event listener for changes
+        toggle.addEventListener('change', function() {
+          darkmode.toggle(); // Toggle dark mode state
+          localStorage.setItem('darkmode', toggle.checked); // Update the stored state
+        });
       }
+
       window.addEventListener('load', addDarkmodeWidget);
     </script>
   </body>

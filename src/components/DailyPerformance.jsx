@@ -2,9 +2,11 @@ import React from 'react';
 import ReactApexChart from 'react-apexcharts';
 
 const DailyPerformance = ({ averageLatencyEachDay }) => {
-  if (!averageLatencyEachDay|| averageLatencyEachDay.length === 0) {
+  
+  if (!averageLatencyEachDay || averageLatencyEachDay.length === 0) {
     return <div className='data-loading'>Loading chart data...</div>;
   }
+
   // setup series. call map on averageLatencyEachDay to populate the y axis
   const series = [
     {
@@ -72,6 +74,7 @@ const DailyPerformance = ({ averageLatencyEachDay }) => {
       />
     </div>
   );
+
 };
 
 export default DailyPerformance;
