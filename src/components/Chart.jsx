@@ -6,12 +6,12 @@ const Chart = ({ data, height, width = '100%' }) => {
   // handle cases when response data has not come back yet, or reponse data array is empty
   if (!data || data.length === 0) {
     return <div className='data-loading'>Loading chart data...</div>;
-  }
-
-  //setup series (what's on y-axis)
+  } 
+    //setup series (what's on y-axis)
   const series = [];
   //get all keys from first object in data array
   let keys = Object.keys(data[0]);
+
   //interate through keys array created above
   for (let i = 0; i < keys.length; i++) {
     if (keys[i] !== 'day') {
@@ -84,6 +84,8 @@ const Chart = ({ data, height, width = '100%' }) => {
       },
     },
   };
+
+
   return (
     <div id="chart">
       <ReactApexChart
@@ -95,6 +97,7 @@ const Chart = ({ data, height, width = '100%' }) => {
       />
     </div>
   );
+
 };
 
 export default Chart;
